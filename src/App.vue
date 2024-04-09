@@ -1,17 +1,35 @@
 <template>
   <div id="app">
-    <Navbar />
-    <router-view></router-view>
+    <!-- <Navbar @show-sidebar="showSidebar" /> -->
+    <Sidebar v-if="sidebarVisible" />
+    
+    <b-container fluid>
+      <!-- Contenido principal de tu aplicación -->
+      <router-view></router-view>
+    </b-container>    
   </div>
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue'
+// import Navbar from './components/Navbar.vue'
+import Sidebar from './components/Sidebar.vue'
 
 export default {
   name: 'App',
   components: {
-    Navbar
+    // Navbar,
+    Sidebar
+  },  
+  data() {
+    return {
+      sidebarVisible: true
+    };
+  },
+  methods: {
+    showSidebar() {
+      // Mostrar el sidebar cuando se emite el evento desde el Navbar
+      this.sidebarVisible = !this.sidebarVisible;
+    }
   }  
 }
 </script>
