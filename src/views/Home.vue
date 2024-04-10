@@ -6,6 +6,12 @@
           <h1>Bienvenido a la Página de Inicio</h1>
           <p>¡Haz clic en el botón para ir a la página "About"!</p>
           <b-button @click="redirectToAbout" variant="primary">Ir a About</b-button>
+
+          <b-dropdown id="dropdown-dropleft" offset="-100" text="Drop-Left" variant="primary" class="ml-1">
+            <b-dropdown-item href="#">Action</b-dropdown-item>
+            <b-dropdown-item href="#">Another action</b-dropdown-item>
+            <b-dropdown-item href="#">Something else here</b-dropdown-item>
+          </b-dropdown>          
         </b-col>
       </b-row>
     </b-container>

@@ -1,36 +1,32 @@
 <template>
   <div id="app">
-    <!-- <Navbar @show-sidebar="showSidebar" /> -->
-    <Sidebar v-if="sidebarVisible" />
+    <Sidebar :sidebarWidth.sync="sidebarWidth" />
+    <!-- <NewSidebar /> -->
     
-    <b-container fluid>
-      <!-- Contenido principal de tu aplicación -->
+    <div class="master-container" :style="{ 'margin-left': sidebarWidth }" >
+      <Navbar />
       <router-view></router-view>
-    </b-container>    
+    </div>    
   </div>
 </template>
 
 <script>
-// import Navbar from './components/Navbar.vue'
+import Navbar from './components/Navbar.vue'
 import Sidebar from './components/Sidebar.vue'
+// import NewSidebar from './components/NewSidebar.vue'
 
 export default {
   name: 'App',
   components: {
-    // Navbar,
-    Sidebar
+    Navbar,
+    Sidebar,
+    // NewSidebar
   },  
   data() {
     return {
-      sidebarVisible: true
+      sidebarWidth: "calc(250px)"
     };
-  },
-  methods: {
-    showSidebar() {
-      // Mostrar el sidebar cuando se emite el evento desde el Navbar
-      this.sidebarVisible = !this.sidebarVisible;
-    }
-  }  
+  }, 
 }
 </script>
 
@@ -41,5 +37,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+#app .master-container {
+  min-height: 100vh;
+  transition: margin-left 0.5s ease;
 }
 </style>
