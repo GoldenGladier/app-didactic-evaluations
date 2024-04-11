@@ -36,6 +36,8 @@ export default {
         { id: 4, text: 'Unirse', icon: 'play', link: '/unirse' },
         { id: 5, text: 'Nosotros', icon: 'people', link: '/about' },
         { id: 6, text: 'Login', icon: 'door-open', link: '/login' },
+        { id: 6, text: 'UI', icon: 'code-slash', link: '/testingUi' },
+        
         // Agrega más ítems aquí según tu necesidad
       ]
     }

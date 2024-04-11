@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <Sidebar :sidebarWidth.sync="sidebarWidth" />
-    <!-- <NewSidebar /> -->
     
     <div class="master-container" :style="{ 'margin-left': sidebarWidth }" >
       <Navbar />
@@ -13,14 +12,12 @@
 <script>
 import Navbar from './components/Navbar.vue'
 import Sidebar from './components/Sidebar.vue'
-// import NewSidebar from './components/NewSidebar.vue'
 
 export default {
   name: 'App',
   components: {
     Navbar,
     Sidebar,
-    // NewSidebar
   },  
   data() {
     return {
