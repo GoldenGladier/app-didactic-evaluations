@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <b-container class="login-form">
+    <b-container class="login-form custom-card-box">
       <b-row class="justify-content-center">
         <b-col cols="12" sm="8" >
           <h2 class="text-center mb-3">Iniciar sesión</h2>
@@ -58,6 +58,7 @@ export default {
 <style scoped>
 .login-container {
   height: auto;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,9 +68,7 @@ export default {
   max-width: 400px;
   width: 100%;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
+  border-radius: 5px;  
 }
 
 .custom-text-info {

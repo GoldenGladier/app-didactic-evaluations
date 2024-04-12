@@ -2,7 +2,6 @@
 $primary-color: #EE6F57;
 $primary: #EE6F57;
 $secondary-color: #1F3C88;
-$custom-color: tomato;
 
 // Textos
 $text-color: #F6F5F5;
@@ -14,7 +13,7 @@ $text-color: #F6F5F5;
 .btn-primary {
     background-color: $primary-color;
     border-color: $primary-color;
-  }
+}
   
 .btn-primary:hover {
     background-color: darken($primary-color, 10%);
@@ -24,4 +23,11 @@ $text-color: #F6F5F5;
 .btn-primary:focus,
 .btn-primary.focus {
     box-shadow: 0 0 0 0.2rem rgba(238, 111, 87, 0.5);
+}
+
+.custom-card-box {
+  background: #FFFFFF;
+  border-radius: 0.4rem;
+  box-shadow: 0 4px 24px 0 rgba(34,41,47, 0.15);
+  padding: 1rem;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="testing-ui">
+  <div class="testing-ui custom-card-box">
     <!-- Título -->
     <h1 class="mb-4">Testing UI con Bootstrap Vue</h1>
     
@@ -33,10 +33,7 @@
     
     <!-- Tooltip -->
     <b-button v-b-tooltip.hover title="¡Hazme clic!">Botón con Tooltip</b-button>
-    
-    <!-- Slider -->
-    <b-slider v-model="sliderValue" class="mt-4"></b-slider>
-    
+       
     <!-- Loader -->
     <b-spinner class="mt-4"></b-spinner>
     
@@ -53,7 +50,6 @@ export default {
         name: '',
         email: ''
       },
-      sliderValue: 50,
       progressValue: 75
     };
   },

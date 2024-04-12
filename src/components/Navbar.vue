@@ -40,8 +40,9 @@ export default {
 <style>
 .custom-navbar {
   background-color: #FBA834;
-  margin: 0.5rem;
   border-radius: 0.4rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 4px 24px 0 rgba(34,41,47, 0.15);
 }
 
 .custom-info-brand {
@@ -58,7 +59,7 @@ export default {
 }
 
 .custom-navbar {
-  background-color: #FBA834;
+  background-color: #EE6F57;
   padding: 0.5rem;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="custom-card-box">
     <b-container class="mt-4">
       <b-row>
         <b-col cols="12" class="text-center">

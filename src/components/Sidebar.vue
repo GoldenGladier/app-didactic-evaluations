@@ -36,7 +36,7 @@ export default {
         { id: 4, text: 'Unirse', icon: 'play', link: '/unirse' },
         { id: 5, text: 'Nosotros', icon: 'people', link: '/about' },
         { id: 6, text: 'Login', icon: 'door-open', link: '/login' },
-        { id: 6, text: 'UI', icon: 'code-slash', link: '/testingUi' },
+        { id: 7, text: 'UI', icon: 'code-slash', link: '/testingUi' },
         
         // Agrega más ítems aquí según tu necesidad
       ]
@@ -51,6 +51,7 @@ export default {
     toggleCollapse() {
       this.sidebarCollapsed = !this.sidebarCollapsed;
       this.$emit( 'update:sidebarWidth', this.sidebarWidth );
+      console.log(this.sidebarWidth)
     },
     isActive(route) {
       return this.$route.path === route;
@@ -74,7 +75,7 @@ export default {
   margin: 0.5rem;
   margin-right: 0;
 
-  background-color: #FBA834;
+  background-color: #EE6F57;
   color: #F6F5F5;
   position: fixed;
   top: 0;
@@ -107,6 +108,7 @@ export default {
 
 .sidebar .custom-nav-item a:hover {
   background-color: #FDBF60;
+  background-color: #e7a399;
   border-radius: 0.4rem;
   color: #F6F5F5;
   padding: auto 1rem;
@@ -114,6 +116,7 @@ export default {
 
 .sidebar .custom-nav-item.active a {
   background-color: #FDBF60;
+  background-color: #CC6F60;
   border-radius: 0.4rem;
   color: #F6F5F5;
   padding: auto 1rem;
