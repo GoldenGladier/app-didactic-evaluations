@@ -13,10 +13,22 @@
         <hr class="custom-hr">
 
         <b-nav vertical class="custom-vertical-nav">
-          <b-nav-item v-for="item in items" :key="item.id" :to="item.link" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
-            <b-icon :icon="item.icon" class="sidebar-icon"></b-icon>
-            <span v-if="!sidebarCollapsed" class="sidebar-text">{{ item.text }}</span>
-          </b-nav-item>
+          <template v-for="(item, index) in items">
+            <template v-if="item.isExternalLink">
+              <li :key="index" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
+                <a :href="item.link" class="nav-link" target="_blank">
+                  <b-icon :icon="item.icon" class="sidebar-icon"></b-icon>
+                  <span v-if="!sidebarCollapsed" class="sidebar-text">{{ item.text }}</span>
+                </a>
+              </li>
+            </template>      
+            <template v-else>      
+              <b-nav-item :key="index" :to="item.link" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
+                <b-icon :icon="item.icon" class="sidebar-icon"></b-icon>
+                <span v-if="!sidebarCollapsed" class="sidebar-text">{{ item.text }}</span>
+              </b-nav-item>
+            </template>
+          </template>
         </b-nav>
       </ul>
     </div>
@@ -30,13 +42,16 @@ export default {
       sidebarCollapsed: false,
       sidebarFullWidth: 'calc(250px - 0.5rem)',
       items: [
-        { id: 1, text: 'Inicio', icon: 'house-door', link: '/home' },
-        { id: 2, text: 'Mis evaluaciones', icon: 'card-checklist', link: '/mis-evaluaciones' },
-        { id: 3, text: 'Crear evaluación', icon: 'plus-circle', link: '/crear-evaluacion' },
-        { id: 4, text: 'Unirse', icon: 'play', link: '/unirse' },
-        { id: 5, text: 'Nosotros', icon: 'people', link: '/about' },
-        { id: 6, text: 'Login', icon: 'door-open', link: '/login' },
-        { id: 7, text: 'UI', icon: 'code-slash', link: '/testingUi' },
+        { text: 'Inicio', icon: 'house-door', link: '/home' },
+        { text: 'Mis evaluaciones', icon: 'card-checklist', link: '/mis-evaluaciones' },
+        { text: 'Crear evaluación', icon: 'plus-circle', link: '/crear-evaluacion' },
+        { text: 'Unirse', icon: 'play', link: '/unirse' },
+        { text: 'Nosotros', icon: 'people', link: '/about' },
+        { text: 'Login', icon: 'door-open', link: '/login' },
+        { text: 'Registrarse', icon: 'person-plus', link: '/checkin' },
+        { text: 'Unirse a actividad', icon: 'star', link: '/join-to-activity' },        
+        { text: 'UI', icon: 'code-slash', link: '/testingUi' },
+        { text: 'Icons', icon: 'suit-heart', link: 'https://icons.getbootstrap.com', isExternalLink: true },
         
         // Agrega más ítems aquí según tu necesidad
       ]
