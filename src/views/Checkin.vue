@@ -15,7 +15,26 @@
               ></b-form-input>
             </b-form-group>
 
-            <b-form-group label="Apellidos" label-for="apellidos">
+            <b-form-group label="Apellido Paterno" label-for="apellidoPaterno">
+              <b-form-input
+                id="apellidoPaterno"
+                type="text"
+                v-model="apellidos"                
+                placeholder="Ingrese su apellido paterno"
+                required
+              ></b-form-input>
+            </b-form-group>
+
+            <b-form-group label="Apellido Materno" label-for="apellidoMaterno">
+              <b-form-input
+                id="apellidoMaterno"
+                type="text"
+                v-model="apellidos"                
+                placeholder="Ingrese su apellido materno"
+                required
+              ></b-form-input>
+            </b-form-group>            
+            <!-- <b-form-group label="Apellidos" label-for="apellidos">
               <b-form-input
                 id="apellidos"
                 type="text"
@@ -23,7 +42,7 @@
                 placeholder="Ingrese sus apellidos"
                 required
               ></b-form-input>
-            </b-form-group>
+            </b-form-group> -->
 
             <b-form-group label="Correo electrónico" label-for="email" >
               <b-form-input
