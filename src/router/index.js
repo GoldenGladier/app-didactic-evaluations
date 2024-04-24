@@ -6,6 +6,7 @@ import Login from '@/views/Login.vue'
 import Checkin from '@/views/Checkin.vue'
 import TestingUi from '@/views/TestingUi.vue'
 import JoinToAssessment from '@/views/JoinToAssessment.vue'
+import MisEvaluaciones from '@/views/MisEvaluaciones.vue'
 
 
 Vue.use(Router)
@@ -46,7 +47,12 @@ export default new Router({
             path: '/join-to-activity',
             name: 'JoinToAssessment',
             component: JoinToAssessment
-        },                
+        },
+        {
+            path: '/mis-evaluaciones',
+            name: 'MisEvaluaciones',
+            component: MisEvaluaciones
+        }                    
         // Puedes añadir más rutas aquí
     ]
 })
