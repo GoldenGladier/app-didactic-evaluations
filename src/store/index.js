@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import sidebar from './sidebar';
+import auth from './auth.js'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
-        sidebar,    
+        auth,
     },    
     state: {
         // Aquí van las variables de estado
