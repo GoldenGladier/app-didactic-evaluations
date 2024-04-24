@@ -52,6 +52,7 @@ export default {
         { text: 'Unirse a actividad', icon: 'star', link: '/join-to-activity' },        
         { text: 'UI', icon: 'code-slash', link: '/testingUi' },
         { text: 'Icons', icon: 'suit-heart', link: 'https://icons.getbootstrap.com', isExternalLink: true },
+        { text: 'MisEvaluaciones', icon: 'code-slash', link: '/mis-evaluaciones' },
         
         // Agrega más ítems aquí según tu necesidad
       ]
