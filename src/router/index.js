@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { isLoggedIn } from '@/store/auth.js'
+
 import Home from '@/views/Home.vue' 
 import About from '@/views/About.vue'
 import Login from '@/views/Login.vue'
@@ -11,7 +13,7 @@ import MisEvaluaciones from '@/views/MisEvaluaciones.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     routes: [
         {
@@ -46,7 +48,10 @@ export default new Router({
         {
             path: '/join-to-activity',
             name: 'JoinToAssessment',
-            component: JoinToAssessment
+            component: JoinToAssessment,
+            meta: {
+                requiresAuth: true // Esta meta indica que esta ruta requiere autenticación
+            }            
         },
         {
             path: '/mis-evaluaciones',
@@ -56,3 +61,14 @@ export default new Router({
         // Puedes añadir más rutas aquí
     ]
 })
+
+// Guardia de navegación para verificar la autenticación
+router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth && !isLoggedIn()) { // Verificar si la ruta requiere autenticación y el usuario no está autenticado
+      next('/login'); // Redirigir al usuario al login
+    } else {
+      next(); // Continuar con la navegación
+    }
+});
+
+export default router;

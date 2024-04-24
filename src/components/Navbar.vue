@@ -5,18 +5,24 @@
       <b-navbar-brand href="#">Mi aplicación</b-navbar-brand>      
     </div>
 
-    <b-collapse id="navbarSupportedContent" class="custom-extra-options" is-nav>
+    <b-collapse  id="navbarSupportedContent" class="custom-extra-options" is-nav>
       <b-navbar-nav class="ml-auto">
-        <b-nav-item-dropdown >
+        <b-nav-item-dropdown v-if="isLoggedIn">
           <template #button-content>
             <div class="d-flex align-items-center custom-user-opcions">
-              <span class="username">User name</span>
+              <span class="username">{{ username }}</span>
               <!-- <img src="ruta-a-la-imagen-del-usuario" alt="Foto de perfil" class="user-avatar"> -->
               <b-icon icon="person" class="user-avatar"></b-icon>
             </div>
           </template>
-          <b-dropdown-item >Cerrar sesión</b-dropdown-item>
-          <b-dropdown-item >Configurar usuario</b-dropdown-item>
+          <b-dropdown-item @click="logout()">            
+            <b-icon icon="door-closed" class="sidebar-icon"></b-icon>
+            <span class="sidebar-text">Cerrar sesión</span>              
+          </b-dropdown-item>    
+          <b-dropdown-item >            
+            <b-icon icon="person-fill" class="sidebar-icon"></b-icon>
+            <span class="sidebar-text">Configurar usuario</span>              
+          </b-dropdown-item>              
         </b-nav-item-dropdown>
 
         <!-- <b-dropdown id="dropdown-dropleft" dropleft offset="-35" text="Drop-Left" variant="primary" class="ml-1">
@@ -32,8 +38,35 @@
 </template>
 
 <script>
+import store from '@/store/auth';
+
 export default {
   name: 'Navbar',
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.auth.isLoggedIn;
+    },
+    user() {
+      console.log("Leyendo al user: ", this.$store.state.auth.user)
+      return this.$store.state.auth.user;
+    },
+    username() {
+      return this.user.nombre + ' ' + this.user.apellido_paterno + ' ' + (this.user.apellido_materno ? this.user.apellido_materno : '')
+    }
+  },
+  methods: {
+    logout() {
+      console.log("Close sesion")
+      store.commit('logout');   
+      if(this.$route.path !== '/login') {
+        this.$router.push('/login');
+      }
+    }
+  },  
+  created() {
+    console.log("localStorage.getItem('token'): ", localStorage.getItem('token'))
+    console.log("localStorage.getItem('user'): ", localStorage.getItem('user'))
+  }, 
 };
 </script>
 
@@ -65,6 +98,12 @@ export default {
 
 .custom-user-opcions {
   color: #F6F5F5;
+}
+
+.custom-extra-options .sidebar-icon{
+  color: var(--secondary-color);
+  margin: initial;
+  margin-right: 0.5rem;
 }
 
 .username {
