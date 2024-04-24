@@ -1,30 +1,27 @@
 <template>
-
-    <div class="container">
-        <h1 class="text-center mb-3"> Mis Evaluaciones</h1>
-        <div class="search-container">
-      <!-- Barra de búsqueda -->
-        <SearchBar @search="performSearch" />
-        </div>
-            <div class="result-container">
-            <div v-for="item in filteredItems" :key="item.id" class="evaluacion-container"> 
-                <h3>{{ item.name }}</h3>
-                <p><strong>ID:</strong> {{ item.id }}</p>
-                <div class="button-container">
-                   
-                    <b-button @click="viewDetails(item)" variant="info" class="mt-2">Ver Detalles</b-button>
-                    <b-button @click="editItem(item)" variant="primary" class="mt-2">Editar</b-button>
-                    <b-button @click="removeItem(item)" variant="danger" class="mt-2">Eliminar</b-button>
-                </div>
-            </div>
-            </div>
+  <div class="container">
+    <h1 class="text-center mb-3"> Mis Evaluaciones</h1>
+    <div class="search-container">
+    <!-- Barra de búsqueda -->
+    <SearchBar @search="performSearch" />
     </div>
+        <div class="result-container">
+        <div v-for="item in filteredItems" :key="item.id" class="evaluacion-container"> 
+            <h3>{{ item.name }}</h3>
+            <p><strong>ID:</strong> {{ item.id }}</p>
+            <div class="button-container">
+                
+                <b-button @click="viewDetails(item)" variant="info" class="mt-2">Ver Detalles</b-button>
+                <b-button @click="editItem(item)" variant="primary" class="mt-2">Editar</b-button>
+                <b-button @click="removeItem(item)" variant="danger" class="mt-2">Eliminar</b-button>
+            </div>
+        </div>
+      </div>
+  </div>
 </template>
-
   
-  
-  <script>
-  import SearchBar from 'C:/Users/52554/Downloads/app-didactic-evaluations-master/app-didactic-evaluations-master/src/components/SearchBar.vue';
+<script>
+import SearchBar from '@/components/SearchBar.vue';
   
   export default {
     components: {

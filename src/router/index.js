@@ -8,7 +8,7 @@ import Login from '@/views/Login.vue'
 import Checkin from '@/views/Checkin.vue'
 import TestingUi from '@/views/TestingUi.vue'
 import JoinToAssessment from '@/views/JoinToAssessment.vue'
-import MisEvaluaciones from '@/views/MisEvaluaciones.vue'
+import MyEvaluations from '@/views/MyEvaluations.vue'
 
 
 Vue.use(Router)
@@ -55,8 +55,8 @@ const router = new Router({
         },
         {
             path: '/mis-evaluaciones',
-            name: 'MisEvaluaciones',
-            component: MisEvaluaciones
+            name: 'MyEvaluations',
+            component: MyEvaluations
         }                    
         // Puedes añadir más rutas aquí
     ]

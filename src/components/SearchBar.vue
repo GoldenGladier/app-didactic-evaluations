@@ -1,32 +1,32 @@
 <template>
-    <div>
-      <input
-        type="text"
-        v-model="searchQuery"
-        placeholder="Search"
-        @input="handleSearch"
-        class="round-input"
-      />
-    </div>
-  </template>
+  <div class="search-bar-container">
+    <input
+      type="text"
+      v-model="searchQuery"
+      placeholder="Search"
+      @input="handleSearch"
+      class="round-input"
+    />
+  </div>
+</template>
   
-  <script>
-  export default {
-    data() {
-      return {
-        searchQuery: ''
-      };
-    },
-    methods: {
-      handleSearch() {
-        // Emitir un evento con el término de búsqueda
-        this.$emit('search', this.searchQuery);
-      }
+<script>
+export default {
+  data() {
+    return {
+      searchQuery: ''
+    };
+  },
+  methods: {
+    handleSearch() {
+      // Emitir un evento con el término de búsqueda
+      this.$emit('search', this.searchQuery);
     }
-  };
-  </script>
+  }
+};
+</script>
   
-  <style scoped>
+<style scoped>
   /* Estilos para el campo de búsqueda redondo */
   .round-input {
     padding: 8px;
@@ -40,5 +40,5 @@
   div {
     text-align: center; /* Alineación centrada del campo de búsqueda */
   }
-  </style>
+</style>
   
