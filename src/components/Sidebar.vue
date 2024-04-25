@@ -48,7 +48,7 @@ export default {
         { text: 'Unirse', icon: 'play', link: '/unirse' },
         { text: 'Nosotros', icon: 'people', link: '/about' },
         { text: 'Login', icon: 'door-open', link: '/login' },
-        { text: 'Registrarse', icon: 'person-plus', link: '/checkin' },
+        { text: 'Registrarse', icon: 'person-plus', link: '/register' },
         { text: 'Unirse a actividad', icon: 'star', link: '/join-to-activity' },        
         { text: 'UI', icon: 'code-slash', link: '/testingUi' },
         { text: 'Icons', icon: 'suit-heart', link: 'https://icons.getbootstrap.com', isExternalLink: true },
