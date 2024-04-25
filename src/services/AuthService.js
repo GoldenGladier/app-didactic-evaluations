@@ -1,7 +1,7 @@
 import axios from 'axios';
 import store from '@/store/auth';
 
-const API_URL = 'http://localhost:3001/lerner/user';
+const API_URL = process.env.VUE_APP_API_URL + '/user';
 
 class AuthService {
   async login(credentials) {
@@ -10,9 +10,7 @@ class AuthService {
         const token = response.data.token;
         const user = response.data.user;
 
-        // Guardar el token en Vuex y localStorage
         store.commit('setToken', token);
-        // Guardar los datos del usuario en Vuex y localStorage
         store.commit('setUser', user);
         console.log("user en el servicio: ", user)
 
@@ -22,9 +20,9 @@ class AuthService {
     }
   }
 
-  async register(userInfo) {
+  async register(newUserInfo) {
     try {
-      const response = await axios.post(`${API_URL}/signup`, userInfo);
+      const response = await axios.post(`${API_URL}/signup`, newUserInfo);
       return response.data;
     } catch (error) {
       throw error.response.data.message;

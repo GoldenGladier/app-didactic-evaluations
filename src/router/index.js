@@ -5,7 +5,7 @@ import { isLoggedIn } from '@/store/auth.js'
 import Home from '@/views/Home.vue' 
 import About from '@/views/About.vue'
 import Login from '@/views/Login.vue'
-import Checkin from '@/views/Checkin.vue'
+import Register from '@/views/Register.vue'
 import TestingUi from '@/views/TestingUi.vue'
 import JoinToAssessment from '@/views/JoinToAssessment.vue'
 import MyEvaluations from '@/views/MyEvaluations.vue'
@@ -41,9 +41,9 @@ const router = new Router({
             component: TestingUi
         },   
         {
-            path: '/checkin',
-            name: 'Checkin',
-            component: Checkin
+            path: '/register',
+            name: 'Register',
+            component: Register
         },                                    
         {
             path: '/join-to-activity',
