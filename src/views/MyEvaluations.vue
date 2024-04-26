@@ -91,6 +91,34 @@ b-button {
 p {
   margin-bottom: 5px;
 }
+.search-container {
+    margin-bottom: 20px;
+  }
+
+.container {
+    background: #FFFFFF;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 0.4rem;
+     box-shadow: 0 4px 24px 0 rgba(34,41,47, 0.15);
+  }
+
+.result-container {
+    display: flex;
+    justify-content: flex-start; /* Alinea los contenedores de elementos al inicio */
+    flex-wrap: wrap; /* para que quepan todos en lo ancho */
+  }
+  
+  .evaluacion-container {
+    width: 300px; /* ancho de cada contenedor  */
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: left;
+  }
   </style>
   
 
