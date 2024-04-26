@@ -10,7 +10,7 @@ import ConfirmEmail from '@/views/ConfirmEmail.vue'
 import TestingUi from '@/views/TestingUi.vue'
 import JoinToAssessment from '@/views/JoinToAssessment.vue'
 import MyEvaluations from '@/views/MyEvaluations.vue'
-
+import CreateEvaluation from '@/views/CreateEvaluation.vue'  
 
 Vue.use(Router)
 
@@ -63,7 +63,12 @@ const router = new Router({
             path: '/mis-evaluaciones',
             name: 'MyEvaluations',
             component: MyEvaluations
-        }                    
+        }            
+        ,{
+            path: '/crear-evaluacion',
+            name: 'CreateEvaluation',
+            component: CreateEvaluation
+        }           
         // Puedes añadir más rutas aquí
     ]
 })
