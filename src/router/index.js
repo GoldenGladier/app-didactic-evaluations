@@ -6,6 +6,7 @@ import Home from '@/views/Home.vue'
 import About from '@/views/About.vue'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
+import ConfirmEmail from '@/views/ConfirmEmail.vue'
 import TestingUi from '@/views/TestingUi.vue'
 import JoinToAssessment from '@/views/JoinToAssessment.vue'
 import MyEvaluations from '@/views/MyEvaluations.vue'
@@ -44,7 +45,12 @@ const router = new Router({
             path: '/register',
             name: 'Register',
             component: Register
-        },                                    
+        },  
+        {
+            path: '/confirm-email/:token?',
+            name: 'ConfirmEmail',
+            component: ConfirmEmail
+        },                                             
         {
             path: '/join-to-activity',
             name: 'JoinToAssessment',

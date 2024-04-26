@@ -3,7 +3,7 @@
     <b-overlay :show="isLoading" class="width-100">      
       <b-container class="login-form custom-card-box">  
         <b-row class="justify-content-center">
-          <b-col cols="12" sm="8" >
+          <b-col cols="12" sm="10" >
             <h2 class="text-center mb-3">Iniciar sesión</h2>
             <b-form @submit.prevent="login">
               <b-form-group label="Correo electrónico" label-for="email" class="mt-1">
@@ -28,9 +28,20 @@
 
               <b-button type="submit" variant="primary" class="mt-2" block>Iniciar sesión</b-button>
             </b-form>
-              <hr class="my-4">
+              
+            <hr class="my-4">
 
-            <h3 class="custom-text-info">Recuperar contraseña</h3>
+            <RouterLink to="user/reset-password">
+              <div class="custom-text-info">
+                <b-icon icon="key-fill" class="icon-text-info"></b-icon> Recuperar contraseña
+              </div>
+            </RouterLink>       
+            <h3 class="mt-2 custom-text-info">
+              ¿No tienes una cuenta?              
+              <RouterLink to="register">
+                  <b-icon icon="person-plus-fill" class="icon-text-info"></b-icon> Registrate
+              </RouterLink>    
+            </h3>     
           </b-col>
         </b-row>
       </b-container>
@@ -101,9 +112,19 @@ export default {
 }
 
 .custom-text-info {
-  color: black; /* Color del texto */
-  text-decoration: underline; /* Subrayado */
-  font-style: italic; /* Itálico */
-  font-size: 14px; /* Tamaño del texto */
+  color: black; 
+  font-style: italic; 
+  font-size: 14px; 
+}
+a .custom-text-info {
+  color: var(--primary-color);
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.icon-text-info {
+  font-size: 17px;
 }
 </style>

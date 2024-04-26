@@ -29,6 +29,14 @@ class AuthService {
     }
   }
 
+  async confirmEmail(token) {
+    try {
+      const response = await axios.get(`${API_URL}/confirmEmail/${token}`);
+      return response.data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
+  }
 }
 
 export default new AuthService();

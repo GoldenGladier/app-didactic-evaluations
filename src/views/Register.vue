@@ -3,7 +3,7 @@
     <b-overlay :show="isLoading" class="width-100">      
       <b-container class="login-form custom-card-box">
         <b-row class="justify-content-center">
-          <b-col cols="12" sm="8" >
+          <b-col cols="12" sm="10" >
             <h2 class="text-center mb-3">Crear cuenta</h2>
             <b-form @submit.prevent="register()">
               <b-form-group label="Nombre" label-for="nombre">
@@ -76,6 +76,15 @@
               </b-form-group>            
 
               <b-button type="submit" variant="primary" class="mt-2 mb-3" block>Registrarse</b-button>
+
+              <hr class="my-4">
+
+              <h3 class="mt-2 custom-text-info">
+                ¿Ya tienes una cuenta?              
+                <RouterLink to="login">
+                    <b-icon icon="door-open-fill" class="icon-text-info"></b-icon> Inicia sesión
+                </RouterLink>    
+              </h3>                 
             </b-form>
           </b-col>
         </b-row>
@@ -105,7 +114,7 @@ export default {
       let bothSurnames = apellidos.split(' ');
 
       let fathersLastname = bothSurnames[0]
-      let mothersLastname = bothSurnames.length > 1 ? bothSurnames[1] : null;
+      let mothersLastname = bothSurnames.length > 1 ? bothSurnames[1] : '';
 
       let newUserData = {
         name: this.nombre,
@@ -172,9 +181,19 @@ label {
 }
 
 .custom-text-info {
-  color: black; /* Color del texto */
-  text-decoration: underline; /* Subrayado */
-  font-style: italic; /* Itálico */
-  font-size: 14px; /* Tamaño del texto */
+  color: black; 
+  font-style: italic; 
+  font-size: 14px; 
+}
+a .custom-text-info {
+  color: var(--primary-color);
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.icon-text-info {
+  font-size: 17px;
 }
 </style>
