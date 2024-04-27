@@ -1,9 +1,34 @@
 <template>
-  <div class="container">
+  <b-container class="custom-master-container">
     <h1 class="text-center mb-3"> Mis Evaluaciones</h1>
     <div class="search-container">
     <!-- Barra de búsqueda -->
-    <SearchBar @search="performSearch" />
+    <SearchBar @search="performSearch" class="mb-2"/>
+    <!-- <b-container> -->
+      <b-row>
+        <b-col v-for="item in filteredItems" :key="item.id" class="evaluacion-container">
+          <div>
+            <b-img :src="require('@/assets/default-image.png')" alt="activity-img" class="custom-img mb-3"></b-img>            
+            <h3 class="text-center">{{ item.name }}</h3>
+            <!-- <p><strong>ID:</strong> {{ item.id }}</p> -->
+            <div class="button-container">                
+                <b-button @click="viewDetails(item)" variant="info" class="mt-2">
+                  <b-icon icon="eye"></b-icon>
+                  Ver
+                </b-button>
+                <b-button @click="editItem(item)" variant="primary" class="mt-2">
+                  <b-icon icon="pen"></b-icon>
+                  Editar
+                </b-button>
+                <b-button @click="removeItem(item)" variant="danger" class="mt-2">
+                  <b-icon icon="trash"></b-icon>
+                  Eliminar
+                </b-button>
+            </div>
+          </div>
+        </b-col>
+      </b-row>
+    <!-- </b-container> -->
     </div>
         <div class="result-container">
         <div v-for="item in filteredItems" :key="item.id" class="evaluacion-container"> 
@@ -17,7 +42,7 @@
             </div>
         </div>
       </div>
-  </div>
+  </b-container>
 </template>
   
 <script>
@@ -59,13 +84,12 @@ import SearchBar from '@/components/SearchBar.vue';
     mounted() {
       // PRUEBA
       this.items = [
-        { id: 1, name: 'Evaluacion A' },
-        { id: 2, name: 'Evaluacion B' },
-        { id: 3, name: 'Evaluacion C' },
-        { id: 4, name: 'examen 6' },
-        { id: 5, name: 'tarea 8' },
-        { id: 6, name: 'Evaluacion 9' }
-        
+        { id: 1, name: 'Evaluacion A', imgUrl: '@/assets/good-email.png' },
+        { id: 2, name: 'Evaluacion B', imgUrl: '@/assets/default-image.png' },
+        { id: 3, name: 'Evaluacion C', imgUrl: '@/assets/default-image.png' },
+        { id: 4, name: 'examen 6', imgUrl: '@/assets/default-image.png' },
+        { id: 5, name: 'tarea 8', imgUrl: '@/assets/default-image.png' },
+        { id: 6, name: 'Evaluacion 9', imgUrl: '@/assets/default-image.png' }
       ];
       this.filteredItems = this.items; // Mostrar todos los elementos al inicio
     }
@@ -73,6 +97,11 @@ import SearchBar from '@/components/SearchBar.vue';
   </script>
   
  <style>
+.custom-img {
+  width: 100%;
+  border-radius: 0.4rem;
+}
+
 .button-container {
   margin-top: 15px;
   display: flex;

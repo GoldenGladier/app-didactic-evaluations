@@ -31,7 +31,7 @@
               
             <hr class="my-4">
 
-            <RouterLink to="user/reset-password">
+            <RouterLink to="user/request-reset-password">
               <div class="custom-text-info">
                 <b-icon icon="key-fill" class="icon-text-info"></b-icon> Recuperar contraseña
               </div>

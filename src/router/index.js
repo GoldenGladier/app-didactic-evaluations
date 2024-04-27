@@ -7,6 +7,8 @@ import About from '@/views/About.vue'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 import ConfirmEmail from '@/views/ConfirmEmail.vue'
+import RequestResetPassword from '@/views/user/RequestResetPassword.vue'
+import ResetPassword from '@/views/user/ResetPassword.vue'
 import TestingUi from '@/views/TestingUi.vue'
 import JoinToAssessment from '@/views/JoinToAssessment.vue'
 import MyEvaluations from '@/views/MyEvaluations.vue'
@@ -50,7 +52,17 @@ const router = new Router({
             path: '/confirm-email/:token?',
             name: 'ConfirmEmail',
             component: ConfirmEmail
-        },                                             
+        },           
+        {
+            path: '/user/request-reset-password',
+            name: 'RequestResetPassword',
+            component: RequestResetPassword                        
+        },
+        {
+            path: '/user/reset-password/:token?',
+            name: 'ResetPassword',
+            component: ResetPassword
+        },                                                
         {
             path: '/join-to-activity',
             name: 'JoinToAssessment',
