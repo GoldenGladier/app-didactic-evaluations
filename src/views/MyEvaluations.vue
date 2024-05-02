@@ -96,7 +96,7 @@ import SearchBar from '@/components/SearchBar.vue';
   };
   </script>
   
- <style>
+ <style scoped>
 .custom-img {
   width: 100%;
   border-radius: 0.4rem;

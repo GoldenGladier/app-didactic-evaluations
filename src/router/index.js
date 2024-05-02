@@ -13,6 +13,7 @@ import TestingUi from '@/views/TestingUi.vue'
 import JoinToAssessment from '@/views/JoinToAssessment.vue'
 import MyEvaluations from '@/views/MyEvaluations.vue'
 import CreateEvaluation from '@/views/CreateEvaluation.vue'  
+import ActivityView from '@/views/ActivityView.vue'  
 
 Vue.use(Router)
 
@@ -80,7 +81,12 @@ const router = new Router({
             path: '/crear-evaluacion',
             name: 'CreateEvaluation',
             component: CreateEvaluation
-        }           
+        },
+        {
+            path: '/activity',
+            name: 'ActivityView',
+            component: ActivityView
+        },                                
         // Puedes añadir más rutas aquí
     ]
 })
