@@ -3,8 +3,8 @@
     <div :class="{ 'sidebar': true, 'collapsed': sidebarCollapsed }">
       <ul class="list-unstyled mb-0">
         <li class="extra-nav-item" >
-          <b-icon icon="triangle-half" class="sidebar-icon"></b-icon>
-          <span v-if="!sidebarCollapsed" class="sidebar-text">Mi Aplicación</span>
+          <AppIcon color="#ffffff" size="25px"/>
+          <span v-if="!sidebarCollapsed" class="sidebar-text">Actividades didácticas</span>
         </li>   
         <li :class="sidebarCollapsed ? 'extra-nav-item' : ''">
           <b-icon @click="toggleCollapse" :icon="sidebarCollapsed ? 'chevron-double-right' : 'chevron-double-left'" class="collapse-icon"></b-icon>    
@@ -36,7 +36,13 @@
 </template>
 
 <script>
+import AppIcon from './navegation/AppIcon.vue';
+import sidebar from '@/store/sidebar';
+
 export default {
+  components: {
+    AppIcon
+  },
   data() {
     return {
       sidebarCollapsed: false,
@@ -64,12 +70,16 @@ export default {
   methods: {
     toggleCollapse() {
       this.sidebarCollapsed = !this.sidebarCollapsed;
+      sidebar.commit("setCollapsed", this.sidebarCollapsed);
       this.$emit( 'update:sidebarWidth', this.sidebarWidth );
       console.log(this.sidebarWidth)
     },
     isActive(route) {
       return this.$route.path === route;
     }
+  },
+  created() {
+    this.sidebarCollapsed = this.$store.state.sidebar.sidebarCollapsed;
   }
 }
 </script>
@@ -112,7 +122,7 @@ export default {
 
 .extra-nav-item {
   padding-top: 2rem;
-  padding-left: 2rem;
+  padding-left: 1rem;
 }
 
 .sidebar .custom-nav-item a {
@@ -157,7 +167,7 @@ export default {
 }
 
 .sidebar-text {
-  margin-left: 10px;
+  margin-left: 5px;
   color: #F6F5F5;
 }
 

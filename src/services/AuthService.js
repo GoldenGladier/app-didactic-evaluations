@@ -22,14 +22,17 @@ class AuthService {
   async validateSession(token) {
     try {
         const response = await axios.get(`${process.env.VUE_APP_API_URL}/session/validateToken/${token}`); 
-
         if(response.status === 401) {
+          console.log("Estoy haciendo logout")
           store.commit('logout'); 
         }
-
         return response.data;
     } catch (error) {
-        throw error.response.data.message;
+      if(error.response.status === 401) { 
+        console.log("Estoy haciendo logout")
+        store.commit('logout'); 
+      }
+      throw error.response.data.message;
     }
   }
 

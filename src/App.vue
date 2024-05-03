@@ -26,8 +26,9 @@ export default {
     };
   }, 
   created() {
+    this.sidebarWidth = this.$store.state.sidebar.sidebarCollapsed ? "calc(60px + 0.5rem)" : "250px"
     document.title = 'Actividades didácticas';
-  }  
+  }    
 }
 </script>
 
@@ -43,6 +44,7 @@ export default {
 
 #app .master-container {
   position: relative;
+  overflow-x: hidden;
   min-height: 100vh;
   padding: 0.5rem;
   transition: margin-left 0.5s ease;

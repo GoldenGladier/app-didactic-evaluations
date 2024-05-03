@@ -9,6 +9,12 @@ $text-color: #F6F5F5;
 @import  'node_modules/bootstrap/scss/bootstrap.scss' ;
 @import  'node_modules/bootstrap-vue/src/index.scss' ;
 
+.custom-actions-button .btn-link {
+    color: #FFFFFF;
+}
+.custom-actions-button:hover .btn-link {
+    color: rgb(228, 228, 228);
+}
 // Estilos para el botón principal
 .btn-primary {
     background-color: $primary-color;
@@ -41,10 +47,25 @@ $text-color: #F6F5F5;
     width: 100%;
 }
 
+h1 {
+    font-size: 24px;
+    font-family: -apple-system, BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";    
+    letter-spacing: -0.5px;
+    font-weight: 400;
+} 
+
+h2, h3, h4 {
+    font-size: 24px;
+    font-family: -apple-system, BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";    
+    letter-spacing: -0.5px;    
+}
 // Contenedor de las vistas
 .custom-master-container {
     max-width: 100% !important;
     padding: 1rem 2rem;
+    position: absolute;
+    min-height: 100%;
+    top: 0;
 }
 // Formularios
 .custom-form {
@@ -63,4 +84,17 @@ $text-color: #F6F5F5;
             text-align: center;
         }
     }    
+}
+
+form {
+    padding: 0 2rem;
+    input{
+        text-align: center;
+    }
+}   
+
+@media (max-width: 768px) {
+    form {
+        padding: 0;
+    }  
 }

@@ -2,12 +2,20 @@
   <b-navbar toggleable="md" type="dark" class="custom-navbar">
     <div class="custom-info-brand">
       <AppIcon color="#ffffff" />
-      <b-navbar-brand href="#">Mi aplicación</b-navbar-brand>      
+      <b-navbar-brand href="#">Actividades didácticas</b-navbar-brand>      
     </div>
 
-    <b-collapse  id="navbarSupportedContent" class="custom-extra-options" is-nav>
+    <b-collapse id="navbarSupportedContent" class="custom-extra-options" is-nav>
       <b-navbar-nav class="ml-auto">
-        <b-nav-item-dropdown v-if="isLoggedIn" class="test-g">
+
+        <b-nav-item v-if="!isLoggedIn" href="/login" class="custom-nav-item d-flex align-items-center">
+          <b-icon icon="door-open" class="sidebar-icon" /> Login
+        </b-nav-item>
+        <b-nav-item v-if="!isLoggedIn" href="/register" class="custom-nav-item d-flex align-items-center">
+          <b-icon icon="person-plus" class="sidebar-icon" /> Registrarse
+        </b-nav-item>
+
+        <b-nav-item-dropdown v-if="isLoggedIn">
           <template #button-content>
             <div class="d-flex align-items-center custom-user-opcions">
               <span class="username">{{ username }}</span>
@@ -91,6 +99,10 @@ export default {
 .custom-navbar {
   background-color: #EE6F57;
   padding: 0.5rem;
+}
+
+.custom-nav-item .nav-link {
+  color: #F6F5F5 !important;
 }
 
 .custom-user-opcions {
