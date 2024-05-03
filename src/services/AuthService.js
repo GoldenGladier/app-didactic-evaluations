@@ -19,6 +19,19 @@ class AuthService {
         throw error.response.data.message;
     }
   }
+  async validateSession(token) {
+    try {
+        const response = await axios.get(`${process.env.VUE_APP_API_URL}/session/validateToken/${token}`); 
+
+        if(response.status === 401) {
+          store.commit('logout'); 
+        }
+
+        return response.data;
+    } catch (error) {
+        throw error.response.data.message;
+    }
+  }
 
   async register(newUserInfo) {
     try {

@@ -1,13 +1,13 @@
 <template>
   <b-navbar toggleable="md" type="dark" class="custom-navbar">
     <div class="custom-info-brand">
-      <b-icon icon="triangle-half" class="sidebar-icon" ></b-icon>
+      <AppIcon color="#ffffff" />
       <b-navbar-brand href="#">Mi aplicación</b-navbar-brand>      
     </div>
 
     <b-collapse  id="navbarSupportedContent" class="custom-extra-options" is-nav>
       <b-navbar-nav class="ml-auto">
-        <b-nav-item-dropdown v-if="isLoggedIn">
+        <b-nav-item-dropdown v-if="isLoggedIn" class="test-g">
           <template #button-content>
             <div class="d-flex align-items-center custom-user-opcions">
               <span class="username">{{ username }}</span>
@@ -19,17 +19,11 @@
             <b-icon icon="door-closed" class="sidebar-icon"></b-icon>
             <span class="sidebar-text">Cerrar sesión</span>              
           </b-dropdown-item>    
-          <b-dropdown-item >            
+          <!-- <b-dropdown-item >            
             <b-icon icon="person-fill" class="sidebar-icon"></b-icon>
             <span class="sidebar-text">Configurar usuario</span>              
-          </b-dropdown-item>              
+          </b-dropdown-item>               -->
         </b-nav-item-dropdown>
-
-        <!-- <b-dropdown id="dropdown-dropleft" dropleft offset="-35" text="Drop-Left" variant="primary" class="ml-1">
-          <b-dropdown-item href="#">Action</b-dropdown-item>
-          <b-dropdown-item href="#">Another action</b-dropdown-item>
-          <b-dropdown-item href="#">Something else here</b-dropdown-item>
-        </b-dropdown>   -->
 
       </b-navbar-nav>
     </b-collapse>
@@ -39,15 +33,18 @@
 
 <script>
 import store from '@/store/auth';
+import AppIcon from './navegation/AppIcon.vue';
 
 export default {
   name: 'Navbar',
+  components: {
+    AppIcon,
+  },
   computed: {
     isLoggedIn() {
       return this.$store.state.auth.isLoggedIn;
     },
     user() {
-      console.log("Leyendo al user: ", this.$store.state.auth.user)
       return this.$store.state.auth.user;
     },
     username() {
@@ -63,10 +60,10 @@ export default {
       }
     }
   },  
-  created() {
-    console.log("localStorage.getItem('token'): ", localStorage.getItem('token'))
-    console.log("localStorage.getItem('user'): ", localStorage.getItem('user'))
-  }, 
+  // created() {
+  //   console.log("localStorage.getItem('token'): ", localStorage.getItem('token'))
+  //   console.log("localStorage.getItem('user'): ", localStorage.getItem('user'))
+  // }, 
 };
 </script>
 
@@ -122,9 +119,9 @@ export default {
   display: none !important;
 }
 
-/* .b-navbar {
-  height: auto !important;
-} */
+.custom-extra-options .dropdown-menu {
+  left: -1rem !important;
+}
 
 .ml-auto {
   margin-left: auto !important;

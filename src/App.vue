@@ -25,6 +25,9 @@ export default {
       sidebarWidth: "250px",
     };
   }, 
+  created() {
+    document.title = 'Actividades didácticas';
+  }  
 }
 </script>
 
