@@ -3,32 +3,42 @@
     <h1 class="text-center mb-3"> Mis Evaluaciones</h1>
     <div class="search-container">
     <!-- Barra de búsqueda -->
-    <SearchBar @search="performSearch" class="mb-2"/>
-    <!-- <b-container> -->
-      <b-row>
-        <b-col v-for="item in filteredItems" :key="item.id" class="evaluacion-container">
-          <div>
-            <b-img :src="require('@/assets/default-image.png')" alt="activity-img" class="custom-img mb-3"></b-img>            
-            <h3 class="text-center">{{ item.name }}</h3>
-            <!-- <p><strong>ID:</strong> {{ item.id }}</p> -->
-            <div class="button-container">                
-                <b-button @click="viewDetails(item)" variant="info" class="mt-2">
-                  <b-icon icon="eye"></b-icon>
-                  Ver
-                </b-button>
-                <b-button @click="editItem(item)" variant="primary" class="mt-2">
-                  <b-icon icon="pen"></b-icon>
-                  Editar
-                </b-button>
-                <b-button @click="removeItem(item)" variant="danger" class="mt-2">
-                  <b-icon icon="trash"></b-icon>
-                  Eliminar
-                </b-button>
+    <SearchBar @search="performSearch" class="mb-3"/>
+
+    <b-container fluid>
+      <b-row class="justify-content-md-center">
+        <b-col v-for="item in filteredItems" :key="item.id" col lg="4" md="6" sm="12">
+          <div class="evaluacion-container">
+            
+            <!-- <b-button @click="editItem(item)" >
+              <b-icon icon="three-dots-vertical"></b-icon>
+            </b-button> -->
+
+            <div>
+              <b-dropdown size="lg"  variant="link" toggle-class="text-decoration-none" class="custom-actions-button" no-caret>
+                <template #button-content>
+                  <b-icon icon="three-dots-vertical"></b-icon><span class="sr-only">Search</span>
+                </template>
+                <b-dropdown-item href="#"><b-icon icon="trash"/> Eliminar</b-dropdown-item>
+              </b-dropdown>
             </div>
+
+            <b-img :src="require('@/assets/default-image.png')" alt="activity-img" class="custom-img"></b-img>            
+            <h3 class="text-center">{{ item.name }}</h3>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+            <div class="button-container">                
+                <b-button @click="editItem(item)" variant="warning" class="custom-button-icon">
+                  <b-icon icon="pen"></b-icon> <span class="button-text">Editar</span>
+                </b-button>
+                <b-button @click="removeItem(item)" variant="primary" class="custom-button-icon">
+                  <b-icon icon="share"></b-icon> <span class="button-text">Compartir</span>
+                </b-button>                
+            </div>            
           </div>
         </b-col>
       </b-row>
-    <!-- </b-container> -->
+    </b-container>
+
     </div>
         <div class="result-container">
         <div v-for="item in filteredItems" :key="item.id" class="evaluacion-container"> 
@@ -96,17 +106,49 @@ import SearchBar from '@/components/SearchBar.vue';
   };
   </script>
   
- <style scoped>
-.custom-img {
-  width: 100%;
-  border-radius: 0.4rem;
-}
+<style scoped>
+  .custom-img {
+    margin-bottom: 1rem;
+    width: 100%;
+    border-radius: 0.4rem;
+  }
 
-.button-container {
-  margin-top: 15px;
-  display: flex;
-  justify-content: space-between; /* Distribuir botones horizontalmente */
-}
+  .evaluacion-container {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.4rem;
+    text-align: center;
+  }
+
+  .button-container {
+    /* margin: 0.5rem; */
+    display: flex;
+    justify-content: space-between; /* Distribuir botones horizontalmente */
+  }
+
+  .custom-actions-button,
+  .custom-actions-button:focus,
+  .custom-actions-button:hover,
+  .custom-actions-button:active{
+    position: absolute;
+    right: 1rem;
+    background: transparent;
+    color: #FFFFFF !important;
+    border: none;
+  }
+
+  .custom-actions-button button.btn-link:hover {
+    color: #FFFFFF !important;
+    background: skyblue;
+  }
+
+  @media (max-width: 768px) {
+    .button-text {
+      display: none;
+    }
+  }
+
 
 /* Estilos para botones */
 b-button {
@@ -140,47 +182,9 @@ p {
     flex-wrap: wrap; /* para que quepan todos en lo ancho */
   }
   
-  .evaluacion-container {
-    width: 300px; /* ancho de cada contenedor  */
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    text-align: left;
-  }
-  </style>
+
+</style>
   
 
 
   
-    <!--
-        <template>
-            Para acceder a la cuenta antes 
-    <div class="custom-card-box">
-      <b-container class="mt-4">
-        <b-row>
-          <b-col cols="12" class="text-center">
-            <h1>Bienvenido a tus evaluaciones</h1>
-            <p>¡Haz clic en el botón para acceder a tu cuenta!</p>
-            <b-button @click="redirectToLogin" variant="primary">Ir a Login</b-button>
-         
-          </b-col>
-        </b-row>
-      </b-container>
-    </div>
-
-    
-
-
-
-  </template>
-  
-  <script>
-  export default {
-    methods: {
-      redirectToLogin() {
-        this.$router.push({ name: 'Login' });
-      }
-    }
-  }
-  </script>-->
