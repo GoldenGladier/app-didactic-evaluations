@@ -49,12 +49,12 @@ export default {
       sidebarFullWidth: 'calc(250px - 0.5rem)',
       items: [
         { text: 'Inicio', icon: 'house-door', link: '/home' },
-        { text: 'Mis evaluaciones', icon: 'card-checklist', link: '/mis-evaluaciones' },
-        { text: 'Crear evaluación', icon: 'plus-circle', link: '/crear-evaluacion' },
+        { text: 'Mis evaluaciones', icon: 'card-checklist', link: '/evaluaciones/mis-evaluaciones' },
+        { text: 'Crear evaluación', icon: 'plus-circle', link: '/evaluaciones/crear-evaluacion' },
         { text: 'Unirse a actividad', icon: 'star', link: '/join-to-activity' },        
-        { text: 'Nosotros', icon: 'people', link: '/about' },
-        { text: 'Login', icon: 'door-open', link: '/login' },
-        { text: 'Registrarse', icon: 'person-plus', link: '/register' },
+        // { text: 'Nosotros', icon: 'people', link: '/about' },
+        // { text: 'Login', icon: 'door-open', link: '/login' },
+        // { text: 'Registrarse', icon: 'person-plus', link: '/register' },
         { text: 'UI', icon: 'code-slash', link: '/testingUi' },
         { text: 'Icons', icon: 'suit-heart', link: 'https://icons.getbootstrap.com', isExternalLink: true },
         

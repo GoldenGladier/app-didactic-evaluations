@@ -15,6 +15,12 @@ $text-color: #F6F5F5;
 .custom-actions-button:hover .btn-link {
     color: rgb(228, 228, 228);
 }
+
+.custom-close-button {
+    background: transparent;
+    color: #ccc;
+    border: initial;
+}
 // Estilos para el botón principal
 .btn-primary {
     background-color: $primary-color;
@@ -92,6 +98,12 @@ form {
         text-align: center;
     }
 }   
+
+.required-label label::after {
+    content: "*";
+    color: red;
+    margin-left: 5px; 
+}
 
 @media (max-width: 768px) {
     form {

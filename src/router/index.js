@@ -11,8 +11,11 @@ import RequestResetPassword from '@/views/user/RequestResetPassword.vue'
 import ResetPassword from '@/views/user/ResetPassword.vue'
 import TestingUi from '@/views/TestingUi.vue'
 import JoinToAssessment from '@/views/JoinToAssessment.vue'
+import EvaluationsLayout from '@/views/EvaluationsLayout.vue'
 import MyEvaluations from '@/views/MyEvaluations.vue'
-import CreateEvaluation from '@/views/CreateEvaluation.vue'  
+import CreateEvaluation from '@/views/activities/CreateEvaluation.vue'  
+import CreateActivities from '@/views/activities/CreateActivities.vue'  
+import EditEvaluation from '@/views/activities/EditEvaluation.vue'  
 import ActivityView from '@/views/ActivityView.vue'  
 
 Vue.use(Router)
@@ -72,16 +75,48 @@ const router = new Router({
                 requiresAuth: true // Esta meta indica que esta ruta requiere autenticación
             }            
         },
+        // {
+        //     path: '/mis-evaluaciones',
+        //     name: 'MyEvaluations',
+        //     component: MyEvaluations
+        // },
+        // {
+        //     path: '/crear-evaluacion',
+        //     name: 'CreateEvaluation',
+        //     component: CreateEvaluation
+        // },
+        // {
+        //     path: 'evaluaciones/:idEvaluation/crear-actividades',
+        //     name: 'CreateActivities',
+        //     component: CreateActivities
+        // },     
+
         {
-            path: '/mis-evaluaciones',
-            name: 'MyEvaluations',
-            component: MyEvaluations
-        }            
-        ,{
-            path: '/crear-evaluacion',
-            name: 'CreateEvaluation',
-            component: CreateEvaluation
-        },
+            path: '/evaluaciones',
+            component: EvaluationsLayout, // Layout específico para la sección de evaluaciones
+            children: [
+              {
+                path: 'mis-evaluaciones',
+                name: 'MyEvaluations',
+                component: MyEvaluations
+              },
+              {
+                path: 'crear-evaluacion',
+                name: 'CreateEvaluation',
+                component: CreateEvaluation
+              },
+              {
+                path: ':idEvaluation/crear-actividades', 
+                name: 'CreateActivities',
+                component: CreateActivities
+              },
+              {
+                path: ':idEvaluation/editar', 
+                name: 'EditEvaluation',
+                component: EditEvaluation
+              },
+            ]
+        },        
         {
             path: '/activity',
             name: 'ActivityView',

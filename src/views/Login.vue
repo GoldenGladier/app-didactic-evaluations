@@ -74,7 +74,7 @@ export default {
       AuthService.login(credentials)
       .then(response => {
         console.log("El login recibio la data: ", response);
-        this.$router.push('/mis-evaluaciones');
+        this.$router.push('/evaluaciones/mis-evaluaciones');
       })
       .catch(error => {
         console.error('Error:', error);

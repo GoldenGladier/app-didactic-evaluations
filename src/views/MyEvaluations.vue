@@ -7,6 +7,14 @@
 
     <b-container fluid>
       <b-row class="justify-content-md-center">
+
+        <b-col v-if="items.length === 0" cols="12" class="mt-5">
+          <h3 class="text-center">Por el momento no tienes evaluaciones disponibles.</h3>
+          <b-button @click="$router.push(`/evaluaciones/crear-evaluacion`)" variant="primary" class="custom-button-icon">
+            <b-icon icon="plus-circle"></b-icon> <span class="button-text">Crear evaluación</span>
+          </b-button>           
+        </b-col>
+
         <b-col v-for="item in filteredItems" :key="item.id" col lg="4" md="6" sm="12">
           <div class="evaluacion-container">
             
@@ -24,10 +32,10 @@
             </div>
 
             <b-img :src="require('@/assets/default-image.png')" alt="activity-img" class="custom-img"></b-img>            
-            <h3 class="text-center">{{ item.name }}</h3>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+            <h3 class="text-center">{{ item.nombre }}</h3>
+            <p>{{ item.descripcion }}</p>
             <div class="button-container">                
-                <b-button @click="editItem(item)" variant="warning" class="custom-button-icon">
+                <b-button @click="$router.push(`/evaluaciones/${item.id_evaluaciones}/editar`)" variant="warning" class="custom-button-icon">
                   <b-icon icon="pen"></b-icon> <span class="button-text">Editar</span>
                 </b-button>
                 <b-button @click="removeItem(item)" variant="primary" class="custom-button-icon">
@@ -40,7 +48,7 @@
     </b-container>
 
     </div>
-        <div class="result-container">
+    <!-- <div class="result-container">
         <div v-for="item in filteredItems" :key="item.id" class="evaluacion-container"> 
             <h3>{{ item.name }}</h3>
             <p><strong>ID:</strong> {{ item.id }}</p>
@@ -51,14 +59,17 @@
                 <b-button @click="removeItem(item)" variant="danger" class="mt-2">Eliminar</b-button>
             </div>
         </div>
-      </div>
+    </div> -->
   </b-container>
 </template>
   
 <script>
+  import EvaluationService from '@/services/EvaluationService';
+
 import SearchBar from '@/components/SearchBar.vue';
   
   export default {
+    name: "MyEvaluations",
     components: {
       SearchBar
     },
@@ -72,7 +83,7 @@ import SearchBar from '@/components/SearchBar.vue';
       performSearch(searchQuery) {
         // Filtra los elementos basados en el término de búsqueda
         this.filteredItems = this.items.filter(item =>
-          item.name.toLowerCase().includes(searchQuery.toLowerCase())
+          item.nombre.toLowerCase().includes(searchQuery.toLowerCase())
         );
       },
       editItem(item) {
@@ -92,16 +103,25 @@ import SearchBar from '@/components/SearchBar.vue';
     }
     },
     mounted() {
-      // PRUEBA
-      this.items = [
-        { id: 1, name: 'Evaluacion A', imgUrl: '@/assets/good-email.png' },
-        { id: 2, name: 'Evaluacion B', imgUrl: '@/assets/default-image.png' },
-        { id: 3, name: 'Evaluacion C', imgUrl: '@/assets/default-image.png' },
-        { id: 4, name: 'examen 6', imgUrl: '@/assets/default-image.png' },
-        { id: 5, name: 'tarea 8', imgUrl: '@/assets/default-image.png' },
-        { id: 6, name: 'Evaluacion 9', imgUrl: '@/assets/default-image.png' }
-      ];
-      this.filteredItems = this.items; // Mostrar todos los elementos al inicio
+      EvaluationService.getAllEvaluationsByAauthenticatedUser()
+      .then(response => {
+        console.log("Evaluaciones del usuario: ", response);
+        this.items = response;
+        this.filteredItems = this.items;
+      })
+      .catch(error => {
+        console.error('Error:', error);  
+      }); 
+
+      // this.items = [
+      //   { id: 1, name: 'Evaluacion A', imgUrl: '@/assets/good-email.png' },
+      //   { id: 2, name: 'Evaluacion B', imgUrl: '@/assets/default-image.png' },
+      //   { id: 3, name: 'Evaluacion C', imgUrl: '@/assets/default-image.png' },
+      //   { id: 4, name: 'examen 6', imgUrl: '@/assets/default-image.png' },
+      //   { id: 5, name: 'tarea 8', imgUrl: '@/assets/default-image.png' },
+      //   { id: 6, name: 'Evaluacion 9', imgUrl: '@/assets/default-image.png' }
+      // ];
+       // Mostrar todos los elementos al inicio
     }
   };
   </script>
