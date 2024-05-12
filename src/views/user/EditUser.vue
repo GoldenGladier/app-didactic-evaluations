@@ -7,7 +7,7 @@
                   <h2 class="text-center mb-3">Editar datos de tu cuenta</h2>
                   <b-form @submit.prevent="editUser()">
 
-                    <b-form-group label="Correo electrónico" label-for="email" class="mb-0">
+                    <b-form-group label="Correo electrónico" label-for="email" class="mb-0 required-label">
                         <b-form-input
                         id="email"
                         type="email"
@@ -23,14 +23,6 @@
                         <span>
                           Correo electrónico no verificado.
                         </span>
-                      <!-- <p class="text-danger">                      
-                        <i class="bi bi-envelope-exclamation" style="font-size: 25pt; display: block;"></i> 
-                        Parece que aún no has verificado tu correo electrónico. Por favor, revisa tu bandeja de entrada (incluyendo la carpeta de spam) para encontrar el correo de verificación. Haz clic en el siguiente botón si necesitas que te lo reenviemos.                      
-                      </p> -->
-                      <!-- <b-button type="submit" variant="warning" class="mt-1 mb-5" >
-                        <i class="bi bi-envelope-arrow-up" ></i>
-                        Reenviar correo de verificación
-                      </b-button> -->
                     </div>
                     <div v-else class="d-flex justify-content-center align-items-center text-success mb-3">
                       <i class="bi bi-envelope-check" style="font-size: 18pt;"></i> 
@@ -39,7 +31,7 @@
                       </span>                                          
                     </div>
 
-                    <b-form-group label="Nombre" label-for="nombre">
+                    <b-form-group label="Nombre" label-for="nombre" class="required-label">
                         <b-form-input
                         id="nombre"
                         type="text"
@@ -49,7 +41,7 @@
                         ></b-form-input>
                     </b-form-group>
 
-                    <b-form-group label="Apellidos" label-for="apellidos">
+                    <b-form-group label="Apellidos" label-for="apellidos" class="required-label">
                         <b-form-input
                         id="apellidos"
                         type="text"
