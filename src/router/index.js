@@ -9,6 +9,7 @@ import Register from '@/views/Register.vue'
 import ConfirmEmail from '@/views/ConfirmEmail.vue'
 import RequestResetPassword from '@/views/user/RequestResetPassword.vue'
 import ResetPassword from '@/views/user/ResetPassword.vue'
+import EditUser from '@/views/user/EditUser.vue'
 import TestingUi from '@/views/TestingUi.vue'
 import JoinToAssessment from '@/views/JoinToAssessment.vue'
 import EvaluationsLayout from '@/views/EvaluationsLayout.vue'
@@ -66,7 +67,12 @@ const router = new Router({
             path: '/user/reset-password/:token?',
             name: 'ResetPassword',
             component: ResetPassword
-        },                                                
+        },                    
+        {
+            path: '/edit-user',
+            name: 'EditUser',
+            component: EditUser
+        },  
         {
             path: '/join-to-activity',
             name: 'JoinToAssessment',
@@ -94,26 +100,41 @@ const router = new Router({
         {
             path: '/evaluaciones',
             component: EvaluationsLayout, // Layout específico para la sección de evaluaciones
+            meta: {
+                requiresAuth: true
+            },            
             children: [
               {
                 path: 'mis-evaluaciones',
                 name: 'MyEvaluations',
-                component: MyEvaluations
+                component: MyEvaluations,
+                meta: {
+                    requiresAuth: true
+                },                  
               },
               {
                 path: 'crear-evaluacion',
                 name: 'CreateEvaluation',
-                component: CreateEvaluation
+                component: CreateEvaluation,
+                meta: {
+                    requiresAuth: true
+                },                       
               },
               {
                 path: ':idEvaluation/crear-actividades', 
                 name: 'CreateActivities',
-                component: CreateActivities
+                component: CreateActivities,
+                meta: {
+                    requiresAuth: true
+                },                  
               },
               {
                 path: ':idEvaluation/editar', 
                 name: 'EditEvaluation',
-                component: EditEvaluation
+                component: EditEvaluation,
+                meta: {
+                    requiresAuth: true
+                },                  
               },
             ]
         },        

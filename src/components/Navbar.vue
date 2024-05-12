@@ -27,10 +27,11 @@
             <b-icon icon="door-closed" class="sidebar-icon"></b-icon>
             <span class="sidebar-text">Cerrar sesión</span>              
           </b-dropdown-item>    
-          <!-- <b-dropdown-item >            
-            <b-icon icon="person-fill" class="sidebar-icon"></b-icon>
-            <span class="sidebar-text">Configurar usuario</span>              
-          </b-dropdown-item>               -->
+          <b-dropdown-item @click="$router.push('/edit-user');" :class="{ 'active': isActive('/edit-user') }">            
+            <!-- <b-icon icon="gear" class="sidebar-icon"></b-icon> -->
+            <i class="bi bi-person-gear"></i>
+            <span class="sidebar-text">Editar usuario</span>              
+          </b-dropdown-item>              
         </b-nav-item-dropdown>
 
       </b-navbar-nav>
@@ -66,7 +67,10 @@ export default {
       if(this.$route.path !== '/login') {
         this.$router.push('/login');
       }
-    }
+    },
+    isActive(route) {
+      return this.$route.path === route;
+    }    
   },  
   // created() {
   //   console.log("localStorage.getItem('token'): ", localStorage.getItem('token'))
@@ -99,6 +103,16 @@ export default {
 .custom-navbar {
   background-color: #EE6F57;
   padding: 0.5rem;
+}
+
+.custom-extra-options .active {
+  background-color: var(--primary);  
+}
+.custom-extra-options .active .sidebar-text, .custom-extra-options .active i{
+  color: #F6F5F5;
+}
+.custom-extra-options .active:hover .sidebar-text, .custom-extra-options .active:hover i{
+  color: var(--text-dark-color);
 }
 
 .custom-nav-item .nav-link {

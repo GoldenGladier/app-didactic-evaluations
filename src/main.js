@@ -5,6 +5,7 @@ import store from './store'
 import AuthService from '@/services/AuthService';
 // import './interceptors/axios'
 import VueSweetalert2 from 'vue-sweetalert2'
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import './styles/app.scss'

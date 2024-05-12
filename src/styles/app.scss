@@ -2,6 +2,7 @@
 $primary-color: #EE6F57;
 $primary: #EE6F57;
 $secondary-color: #1F3C88;
+$text-dark-color: #16181b;
 
 // Textos
 $text-color: #F6F5F5;
@@ -109,4 +110,15 @@ form {
     form {
         padding: 0;
     }  
+}
+
+// Iconos
+i {
+    margin-right: 0.5rem;
+    font-size: 130%;
+}
+
+// Custom styles
+.cursor-pointer {
+    cursor: pointer;
 }
