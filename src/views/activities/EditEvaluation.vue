@@ -11,7 +11,7 @@
                     <DetailsEvaluation :evaluationData="evaluationData" :dinamicsList="dinamicsList" />
                 </b-tab>
                 <b-tab title="Actividades de la evaluación" class="custom-tab-border">
-                    <p>Actividades de la evaluación</p>
+                    <DetailsActivities :evaluationData="evaluationData" :activitiesListData="activitiesListData" />
                 </b-tab>
             </b-tabs>
         </div>
@@ -24,12 +24,14 @@
     
     
 <script>
-    import EvaluationService from '@/services/EvaluationService';
-    import DetailsEvaluation from '@/components/evaluations/DetailsEvaluation.vue';
+  import EvaluationService from '@/services/EvaluationService';
+  import ActivityService from '@/services/ActivityService';
+  import DetailsEvaluation from '@/components/evaluations/DetailsEvaluation.vue';
+  import DetailsActivities from '@/components/evaluations/DetailsActivities.vue';
 
     export default {
       components: {
-        DetailsEvaluation
+        DetailsEvaluation, DetailsActivities
       },
       data() {
         return {        
@@ -37,6 +39,7 @@
           idEvaluation: null,
           evaluationData: null,
           dinamicsList: [],   
+          activitiesListData: [],   
         };
       },
       created() {           
@@ -45,15 +48,20 @@
 
         Promise.all([
           EvaluationService.getEvaluationById(this.idEvaluation),
-          EvaluationService.getDinamics(),                
+          EvaluationService.getDinamics(),      
+          ActivityService.getActivities(this.idEvaluation),          
         ]).then(responses => {
-          const [evaluationResponse, dinamicsResponse] = responses;
+          const [evaluationResponse, dinamicsResponse, activitiesResponse] = responses;
+          console.log("Todos los datos de editar evaluación: ", responses);
 
           console.log("Datos de evaluation: ", evaluationResponse);
           this.evaluationData = evaluationResponse;
 
           console.log("Dinamicas: ", dinamicsResponse);
           this.dinamicsList = dinamicsResponse;
+
+          console.log("Actividades: ", activitiesResponse, typeof activitiesResponse);
+          this.activitiesListData = activitiesResponse;
 
           this.isLoading = false 
         }).catch(error => {

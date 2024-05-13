@@ -69,7 +69,10 @@
 
           </b-row>
           
-          <b-button type="submit" variant="success" class="mt-3" >Guardar cambios</b-button>
+          <b-button type="submit" variant="success" class="mt-2 mb-3">
+            <i class="bi bi-floppy"></i>
+            Guardar cambios
+          </b-button>
 
         </b-form>
     </b-container>
@@ -77,7 +80,7 @@
     
     
 <script>
-// import EvaluationService from '@/services/EvaluationService';
+import EvaluationService from '@/services/EvaluationService';
 
   export default {
       name: "DetailsEvaluation",
@@ -97,7 +100,8 @@
           activationTime: null,
           deactivationDate: null,
           deactivationTime: null,
-          idDinamic: '',   
+          idDinamic: null,   
+          id_evaluaciones: null,
         };
       },
       created() {             
@@ -106,6 +110,18 @@
         }
       },
       methods: {
+        initData() {
+          this.title = this.evaluationData.nombre;
+          this.subtitle = this.evaluationData.subtitulo;
+          this.description = this.evaluationData.descripcion;
+          this.feedback = this.evaluationData.retroalimentacion_activa == 1 ? true : false;
+          this.activationDate = this.evaluationData.fecha_activacion;
+          this.activationTime = this.evaluationData.hora_activacion;
+          this.deactivationDate = this.evaluationData.fecha_desactivacion;
+          this.deactivationTime = this.evaluationData.hora_desactivacion;        
+          this.idDinamic = this.evaluationData.id_dinamica;  
+          this.id_evaluaciones = this.evaluationData.id_evaluaciones;  
+        },        
         update() {
           this.isLoading = true
           let newDataEvaluation = {
@@ -117,33 +133,32 @@
             activationTime: this.activationTime,
             deactivationDate: this.deactivationDate,
             deactivationTime: this.deactivationTime,          
-            idDinamic: this.idDinamic,
+            idDinamic: this.idDinamic.toString(),
           }
           console.log("Se quiere actualizar la evaluación: ", newDataEvaluation);
 
-          // EvaluationService.create(newEvaluation)
-          // .then(response => {
-          //   this.isLoading = false
-          //   console.log("Creando evaluación response.data: ", response);
-          //   let idEvaluation = response.evaluation.id_evaluaciones;
+          EvaluationService.update(this.id_evaluaciones, newDataEvaluation)
+          .then(response => {
+            this.isLoading = false
+            console.log("Creando evaluación response.data: ", response);
           
-          //   this.$swal({
-          //     icon: 'success',
-          //     title: '¡Éxito!',
-          //     text: 'Los cambios en los detalles de la evaluación se guardarón correctamente.',
-          //   }).then(() => {
-          //     this.$router.push(`/evaluaciones/${idEvaluation}/crear-actividades`);
-          //   });                        
-          // })
-          // .catch(error => {
-          //   console.error('Error:', error);
-          //   this.isLoading = false
-          //   this.$swal({
-          //     icon: 'error',
-          //     title: '¡Error!',
-          //     text: error,
-          //   });     
-          // });           
+            this.$swal({
+              icon: 'success',
+              title: '¡Éxito!',
+              text: 'Los cambios en los detalles de la evaluación se guardarón correctamente.',
+            }).then(() => {
+              this.$router.go(0);     
+            });                        
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            this.isLoading = false
+            this.$swal({
+              icon: 'error',
+              title: '¡Error!',
+              text: error,
+            });     
+          });           
         },
         getIcon(clasification) {
           let icon = ''
@@ -159,17 +174,6 @@
 
           return icon
         },       
-        initData() {
-          this.title = this.evaluationData.nombre;
-          this.subtitle = this.evaluationData.subtitulo;
-          this.description = this.evaluationData.descripcion;
-          this.feedback = this.evaluationData.retroalimentacion_activa == 1 ? true : false;
-          this.activationDate = this.evaluationData.fecha_activacion;
-          this.activationTime = this.evaluationData.hora_activacion;
-          this.deactivationDate = this.evaluationData.fecha_desactivacion;
-          this.deactivationTime = this.evaluationData.hora_desactivacion;        
-          this.idDinamic = this.evaluationData.id_dinamica;  
-        }
       },
       watch: {
         evaluationData() {
