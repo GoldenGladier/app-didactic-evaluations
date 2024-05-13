@@ -133,7 +133,7 @@ import EvaluationService from '@/services/EvaluationService';
             activationTime: this.activationTime,
             deactivationDate: this.deactivationDate,
             deactivationTime: this.deactivationTime,          
-            idDinamic: this.idDinamic.toString(),
+            idDinamic: this.idDinamic,
           }
           console.log("Se quiere actualizar la evaluación: ", newDataEvaluation);
 
