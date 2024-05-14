@@ -1,5 +1,6 @@
 <template>
   <b-container class="custom-master-container">
+    <b-overlay :show="isLoading" class="width-100">      
     <h1 class="text-center mb-3"> Mis Evaluaciones</h1>
     <div class="search-container">
     <!-- Barra de búsqueda -->
@@ -27,7 +28,7 @@
                 <template #button-content>
                   <b-icon icon="three-dots-vertical"></b-icon><span class="sr-only">Search</span>
                 </template>
-                <b-dropdown-item href="#"><b-icon icon="trash"/> Eliminar</b-dropdown-item>
+                <b-dropdown-item @click="removeItem(item.id_evaluaciones)"><b-icon icon="trash"/> Eliminar</b-dropdown-item>
               </b-dropdown>
             </div>
 
@@ -38,13 +39,13 @@
                 <b-button @click="$router.push(`/evaluaciones/${item.id_evaluaciones}/editar`)" variant="warning" class="custom-button-icon">
                   <b-icon icon="pen"></b-icon> <span class="button-text">Editar</span>
                 </b-button>
-                <b-button @click="removeItem(item)" variant="primary" class="custom-button-icon">
+                <b-button @click="removeItem(item.id_evaluaciones)" variant="primary" class="custom-button-icon">
                   <b-icon icon="share"></b-icon> <span class="button-text">Compartir</span>
                 </b-button>                
             </div>            
           </div>
         </b-col>
-      </b-row>
+      </b-row>      
     </b-container>
 
     </div>
@@ -60,6 +61,7 @@
             </div>
         </div>
     </div> -->
+    </b-overlay>
   </b-container>
 </template>
   
@@ -75,6 +77,7 @@ import SearchBar from '@/components/SearchBar.vue';
     },
     data() {
       return {
+        isLoading: false,
         items: [], // Aquí va los datos de la base de datos
         filteredItems: []
       };
@@ -96,35 +99,60 @@ import SearchBar from '@/components/SearchBar.vue';
       console.log('Ver detalles de:', item);
       // Aquí puedes implementar la funcionalidad para mostrar detalles del elemento
     },
-    removeItem(item) {
-      // Lógica para eliminar el elemento
-      console.log('Eliminar:', item);
-      // Aquí puedes implementar la funcionalidad para eliminar el elemento de la lista
-    }
-    },
-    mounted() {
-      EvaluationService.getAllEvaluationsByAauthenticatedUser()
-      .then(response => {
-        console.log("Evaluaciones del usuario: ", response);
-        this.items = response;
-        this.filteredItems = this.items;
+    removeItem(id_evaluaciones) {    
+      this.$swal({
+        icon: 'warning',
+        title: '¿Seguro que quieres borrar la evaluación?',
+        text: 'Una vez eliminada la evaluación, esta acción no se puede revertir. ¿Estás seguro de continuar con esta acción?',
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: '<i class="bi bi-trash"></i>Eliminar evaluación',        
+        cancelButtonColor: "#d33",
+        cancelButtonText: '<i class="bi bi-ban"></i>Cancelar' 
       })
-      .catch(error => {
-        console.error('Error:', error);  
-      }); 
-
-      // this.items = [
-      //   { id: 1, name: 'Evaluacion A', imgUrl: '@/assets/good-email.png' },
-      //   { id: 2, name: 'Evaluacion B', imgUrl: '@/assets/default-image.png' },
-      //   { id: 3, name: 'Evaluacion C', imgUrl: '@/assets/default-image.png' },
-      //   { id: 4, name: 'examen 6', imgUrl: '@/assets/default-image.png' },
-      //   { id: 5, name: 'tarea 8', imgUrl: '@/assets/default-image.png' },
-      //   { id: 6, name: 'Evaluacion 9', imgUrl: '@/assets/default-image.png' }
-      // ];
-       // Mostrar todos los elementos al inicio
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.isLoading = true;
+          console.log('Eliminar evaluación:', id_evaluaciones);
+          EvaluationService.delete(id_evaluaciones)
+          .then(response => {
+            console.log("Delete status: ", response);
+            this.$router.go(0);
+          })
+          .catch(error => {
+            console.error('Error:', error);  
+            this.isLoading = false;
+          });        
+        } 
+      });         
     }
-  };
-  </script>
+  },
+  mounted() {
+    this.isLoading = true;
+    EvaluationService.getAllEvaluationsByAauthenticatedUser()
+    .then(response => {
+      console.log("Evaluaciones del usuario: ", response);
+      this.items = response;
+      this.filteredItems = this.items;
+      this.isLoading = false;
+    })
+    .catch(error => {
+      console.error('Error:', error);  
+      this.isLoading = false;
+    }); 
+
+    // this.items = [
+    //   { id: 1, name: 'Evaluacion A', imgUrl: '@/assets/good-email.png' },
+    //   { id: 2, name: 'Evaluacion B', imgUrl: '@/assets/default-image.png' },
+    //   { id: 3, name: 'Evaluacion C', imgUrl: '@/assets/default-image.png' },
+    //   { i: 4, name: 'examen 6', imgUrl: '@/assets/default-image.png' },
+    //   { id: 5, name: 'tarea 8', imgUrl: '@/assets/default-image.png' },
+    //   { id: 6, name: 'Evaluacion 9', imgUrl: '@/assets/default-image.png' }
+    // ];
+      // Mostrar todos los elementos al iniciod
+  }
+};
+</script>
   
 <style scoped>
   .custom-img {

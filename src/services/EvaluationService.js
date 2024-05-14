@@ -1,22 +1,6 @@
-// import axios from 'axios';
 import axios from './axios';
 
 const API_URL = process.env.VUE_APP_API_URL + '/evaluation';
-
-// const axiosInstance = axios.create();
-
-// axiosInstance.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem('token');
-// if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
 
 class EvaluationService {
     async create(evaluationData) {
@@ -43,6 +27,14 @@ class EvaluationService {
             throw error.response.data.message;
         }
     }    
+    async delete(id_evaluaciones) {
+        try {
+            const response = await axios.delete(`${API_URL}/delete/${id_evaluaciones}`);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    }        
     async getAllEvaluationsByAauthenticatedUser() {
         try {
             const response = await axios.get(`${API_URL}/getAllEvaluations`);
