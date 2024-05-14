@@ -147,7 +147,7 @@ import EvaluationService from '@/services/EvaluationService';
               title: '¡Éxito!',
               text: 'Los cambios en los detalles de la evaluación se guardarón correctamente.',
             }).then(() => {
-              this.$router.go(0);     
+              this.$router.replace({ name: 'EditEvaluation', params: { idEvaluation: this.$route.params.idEvaluation, tabId: 'details' } });   
             });                        
           })
           .catch(error => {

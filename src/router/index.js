@@ -129,7 +129,7 @@ const router = new Router({
                 },                  
               },
               {
-                path: ':idEvaluation/editar', 
+                path: ':idEvaluation/editar/:tabId?', 
                 name: 'EditEvaluation',
                 component: EditEvaluation,
                 meta: {

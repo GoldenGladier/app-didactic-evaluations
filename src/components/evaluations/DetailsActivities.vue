@@ -22,7 +22,7 @@
                     @input="markChanges()"
                     required
                   ></b-form-textarea>
-                  <b-button @click="removeActivity(index)" variant="danger" size="sm" class="custom-close-button" v-b-tooltip.hover title="Eliminar actividad">
+                  <b-button @click="removeActivity(activities[index].id_ordenamiento, index)" variant="danger" size="sm" class="custom-close-button" v-b-tooltip.hover title="Eliminar actividad">
                     <b-icon icon="x-lg"></b-icon>
                   </b-button>
                 </div>
@@ -70,12 +70,27 @@
       },
       addNewActivity() {
         const nextQuestionNumber = this.activities.length + 1;
-        this.activities.push({ oracion: '', id_evaluacion: this.evaluationData.id_evaluaciones, num_pregunta: nextQuestionNumber });
+        const idEvaluaciones = this.evaluationData.id_evaluaciones ? this.evaluationData.id_evaluaciones : null
+        this.activities.push({ oracion: '', id_evaluacion: idEvaluaciones, num_pregunta: nextQuestionNumber });
         this.cambiosSinGuardar = true;
       },
-      removeActivity(index) {
-        this.activities.splice(index, 1);
-        this.cambiosSinGuardar = true;
+      removeActivity(id_ordenamiento, index) {
+        this.isLoading = true
+        if(id_ordenamiento){
+          ActivityService.deleteActivityOrderStatement(id_ordenamiento)
+          .then(response => {
+            console.log("Elimine la actividad: ", response);
+            this.$router.replace({ name: 'EditEvaluation', params: { idEvaluation: this.$route.params.idEvaluation, tabId: 'activities' } });     
+          })
+          .catch(error => {
+            console.error('Error al intentar eliminar la actividad:', error);  
+            this.isLoading = false
+          });           
+        }
+        else{
+          this.activities.splice(index, 1);
+          this.isLoading = false
+        }
       },      
       updateActivities(){
         this.isLoading = true;
@@ -102,7 +117,7 @@
           text: 'Las actividades se guardarón correctamente',
         })
         .then(() => {
-          this.$router.go(0);     
+          this.$router.replace({ name: 'EditEvaluation', params: { idEvaluation: this.$route.params.idEvaluation, tabId: 'activities' } });   
         });   
         this.isLoading = false;
       },

@@ -7,10 +7,10 @@
 
         <div>
             <b-tabs fill>
-                <b-tab title="Detalles de la evaluación" class="custom-tab-border" active>
+                <b-tab title="Detalles de la evaluación" class="custom-tab-border" :active="activeTab === 'details'">
                     <DetailsEvaluation :evaluationData="evaluationData" :dinamicsList="dinamicsList" />
                 </b-tab>
-                <b-tab title="Actividades de la evaluación" class="custom-tab-border">
+                <b-tab title="Actividades de la evaluación" class="custom-tab-border" :active="activeTab === 'activities'">
                     <DetailsActivities :evaluationData="evaluationData" :activitiesListData="activitiesListData" />
                 </b-tab>
             </b-tabs>
@@ -36,6 +36,7 @@
       data() {
         return {        
           isLoading: false,
+          activeTab: null,
           idEvaluation: null,
           evaluationData: null,
           dinamicsList: [],   
@@ -44,12 +45,23 @@
       },
       created() {           
         this.isLoading = true  
+        const tabId = this.$route.params.tabId;
+        if (tabId) {
+          this.activeTab = tabId;
+        }        
         this.idEvaluation = this.$route.params.idEvaluation
 
         Promise.all([
           EvaluationService.getEvaluationById(this.idEvaluation),
           EvaluationService.getDinamics(),      
-          ActivityService.getActivities(this.idEvaluation),          
+          ActivityService.getActivities(this.idEvaluation).catch(error => {
+            if (error.message === "No hay actividades asociadas a la evaluación.") {
+              console.log("No hay actividades asociadas a la evaluación.");
+              return []; 
+            } else {
+              throw error;
+            }
+          })     
         ]).then(responses => {
           const [evaluationResponse, dinamicsResponse, activitiesResponse] = responses;
           console.log("Todos los datos de editar evaluación: ", responses);
