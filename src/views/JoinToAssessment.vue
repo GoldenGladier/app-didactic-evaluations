@@ -1,26 +1,32 @@
 <template>
-  <div class="login-container">
-    <b-container class="login-form custom-card-box">
-      <b-row class="justify-content-center">
-        <b-col cols="12" sm="8" >
-          <h2 class="text-center mb-3">Unirse a actividad</h2>
-          <b-form @submit.prevent="joinToAssessment">
-            <b-form-group label="Pin" label-for="pin">
-              <b-form-input
-                id="pin"
-                type="text"
-                v-model="pin"                
-                placeholder="Ingresa el Pin de la actividad"
-                required
-              ></b-form-input>
-            </b-form-group>
+  <b-container class="custom-master-container custom-card-box custom-center-flex">
+    <b-overlay :show="isLoading" class="width-100">   
+      <b-container class="login-form">
+        <b-row class="justify-content-center">
+          <b-col cols="12" sm="8" >
+            <h2 class="text-center mb-3">Unirse a actividad</h2>
+            <b-form @submit.prevent="joinToAssessment">
+              <b-form-group label="Pin" label-for="pin" class="required-label">
+                <b-form-input
+                  id="pin"
+                  type="text"
+                  v-model="pin"                
+                  placeholder="Ingresa el Pin de la actividad"
+                  required
+                ></b-form-input>
+              </b-form-group>
 
-            <b-button type="submit" variant="primary" class="mt-2 mb-2" block>Siguiente</b-button>
-          </b-form>
-        </b-col>
-      </b-row>
-    </b-container>
-  </div>
+              <b-button type="submit" variant="primary" class="mt-2 mb-2" block>Siguiente</b-button>
+            </b-form>
+          </b-col>
+        </b-row>
+      </b-container>      
+
+  <!-- <div class="login-container">
+    
+  </div> -->
+    </b-overlay>
+  </b-container>
 </template>
 
 <script>
@@ -49,7 +55,7 @@ export default {
 }
 
 .login-form {
-  max-width: 400px;
+  max-width: 700px;
   /* width: 100%; */
   /* padding: 20px; */
   border-radius: 5px;  

@@ -34,7 +34,15 @@ class EvaluationService {
         } catch (error) {
             throw error.response.data.message;
         }
-    }        
+    }       
+    async share(id_evaluaciones) {
+        try {
+            const response = await axios.get(`${API_URL}/share/${id_evaluaciones}`);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    }         
     async getAllEvaluationsByAauthenticatedUser() {
         try {
             const response = await axios.get(`${API_URL}/getAllEvaluations`);

@@ -19,10 +19,6 @@
         <b-col v-for="item in filteredItems" :key="item.id" col lg="4" md="6" sm="12">
           <div class="evaluacion-container">
             
-            <!-- <b-button @click="editItem(item)" >
-              <b-icon icon="three-dots-vertical"></b-icon>
-            </b-button> -->
-
             <div>
               <b-dropdown size="lg"  variant="link" toggle-class="text-decoration-none" class="custom-actions-button" no-caret>
                 <template #button-content>
@@ -34,12 +30,13 @@
 
             <b-img :src="require('@/assets/default-image.png')" alt="activity-img" class="custom-img"></b-img>            
             <h3 class="text-center">{{ item.nombre }}</h3>
-            <p>{{ item.descripcion }}</p>
+            <h4 class="text-center">{{ item.subtitulo }}</h4>            
+            <p class="pl-1 pr-1">{{ item.descripcion }}</p>
             <div class="button-container">                
                 <b-button @click="$router.push(`/evaluaciones/${item.id_evaluaciones}/editar`)" variant="warning" class="custom-button-icon">
                   <b-icon icon="pen"></b-icon> <span class="button-text">Editar</span>
                 </b-button>
-                <b-button @click="removeItem(item.id_evaluaciones)" variant="primary" class="custom-button-icon">
+                <b-button @click="shareEvaluation(item.id_evaluaciones)" variant="primary" class="custom-button-icon">
                   <b-icon icon="share"></b-icon> <span class="button-text">Compartir</span>
                 </b-button>                
             </div>            
@@ -62,29 +59,39 @@
         </div>
     </div> -->
     </b-overlay>
+    <b-modal v-model="shareEvaluationModal" hide-footer centered>
+      <template #modal-header="{close}">
+        <h5 class="modal-title"><i class="bi bi-share-fill"></i> Compartir evaluación</h5>
+        <button type="button" aria-label="Close" class="close" @click="close()">×</button>
+      </template> 
+
+      <ShareEvaluationModal :shareEvaluationId="shareEvaluationId" />      
+    </b-modal>
   </b-container>
 </template>
   
 <script>
-  import EvaluationService from '@/services/EvaluationService';
+import EvaluationService from '@/services/EvaluationService';
 
 import SearchBar from '@/components/SearchBar.vue';
+import ShareEvaluationModal from '@/components/evaluations/ShareEvaluationModal.vue';
   
   export default {
     name: "MyEvaluations",
     components: {
-      SearchBar
+      SearchBar, ShareEvaluationModal
     },
     data() {
       return {
         isLoading: false,
         items: [], // Aquí va los datos de la base de datos
-        filteredItems: []
+        filteredItems: [],
+        shareEvaluationModal: false,
+        shareEvaluationId: null,
       };
     },
     methods: {
       performSearch(searchQuery) {
-        // Filtra los elementos basados en el término de búsqueda
         this.filteredItems = this.items.filter(item =>
           item.nombre.toLowerCase().includes(searchQuery.toLowerCase())
         );
@@ -93,39 +100,44 @@ import SearchBar from '@/components/SearchBar.vue';
       // Lógica para agregar el elemento al carrito de compras
       console.log('Edita la evaluacion:', item);
       // Aquí puedes implementar la funcionalidad para agregar el elemento al carrito
-    },
-    viewDetails(item) {
-      // Lógica para ver detalles del elemento
-      console.log('Ver detalles de:', item);
-      // Aquí puedes implementar la funcionalidad para mostrar detalles del elemento
-    },
-    removeItem(id_evaluaciones) {    
-      this.$swal({
-        icon: 'warning',
-        title: '¿Seguro que quieres borrar la evaluación?',
-        text: 'Una vez eliminada la evaluación, esta acción no se puede revertir. ¿Estás seguro de continuar con esta acción?',
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: '<i class="bi bi-trash"></i>Eliminar evaluación',        
-        cancelButtonColor: "#d33",
-        cancelButtonText: '<i class="bi bi-ban"></i>Cancelar' 
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          this.isLoading = true;
-          console.log('Eliminar evaluación:', id_evaluaciones);
-          EvaluationService.delete(id_evaluaciones)
-          .then(response => {
-            console.log("Delete status: ", response);
-            this.$router.go(0);
-          })
-          .catch(error => {
-            console.error('Error:', error);  
-            this.isLoading = false;
-          });        
-        } 
-      });         
-    }
+      },
+      viewDetails(item) {
+        // Lógica para ver detalles del elemento
+        console.log('Ver detalles de:', item);
+        // Aquí puedes implementar la funcionalidad para mostrar detalles del elemento
+      },
+      removeItem(id_evaluaciones) {    
+        this.$swal({
+          icon: 'warning',
+          title: '¿Seguro que quieres borrar la evaluación?',
+          text: 'Una vez eliminada la evaluación, esta acción no se puede revertir. ¿Estás seguro de continuar con esta acción?',
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: '<i class="bi bi-trash"></i>Eliminar evaluación',        
+          cancelButtonColor: "#d33",
+          cancelButtonText: '<i class="bi bi-ban"></i>Cancelar' 
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.isLoading = true;
+            console.log('Eliminar evaluación:', id_evaluaciones);
+            EvaluationService.delete(id_evaluaciones)
+            .then(response => {
+              console.log("Delete status: ", response);
+              this.$router.go(0);
+            })
+            .catch(error => {
+              console.error('Error:', error);  
+              this.isLoading = false;
+            });        
+          } 
+        });         
+      },
+      shareEvaluation(id_evaluaciones) {
+        this.shareEvaluationId = id_evaluaciones;
+        this.shareEvaluationModal = true;
+        console.log('Compartir evaluación: ', id_evaluaciones);
+      }
   },
   mounted() {
     this.isLoading = true;
