@@ -4,10 +4,10 @@
     <b-col cols="12">
         <p class="text-justify">Si deseas que tus alumnos accedan y respondan la evaluación, simplemente comparte este PIN con ellos. Pueden ingresar el PIN en la página web para acceder.</p>
     </b-col>    
-    <b-col sm="12" md="6" bg="6" class="d-flex justify-content-end align-items-center">
+    <b-col sm="12" md="6" bg="6" class="d-flex justify-content-center align-items-center">
         <span class="pin">{{ pin }}</span>
     </b-col>
-    <b-col sm="12" md="6" bg="6" class="d-flex justify-content-start align-items-center">
+    <b-col sm="12" md="6" bg="6" class="d-flex justify-content-center align-items-center">
         <b-button v-if="supportCopyClipboard" @click="copyToClipboard('Usa este pin para unirte a la evaluación: ' + pin)" variant="primary">
             <b-icon icon="clipboard" aria-hidden="true"></b-icon> Copiar
         </b-button>
@@ -40,7 +40,7 @@ export default {
         return {
             isLoading: false,
             pin: null,
-            link: null,
+            link: '/join-to-activity',
             dynamicUrl: null, 
         };
     },

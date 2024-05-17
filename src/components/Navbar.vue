@@ -27,7 +27,7 @@
             <b-icon icon="door-closed" class="sidebar-icon"></b-icon>
             <span class="sidebar-text">Cerrar sesión</span>              
           </b-dropdown-item>    
-          <b-dropdown-item @click="$router.push('/edit-user');" :class="{ 'active': isActive('/edit-user') }">            
+          <b-dropdown-item v-if="!user.isGuestUser" @click="$router.push('/edit-user');" :class="{ 'active': isActive('/edit-user') }">            
             <!-- <b-icon icon="gear" class="sidebar-icon"></b-icon> -->
             <i class="bi bi-person-gear"></i>
             <span class="sidebar-text">Editar usuario</span>              

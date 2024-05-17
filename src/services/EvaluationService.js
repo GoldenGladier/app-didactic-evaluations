@@ -42,7 +42,15 @@ class EvaluationService {
         } catch (error) {
             throw error.response.data.message;
         }
-    }         
+    } 
+    async joinEvaluation(pin) {
+        try {
+            const response = await axios.post(`${API_URL}/joinEvaluation`, {pin});
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    }                         
     async getAllEvaluationsByAauthenticatedUser() {
         try {
             const response = await axios.get(`${API_URL}/getAllEvaluations`);

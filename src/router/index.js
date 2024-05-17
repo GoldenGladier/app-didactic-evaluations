@@ -74,12 +74,9 @@ const router = new Router({
             component: EditUser
         },  
         {
-            path: '/join-to-activity',
+            path: '/join-to-activity/:pin?',
             name: 'JoinToAssessment',
-            component: JoinToAssessment,
-            meta: {
-                requiresAuth: true // Esta meta indica que esta ruta requiere autenticación
-            }            
+            component: JoinToAssessment,      
         },
         // {
         //     path: '/mis-evaluaciones',

@@ -71,6 +71,15 @@ class AuthService {
       throw error.response.data.message;
     }
   }  
+
+  async newGuestUser(username) {
+    try {
+      const response = await axios.post(`${API_URL}/guest`, username);
+      return response.data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
+  }    
   
 }
 
