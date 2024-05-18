@@ -1,0 +1,89 @@
+<template>
+  <b-container class="custom-master-container custom-card-box custom-center-flex">
+    <b-overlay :show="isLoading" class="width-100">   
+        <b-container v-if="infoEvaluation" class="evaluation-data">
+            <h1 v-if="infoEvaluation?.nombre" class="title-bold">{{ infoEvaluation.nombre }}</h1>
+            <h2 v-if="infoEvaluation?.subtitulo" class="subtitle-light">{{ infoEvaluation.subtitulo }}</h2>
+            <p v-if="infoEvaluation?.descripcion" >{{ infoEvaluation.descripcion }}</p>
+            <hr class="my-4">
+
+            <SortTextController :sentences="activities.sentence" />
+            
+        </b-container>
+    </b-overlay>
+  </b-container>
+</template>
+
+<script>
+import EvaluationService from '@/services/EvaluationService.js'
+// import store from '@/store/auth';
+
+import SortTextController from '@/components/activities/SortTextController.vue'
+
+export default {
+    components: {
+        SortTextController,
+    },
+    data() {
+        return {
+            isLoading: false,
+            pin: null,
+            infoEvaluation: null,
+            activities: null,
+            dinamicsList: [],
+        }
+    },
+    methods: {
+        init_data() {
+            if(this.$store.state.auth.isLoggedIn){
+                this.pin = this.$route.params.pinEvaluation
+                console.log("Pin: ", this.pin)
+                EvaluationService.joinEvaluation(this.pin)
+                .then((response) => {
+                    console.log("Join to evaluation: ", response)
+                    this.infoEvaluation = response.infoEvaluation;
+                    this.activities = response.dataEvaluation;
+                })
+                .catch((error) => {
+                    console.error("Ocurrio un error al intentar unirse a la evaluación: ", error)
+                    if(error === 'Codigo invalido'){
+                        console.log("El PIN es invalido, por favor revisa que el PIN sea el mismo que proporciono tu profesor.")
+                        this.$swal({
+                            icon: 'error',
+                            title: '¡PIN incorrecto!',
+                            text: 'El PIN es inválido. Verifica con tu profesor e intenta nuevamente.',
+                        }).then(() => {
+                            this.$router.push({ path: `/join-to-activity/${this.pin}` });        
+                        });                           
+                    }                                          
+                })
+                EvaluationService.getDinamics()
+                .then(response => {
+                    console.log("Dinamicas: ", response);
+                    this.dinamicsList = response
+                })
+                .catch(error => {
+                    console.error('Error:', error);    
+                });                                   
+            }
+            else{
+                this.$router.push({ name: 'JoinToAssessment' });
+            }            
+        },        
+    },
+    created() {
+        this.init_data();
+    },
+}
+</script>
+
+<style>
+.title-bold {
+    /* color: var(--primary); */
+    font-size: 26px;
+    font-weight: 500;
+}
+.subtitle-light {
+    font-weight: 400;   
+}
+</style>

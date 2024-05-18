@@ -73,6 +73,7 @@ export default {
       if(this.$store.state.auth.isLoggedIn) {
         console.log('PIN de actividad:', this.pin);
         console.log('Nombre de usuario registrado:', this.name);
+        this.$router.push({ path: `/evaluaciones/unirse/${this.pin}` });        
       }
       else{
         console.log('PIN de actividad:', this.pin);
@@ -95,7 +96,8 @@ export default {
 
           guestUser.isGuestUser = true;
           store.commit('setUser', guestUser);  
-          store.commit('setToken', guestToken);                    
+          store.commit('setToken', guestToken);   
+          this.$router.push({ path: `/evaluaciones/unirse/${this.pin}` });        
         })
         .catch(error => {
           console.error('Error al crear un usuario invitado: ', error);

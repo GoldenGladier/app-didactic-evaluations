@@ -87,7 +87,7 @@
         this.activities.forEach((activity, index) => {
           const newActivity = {
             letter: activity.letter,
-            questionNumber: index,
+            questionNumber: index + 1,
             idEvaluacion: this.evaluationData.id_evaluaciones,
             idDinamica: this.evaluationData.id_dinamica,
           }

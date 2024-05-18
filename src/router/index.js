@@ -17,6 +17,7 @@ import MyEvaluations from '@/views/MyEvaluations.vue'
 import CreateEvaluation from '@/views/activities/CreateEvaluation.vue'  
 import CreateActivities from '@/views/activities/CreateActivities.vue'  
 import EditEvaluation from '@/views/activities/EditEvaluation.vue'  
+import SolveEvaluation from '@/views/activities/SolveEvaluation.vue'  
 import ActivityView from '@/views/ActivityView.vue'  
 
 Vue.use(Router)
@@ -133,6 +134,14 @@ const router = new Router({
                     requiresAuth: true
                 },                  
               },
+              {
+                path: 'unirse/:pinEvaluation', 
+                name: 'SolveEvaluation',
+                component: SolveEvaluation,
+                meta: {
+                    requiresAuth: true
+                },                  
+              },              
             ]
         },        
         {
