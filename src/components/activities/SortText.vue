@@ -1,8 +1,8 @@
 <template>
-    <div class="mb-5">
+    <div class="mb-4">
         <p><span v-if="index">{{ index }}.</span> Arrasta las palabras y ordenalas para crear el enunciado correcto: </p>
 
-        <draggable v-model="textAnswer" group="people" @start="drag=true" @end="drag=false" @input="emitResponse">
+        <draggable v-model="textAnswer" :key="`draggable-${index}`" :group="`group-${index}`" @start="drag=true" @end="drag=false" @input="emitResponse">
             <span class="custom-span-drag" v-for="element in textAnswer" :key="element.id">{{element.name}}</span>
         </draggable>
 
@@ -14,7 +14,7 @@ import draggable from 'vuedraggable'
   
   export default {
     components: {
-        draggable
+      draggable
     },
     props: {
       text: null,
@@ -51,6 +51,7 @@ import draggable from 'vuedraggable'
 
   <style scoped>
   .custom-span-drag {
+    display: inline-block;
     margin: 0.2rem;
     padding: 0.4rem 0.6rem;
     border-radius: 0.4rem;
