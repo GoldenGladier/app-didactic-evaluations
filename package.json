@@ -2,7 +2,7 @@
   "name": "app-didactic-evaluations",
   "version": "0.1.0",
   "private": true,
-  "scripts": {  
+  "scripts": {
     "serve": "vue-cli-service serve",
     "build": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
     "lint": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint"
@@ -16,6 +16,7 @@
     "core-js": "^3.6.5",
     "firebase": "^10.11.0",
     "vue": "^2.7.16",
+    "vue-click-outside": "^1.1.0",
     "vue-router": "^3.6.5",
     "vue-sweetalert2": "^5.0.5",
     "vuedraggable": "^2.24.3",

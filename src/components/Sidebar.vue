@@ -1,13 +1,14 @@
 <template>
   <div>
-    <div :class="{ 'sidebar': true, 'collapsed': sidebarCollapsed }">
+    <div :class="['sidebar', { 'collapsed': sidebarCollapsed, 'is-overlay': isOverlay }]" v-click-outside="handleClickOutside">
       <ul class="list-unstyled mb-0">
         <li class="extra-nav-item" >
           <AppIcon color="#ffffff" size="25px"/>
           <span v-if="!sidebarCollapsed" class="sidebar-text">Actividades didácticas</span>
         </li>   
-        <li :class="sidebarCollapsed ? 'extra-nav-item' : ''">
-          <b-icon @click="toggleCollapse" :icon="sidebarCollapsed ? 'chevron-double-right' : 'chevron-double-left'" class="collapse-icon"></b-icon>    
+        <li :class="sidebarCollapsed ? 'extra-nav-item' : ''">          
+          <b-icon v-if="isOverlay" @click="toggleCollapse" icon="x" class="collapse-icon"></b-icon>    
+          <b-icon v-else @click="toggleCollapse" :icon="sidebarCollapsed ? 'chevron-double-right' : 'chevron-double-left'" class="collapse-icon"></b-icon>    
         </li>
 
         <hr class="custom-hr">
@@ -18,26 +19,38 @@
               <li :key="index" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
                 <a :href="item.link" class="nav-link" target="_blank">
                   <b-icon :icon="item.icon" class="sidebar-icon"></b-icon>
-                  <span v-if="!sidebarCollapsed" class="sidebar-text">{{ item.text }}</span>
+                  <Transition name="bounce">
+                    <span v-if="!sidebarCollapsed" class="sidebar-text">{{ item.text }}</span>
+                  </Transition>
+                  
                 </a>
               </li>
             </template>      
             <template v-else>      
               <b-nav-item :key="index" :to="item.link" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
                 <b-icon :icon="item.icon" class="sidebar-icon"></b-icon>
-                <span v-if="!sidebarCollapsed" class="sidebar-text">{{ item.text }}</span>
+                <!-- <Transition name="bounce"> -->
+                  <span v-if="!sidebarCollapsed" class="sidebar-text">{{ item.text }}</span>
+                <!-- </Transition> -->
               </b-nav-item>
             </template>
           </template>
         </b-nav>
       </ul>
     </div>
+                  
+    <b-button v-if="isOverlay" @click="toggleCollapse" variant="primary" class="custom-button-toggle-collapse">
+      <i class="bi bi-list mr-0"></i>
+    </b-button>
+
   </div>
 </template>
 
 <script>
 import AppIcon from './navegation/AppIcon.vue';
 import sidebar from '@/store/sidebar';
+
+import ClickOutside from 'vue-click-outside'
 
 export default {
   components: {
@@ -46,6 +59,7 @@ export default {
   data() {
     return {
       sidebarCollapsed: false,
+      isOverlay: false,
       sidebarFullWidth: 'calc(250px - 0.5rem)',
       items: [
         { text: 'Inicio', icon: 'house-door', link: '/home' },
@@ -68,18 +82,34 @@ export default {
     }
   },
   methods: {
+    checkScreenSize() {
+      this.isOverlay = window.innerWidth <= 768;
+    },
     toggleCollapse() {
       this.sidebarCollapsed = !this.sidebarCollapsed;
       sidebar.commit("setCollapsed", this.sidebarCollapsed);
       this.$emit( 'update:sidebarWidth', this.sidebarWidth );
       console.log(this.sidebarWidth)
     },
+    handleClickOutside() {
+      if (this.isOverlay && !this.sidebarCollapsed) {
+        this.toggleCollapse();
+      }
+    },    
     isActive(route) {
       return this.$route.path === route;
     }
   },
   created() {
+    this.checkScreenSize();
+    window.addEventListener('resize', this.checkScreenSize);
     this.sidebarCollapsed = this.$store.state.sidebar.sidebarCollapsed;
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.checkScreenSize);
+  },
+  directives: {
+    ClickOutside
   }
 }
 </script>
@@ -166,17 +196,33 @@ export default {
   padding: 0.5rem !important;
 }
 
-.sidebar-text {
-  margin-left: 5px;
-  color: #F6F5F5;
-}
-
 .sidebar .collapse-icon {
   font-size: 20px;
   cursor: pointer;
   position: absolute;
   top: 10px;
   right: 10px;
+}
+
+.sidebar.is-overlay.collapsed {
+  transform: translateX(-101%);  
+}
+
+.sidebar.is-overlay {
+  transform: translateX(0);
+  position: fixed;
+  margin: 0;  
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 5;
+  width: 270px;
+  transition: transform 0.5s ease;
+}
+
+.sidebar-text {
+  margin-left: 5px;
+  color: #F6F5F5;
 }
 
 .sidebar.collapsed .collapse-icon {
@@ -187,6 +233,33 @@ export default {
 
 .sidebar-icon {
   color: #F6F5F5;
+}
+
+.custom-button-toggle-collapse {
+  position: fixed;
+  left: 0.5rem;
+  top: 0.5rem;
+  padding: 0.7rem 1rem;
+  z-index: 3;
+  border-radius: 0.4rem;
+}
+
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 </style>
