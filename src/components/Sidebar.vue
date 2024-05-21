@@ -215,7 +215,7 @@ export default {
   top: 0;
   left: 0;
   height: 100%;
-  z-index: 5;
+  z-index: 11;
   width: 270px;
   transition: transform 0.5s ease;
 }
@@ -240,7 +240,7 @@ export default {
   left: 0.5rem;
   top: 0.5rem;
   padding: 0.7rem 1rem;
-  z-index: 3;
+  z-index: 10;
   border-radius: 0.4rem;
 }
 
