@@ -4,6 +4,7 @@ $primary: #EE6F57;
 $secondary-color: #1F3C88;
 $text-dark-color: #16181b;
 $text-gray-color: #5f6368;
+$border-gray-color: #ccc;
 
 // Textos
 $text-color: #F6F5F5;
@@ -132,3 +133,30 @@ i {
 .cursor-pointer {
     cursor: pointer;
 }
+
+.title-bold-primary {
+    text-align: center;
+    color: var(--primary);
+    font-size: 26px;
+    font-weight: 500;    
+}
+.title-bold {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 500;
+}
+.subtitle-light {
+    text-align: center;
+    font-weight: 400;   
+}
+
+.border-solid-radius {
+    border-radius: 0.4rem;
+    border: 1px solid var(--text-gray-color);    
+}
+
+.rounded-table {
+    border-radius: 0.4rem;
+    border: 1px solid var(--text-gray-color);
+    // overflow: hidden;
+}  
