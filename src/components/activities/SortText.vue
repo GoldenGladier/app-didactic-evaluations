@@ -1,6 +1,6 @@
 <template>
     <div class="mb-4">
-        <p><span v-if="index">{{ index }}.</span> Arrasta las palabras y ordenalas para crear el enunciado correcto: </p>
+        <p><span v-if="index">{{ index }}.</span> Arrasta los bloques de palabras y ordenalas para crear el enunciado correcto: </p>
 
         <draggable v-model="textAnswer" :key="`draggable-${index}`" :group="`group-${index}`" @start="drag=true" @end="drag=false" @input="emitResponse">
             <span class="custom-span-drag" v-for="element in textAnswer" :key="element.id">{{element.name}}</span>
@@ -59,7 +59,9 @@ import draggable from 'vuedraggable'
     cursor: pointer;
   }
   .custom-span-drag:hover {
-    background: #f9e1dc;
+    background-color: rgba(238, 111, 87, 0.2);
+    border: 1px solid var(--primary);
+    /* background: #f9e1dc; */
   }  
   </style>
 

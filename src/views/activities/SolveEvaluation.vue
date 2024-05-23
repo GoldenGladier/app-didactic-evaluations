@@ -2,12 +2,13 @@
   <b-container class="custom-master-container custom-card-box custom-center-flex">
     <b-overlay :show="isLoading" class="width-100">   
         <b-container v-if="infoEvaluation" class="evaluation-data">
+            <h1 v-if="answerReviewActive" class="title-bold-primary">Resultados</h1>
             <h1 v-if="infoEvaluation?.nombre" class="title-bold">{{ infoEvaluation.nombre }}</h1>
             <h2 v-if="infoEvaluation?.subtitulo" class="subtitle-light">{{ infoEvaluation.subtitulo }}</h2>
-            <p v-if="infoEvaluation?.descripcion" >{{ infoEvaluation.descripcion }}</p>
+            <p v-if="infoEvaluation?.descripcion" class="mt-4">{{ infoEvaluation.descripcion }}</p>
             <hr class="my-4">
 
-            <SortTextController :sentences="activities.sentence" />
+            <SortTextController v-if="dinamicSelected == 'Ordena el enunciado'" :infoEvaluation="infoEvaluation" :sentences="activities.sentence" @updateLoading="updateLoading" :answerReviewActive.sync="answerReviewActive" />
             
         </b-container>
     </b-overlay>
@@ -31,11 +32,14 @@ export default {
             infoEvaluation: null,
             activities: null,
             dinamicsList: [],
+            dinamicSelected: null, 
+            answerReviewActive: false,           
         }
     },
     methods: {
-        init_data() {
+        init_data() {            
             if(this.$store.state.auth.isLoggedIn){
+                this.isLoading = true;
                 this.pin = this.$route.params.pinEvaluation
                 console.log("Pin: ", this.pin)
                 EvaluationService.joinEvaluation(this.pin)
@@ -43,6 +47,24 @@ export default {
                     console.log("Join to evaluation: ", response)
                     this.infoEvaluation = response.infoEvaluation;
                     this.activities = response.dataEvaluation;
+
+                    EvaluationService.getDinamics()
+                    .then(response => {
+                        console.log("Dinamicas: ", response);
+                        this.dinamicsList = response;
+                        const idToFind = this.infoEvaluation.id_dinamica;
+                        const foundElement = this.dinamicsList.find(element => element.id_dinamicas === idToFind);
+                        if (foundElement) {
+                            this.dinamicSelected = foundElement.dinamica;
+                            console.log('Elemento dinamica encontrado:', foundElement);
+                        } else {
+                            console.log('Elemento dinamica no encontrado');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);    
+                    })
+                    .finally(() => { this.isLoading = false });                                 
                 })
                 .catch((error) => {
                     console.error("Ocurrio un error al intentar unirse a la evaluación: ", error)
@@ -57,19 +79,15 @@ export default {
                         });                           
                     }                                          
                 })
-                EvaluationService.getDinamics()
-                .then(response => {
-                    console.log("Dinamicas: ", response);
-                    this.dinamicsList = response
-                })
-                .catch(error => {
-                    console.error('Error:', error);    
-                });                                   
+                .finally(() => { this.isLoading = false });                                 
             }
             else{
                 this.$router.push({ name: 'JoinToAssessment' });
             }            
-        },        
+        },    
+        updateLoading(isLoading) {
+            this.isLoading = isLoading;
+        },
     },
     created() {
         this.init_data();
@@ -78,6 +96,11 @@ export default {
 </script>
 
 <style>
+.title-bold-primary {
+    color: var(--primary);
+    font-size: 26px;
+    font-weight: 500;    
+}
 .title-bold {
     /* color: var(--primary); */
     font-size: 26px;

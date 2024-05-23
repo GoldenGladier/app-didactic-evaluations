@@ -37,6 +37,16 @@ class ActivityService {
     }
   }  
 
+  async respondActivityOrderStatement(data) {
+    try {
+      const response = await axios.post(`${process.env.VUE_APP_API_URL}/answer/sortSentence`, data);      
+      return response.data;
+    } catch (error) {
+      throw error.response;
+      // throw error.response.data.message;
+    }
+  }
+
   async getActivities(idEvaluation) {
     try {
       const response = await axios.get(`${API_URL}/orderQuestion/getActivity/${idEvaluation}`);
