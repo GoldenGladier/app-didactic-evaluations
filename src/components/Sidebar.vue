@@ -140,6 +140,10 @@ export default {
   text-align: left;
 }
 
+.sidebar.is-overlay {
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
 .sidebar .custom-vertical-nav {
   padding: 1rem;
   padding-top: 0;
@@ -215,7 +219,7 @@ export default {
   top: 0;
   left: 0;
   height: 100%;
-  z-index: 11;
+  z-index: 20;
   width: 270px;
   transition: transform 0.5s ease;
 }
@@ -240,7 +244,7 @@ export default {
   left: 0.5rem;
   top: 0.5rem;
   padding: 0.7rem 1rem;
-  z-index: 10;
+  z-index: 16;
   border-radius: 0.4rem;
 }
 
