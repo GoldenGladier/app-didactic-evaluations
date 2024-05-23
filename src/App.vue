@@ -13,6 +13,7 @@
 <script>
 import Navbar from './components/Navbar.vue'
 import Sidebar from './components/Sidebar.vue'
+import sidebar from '@/store/sidebar';
 
 export default {
   name: 'App',
@@ -27,8 +28,8 @@ export default {
     };
   }, 
   created() {
-    this.sidebarWidth = this.$store.state.sidebar.sidebarCollapsed ? "calc(60px + 0.5rem)" : "250px";
     this.checkScreenSize();
+    this.sidebarWidth = this.$store.state.sidebar.sidebarCollapsed ? "calc(60px + 0.5rem)" : "250px";    
     window.addEventListener('resize', this.checkScreenSize);
     document.title = 'Actividades didácticas';
   },
@@ -38,6 +39,9 @@ export default {
   methods: {
     checkScreenSize() {
       this.isOverlay = window.innerWidth <= 768;
+      if(this.isOverlay){
+        sidebar.commit("setCollapsed", true);
+      }
     }
   }  
 }
