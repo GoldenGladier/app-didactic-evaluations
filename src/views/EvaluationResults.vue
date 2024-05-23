@@ -6,16 +6,16 @@
             Exportar a PDF
         </b-button>
       
-        <b-container v-if="evaluationData" class="evaluation-data text-align-center" id="element-to-convert">            
+        <section v-if="evaluationData" class="evaluation-data text-align-center" id="element-to-convert">            
             <h1 class="title-bold-primary"><i class="bi bi-star-fill" style="font-size: 100%"></i>Resultados</h1>
             <h1 class="title-bold">{{ evaluationData.nombre }}</h1>
             <h2 class="subtitle-light">{{ evaluationData.subtitulo }}</h2>
             <p class="mt-4">{{ evaluationData.descripcion }}</p>
-            <hr class="my-4">            
-            <b-col cols="12">
-                <b-table striped :items="students" :fields="fields" bordered class="rounded-table text-center"></b-table>                
-            </b-col>
-        </b-container>
+            <hr class="my-4">     
+            <b-container>
+                <b-table striped :items="students" :fields="fields" bordered class="table custom-table rounded-table text-center"></b-table> 
+            </b-container>     
+        </section>
     </b-overlay>
   </b-container>
 </template>

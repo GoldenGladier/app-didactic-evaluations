@@ -85,6 +85,11 @@ p {
     min-height: 100%;
     top: 0;
 }
+@media (max-width: 767px) {
+    .custom-master-container {
+      padding: 1rem 1rem;
+    }
+}
 // Formularios
 .custom-form {
     width: 100%;
@@ -158,5 +163,17 @@ i {
 .rounded-table {
     border-radius: 0.4rem;
     border: 1px solid var(--text-gray-color);
-    // overflow: hidden;
 }  
+
+.custom-table td,
+.custom-table th {
+  padding: 1rem 0.5rem !important; 
+  text-align: center; 
+  vertical-align: middle !important; 
+}
+
+@media (min-width: 768px) {
+    .custom-table {
+      padding: 1rem;
+    }
+}

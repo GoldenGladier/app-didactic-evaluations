@@ -16,7 +16,7 @@
           </b-button>           
         </b-col>
 
-        <b-col v-for="item in filteredItems" :key="item.id" col lg="4" md="6" sm="12">
+        <b-col v-for="item in filteredItems" :key="item.id" lg="4" md="6" sm="12">
           <div class="evaluacion-container">
             
             <div>
@@ -25,6 +25,7 @@
                   <b-icon icon="three-dots-vertical"></b-icon><span class="sr-only">Search</span>
                 </template>
                 <b-dropdown-item @click="removeItem(item.id_evaluaciones)"><b-icon icon="trash"/> Eliminar</b-dropdown-item>
+                <b-dropdown-item @click="goToEvaluationResults(item.id_evaluaciones)"><i class="bi bi-card-checklist"></i>Resultados</b-dropdown-item>
               </b-dropdown>
             </div>
 
@@ -132,6 +133,9 @@ import ShareEvaluationModal from '@/components/evaluations/ShareEvaluationModal.
             });        
           } 
         });         
+      },
+      goToEvaluationResults(idEvaluation) {
+        this.$router.replace({ name: 'EvaluationResults', params: { idEvaluation: idEvaluation } })
       },
       shareEvaluation(id_evaluaciones) {
         this.shareEvaluationId = id_evaluaciones;
