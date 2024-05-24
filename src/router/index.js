@@ -20,6 +20,7 @@ import EditEvaluation from '@/views/activities/EditEvaluation.vue'
 import SolveEvaluation from '@/views/activities/SolveEvaluation.vue'  
 import ActivityView from '@/views/ActivityView.vue' 
 import EvaluationResults from '@/views/EvaluationResults.vue'
+import Administration from '@/views/admin/Administration.vue'
 
 Vue.use(Router)
 
@@ -157,7 +158,13 @@ const router = new Router({
             path: '/activity',
             name: 'ActivityView',
             component: ActivityView
-        },                                        
+        },  
+        {
+            path: '/administracion',
+            name: 'Administration',
+            component: Administration
+        },              
+        
     ]
 })
 
