@@ -16,8 +16,9 @@
                 ></b-form-input>
               </b-form-group>
 
-              <b-form-group v-if="!isLoggedIn" label="Nombre" label-for="name" class="required-label">
+              <b-form-group label="Nombre" label-for="name" class="required-label">
                 <b-form-input
+                  :disabled="isLoggedIn"
                   id="name"
                   type="text"
                   v-model="name"                
@@ -26,8 +27,9 @@
                 ></b-form-input>
               </b-form-group>              
 
-              <b-form-group v-if="!isLoggedIn" label="Apellidos" label-for="lastname" class="required-label">
+              <b-form-group label="Apellidos" label-for="lastname" class="required-label">
                 <b-form-input
+                  :disabled="isLoggedIn"
                   id="lastname"
                   type="text"
                   v-model="lastname"                
@@ -36,7 +38,9 @@
                 ></b-form-input>
               </b-form-group>               
 
-              <b-button type="submit" variant="primary" class="mt-2 mb-2" block :disabled="!pin">Siguiente</b-button>
+              <b-button type="submit" variant="primary" class="mt-4 mb-2" block :disabled="!pin"><i class="bi bi-arrow-right"></i>Siguiente</b-button>
+              <b-button v-if="isLoggedIn" type="submit" variant="outline-primary" class="mt-2 mb-2" block @click="logout()"><i class="bi bi-person-fill-x"></i>No soy yo</b-button>
+
             </b-form>
           </b-col>
         </b-row>
@@ -67,6 +71,7 @@ export default {
       this.pin = this.$route.params.pin ? this.$route.params.pin : '';
       if(this.isLoggedIn) {
         this.name = this.username
+        this.lastname = this.userLastname
       }
     },
     joinToAssessment() {
@@ -103,7 +108,14 @@ export default {
           console.error('Error al crear un usuario invitado: ', error);
         });
       }
-    }
+    },
+    logout() {
+      this.isLoading = true;
+      console.log("Close sesion");
+      store.commit('logout');
+      window.location.reload();
+      // this.$router.push('/login');
+    },    
   },
   mounted() {
     this.init_data();
@@ -116,8 +128,11 @@ export default {
       return this.$store.state.auth.user;
     },
     username() {
-      return this.user.nombre + ' ' + this.user.apellido_paterno + ' ' + (this.user.apellido_materno ? this.user.apellido_materno : '')
-    }    
+      return this.user.nombre
+    },
+    userLastname() {
+      return (this.user.apellido_paterno + ' ' + (this.user.apellido_materno ? this.user.apellido_materno : '')).trim()
+    }       
   }
 }
 </script>
