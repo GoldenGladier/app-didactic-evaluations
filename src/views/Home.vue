@@ -65,10 +65,10 @@
 
       <!-- Share Section -->
       <b-row class="banner-section my-5 d-flex justify-content-center align-items-center">
-        <b-col cols="12" md="5">
+        <b-col cols="12" md="5" order-md="1">
           <img src="img/share_link.svg" alt="Share Link Or Pin" class="img-fluid">
         </b-col>        
-        <b-col cols="12" md="7">
+        <b-col cols="12" md="7" order-md="2">
           <div class="banner-text my-4">
             <h2 class="font-weight-bold">Comparte tus evaluaciones fácilmente</h2>
             <p class="lead">Con EvaluApp, compartir tus evaluaciones es simple y seguro. Generamos un PIN único para cada actividad, asegurando su exclusividad. Además, puedes enviar el enlace directo a tus alumnos, facilitando su acceso con un solo clic. Simplifica la distribución y acceso a tus evaluaciones con EvaluApp.</p>            
@@ -78,25 +78,25 @@
 
       <!-- Response Settings Section -->
       <b-row class="banner-section my-5 d-flex justify-content-center align-items-center">
-        <b-col cols="12" md="7">
+        <b-col cols="12" md="5" order-md="2">
+          <img src="img/test_approve.svg" alt="Custom Feedback Settings" class="img-fluid">
+        </b-col>           
+        <b-col cols="12" md="7" order-md="1">
           <div class="banner-text my-4">
             <h2 class="font-weight-bold">Configuraciones de Respuesta Personalizadas</h2>
             <p class="lead">
               En EvaluApp, tú decides cómo los alumnos reciben retroalimentación al entregar sus respuestas. Puedes optar por mostrarles las respuestas correctas al instante, sin permitirles corregir sus respuestas previas. Esta opción fomenta un aprendizaje activo y la corrección inmediata de errores. Alternativamente, puedes elegir que los alumnos envíen sus respuestas sin ver ninguna retroalimentación inmediata, promoviendo un enfoque más reflexivo y desafiante. Tú tienes el control total sobre la experiencia de evaluación.            
             </p>
           </div>
-        </b-col>         
-        <b-col cols="12" md="5">
-          <img src="img/test_approve.svg" alt="Custom Feedback Settings" class="img-fluid">
-        </b-col>            
+        </b-col>                  
       </b-row>     
 
       <!-- Grading and Review Section -->
       <b-row class="banner-section my-5 d-flex justify-content-center align-items-center">
-        <b-col cols="12" md="5">
+        <b-col cols="12" md="5" order-md="1">
           <img src="img/test_results.svg" alt="Share Link Or Pin" class="img-fluid">
         </b-col>        
-        <b-col cols="12" md="7">
+        <b-col cols="12" md="7" order-md="2">
           <div class="banner-text my-4">
             <h2 class="font-weight-bold">Revisión de Calificaciones</h2>
             <p class="lead">
@@ -108,17 +108,17 @@
 
       <!-- Multiplatform Access  -->
       <b-row class="banner-section my-5 d-flex justify-content-center align-items-center">
-        <b-col cols="12" md="7">
+        <b-col cols="12" md="5" order-md="2">
+          <img src="img/multi_devices.svg" alt="Multiplatform Access" class="img-fluid">
+        </b-col>         
+        <b-col cols="12" md="7" order-md="1">
           <div class="banner-text my-4">
             <h2 class="font-weight-bold">Acceso Multiplataforma</h2>
             <p class="lead">
               EvaluApp ofrece acceso multiplataforma para una experiencia sin complicaciones. Tanto tú como tus alumnos pueden acceder a la plataforma desde cualquier dispositivo con conexión a internet: ya sea un celular, una computadora o una tableta. No es necesario instalar ninguna aplicación adicional; simplemente abre tu navegador web favorito y accede a EvaluApp. Esto asegura una experiencia fluida y conveniente, independientemente de dónde te encuentres o qué dispositivo estés utilizando.
             </p>
           </div>
-        </b-col>         
-        <b-col cols="12" md="5">
-          <img src="img/multi_devices.svg" alt="Multiplatform Access" class="img-fluid">
-        </b-col>            
+        </b-col>                    
       </b-row>         
     </b-container>
   </b-container>
