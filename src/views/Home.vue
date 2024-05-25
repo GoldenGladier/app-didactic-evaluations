@@ -34,7 +34,7 @@
           </div>
         </b-col>
         <b-col cols="12" md="6">
-          <img src="@/assets/online_test.svg" alt="Banner Image" class="img-fluid">
+          <img src="img/online_test.svg" alt="Banner Image" class="img-fluid">
         </b-col>     
       </b-row>
 
@@ -66,7 +66,7 @@
       <!-- Share Section -->
       <b-row class="banner-section my-5 d-flex justify-content-center align-items-center">
         <b-col cols="12" md="5">
-          <img src="@/assets/share_link.svg" alt="Share Link Or Pin" class="img-fluid">
+          <img src="img/share_link.svg" alt="Share Link Or Pin" class="img-fluid">
         </b-col>        
         <b-col cols="12" md="7">
           <div class="banner-text my-4">
@@ -87,14 +87,14 @@
           </div>
         </b-col>         
         <b-col cols="12" md="5">
-          <img src="@/assets/test_approve.svg" alt="Custom Feedback Settings" class="img-fluid">
+          <img src="img/test_approve.svg" alt="Custom Feedback Settings" class="img-fluid">
         </b-col>            
       </b-row>     
 
       <!-- Grading and Review Section -->
       <b-row class="banner-section my-5 d-flex justify-content-center align-items-center">
         <b-col cols="12" md="5">
-          <img src="@/assets/test_results.svg" alt="Share Link Or Pin" class="img-fluid">
+          <img src="img/test_results.svg" alt="Share Link Or Pin" class="img-fluid">
         </b-col>        
         <b-col cols="12" md="7">
           <div class="banner-text my-4">
@@ -117,7 +117,7 @@
           </div>
         </b-col>         
         <b-col cols="12" md="5">
-          <img src="@/assets/multi_devices.svg" alt="Multiplatform Access" class="img-fluid">
+          <img src="img/multi_devices.svg" alt="Multiplatform Access" class="img-fluid">
         </b-col>            
       </b-row>         
     </b-container>
