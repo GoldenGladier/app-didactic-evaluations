@@ -7,7 +7,6 @@
           <b-row class="justify-content-center">
 
             <b-col cols="12" class="my-5">
-                <h3>The Best Crossword</h3>
                 <CreateCrosswordWrapper :exampleWordsList="words" :modeRespondActivity="true"
                  :showAnswers="showAnswers"></CreateCrosswordWrapper>
             </b-col>

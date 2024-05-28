@@ -3,16 +3,20 @@
     <div id="grid" class="grid-container">
 
         <!-- Form para agregar palabras y pistas -->
+        <h3>Crear crucigrama</h3>
+        <p class="text-justify">
+            Utiliza el siguiente formulario para crear tu crucigrama. En "Palabra", ingresa una palabra del crucigrama y en "Pista" proporciona la pista que verán los alumnos y luego haz clic en "Agregar palabra". Una vez que hayas agregado al menos dos palabras, se habilitarán los botones para generar el crucigrama. Si no te gusta el resultado, haz clic en "generar otras opciones" hasta encontrar uno que te convenza.
+        </p>
         <b-form @submit.prevent="addWord" class="my-2 px-0">
             <b-row class="px-0">
                 <b-col cols="12" md="4">
                     <b-form-group label="Palabra">
-                        <b-form-input v-model="newWord.respuesta" required></b-form-input>
+                        <b-form-input v-model="newWord.respuesta" placeholder="Ingresa una palabra" required></b-form-input>
                     </b-form-group>
                 </b-col>
                 <b-col cols="12" md="5">
                     <b-form-group label="Pista">
-                        <b-form-input v-model="newWord.pregunta" rows="1" max-rows="5" required></b-form-input>
+                        <b-form-input v-model="newWord.pregunta" placeholder="Ingresa una pista para adivinar la palabra" required></b-form-input>
                     </b-form-group>
                 </b-col>
                 <b-col cols="12" md="3" class="d-flex align-items-end justify-content-center">
@@ -30,25 +34,30 @@
 
         <!-- Tabla para mostrar palabras y pistas -->
         <div class="my-3">
-            <b-table :items="words" :fields="fields" responsive="sm" class="table-fixed table-align-middle" striped bordered borderless small>
+            <h4>Lista de palabras para crear el crucigrama</h4>
+            <b-alert v-if="!words.length" variant="warning" show dismissible> <i class="bi bi-exclamation-triangle-fill"></i>Aún no hay palabras agregadas para crear el crucigrama. Debes agregar mínimo dos palabras para poder crear un crucigrama.</b-alert>            
+            <b-table :items="words" :fields="fields" responsive="sm" class="table-fixed table-align-middle" 
+                empty-text="Aún no hay palabras agregadas para crear el crucigrama" striped bordered borderless small>
                 <template #cell(actions)="data">
                     <b-button size="sm" variant="danger" @click="removeWord(data.index)">
-                        <i class="bi bi-trash"></i> Eliminar
+                        <i class="bi bi-trash"></i>Eliminar
                     </b-button>
                 </template>
             </b-table>
         </div>
 
         <div class="my-1">
+            <!-- <b-alert v-if="words.length < 2" variant="warning" show dismissible> <i class="bi bi-exclamation-triangle-fill"></i>Debes agregar mínimo 2 palabras para crear un crucigrama.</b-alert>             -->
+
             <!-- Botón para generar la mejor opción -->
-            <span class="d-inline-block" tabindex="0" v-b-tooltip.top :title="(words.length < 2) ? 'Debe agregar mínimo 2 palabras para crear un crucigrama.' : 'Genera el mejor crucigrama según nuestra recomendación, basado en un algoritmo eficiente.'">
+            <span class="d-inline-block" tabindex="0" v-b-tooltip.top :title="(words.length < 2) ? 'Debes agregar mínimo 2 palabras para crear un crucigrama.' : 'Genera el mejor crucigrama según nuestra recomendación, basado en un algoritmo eficiente.'">
                 <b-button variant="primary" class="mr-2 my-1" @click="generateBestOption" :disabled="words.length < 2">
                     <i class="bi bi-star-fill"></i> Generar opción recomendada
                 </b-button>
             </span>
 
             <!-- Botón para generar otras opciones -->
-            <span class="d-inline-block" tabindex="0" v-b-tooltip.top :title="(words.length < 2) ? 'Debe agregar mínimo 2 palabras para crear un crucigrama.' : 'Genera el mejor crucigrama según nuestra recomendación, basado en un algoritmo eficiente.'">
+            <span class="d-inline-block" tabindex="0" v-b-tooltip.top :title="(words.length < 2) ? 'Debes agregar mínimo 2 palabras para crear un crucigrama.' : 'Genera múltiples crucigramas alternativos para elegir.'">
                 <b-button variant="secondary" class="ml-2 my-1" @click="generateOtherOptions" :disabled="words.length < 2">
                     <i class="bi bi-shuffle"></i> Generar otras opciones
                 </b-button>

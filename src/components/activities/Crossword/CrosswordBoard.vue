@@ -42,8 +42,6 @@ export default {
     },
     data() {
         return {
-            verticalClues: [],
-            horizontalClues: [],
             userGrid: [],
         }
     },

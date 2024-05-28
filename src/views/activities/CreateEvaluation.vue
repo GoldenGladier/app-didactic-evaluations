@@ -65,12 +65,23 @@
               </p>
             </b-col>
             
-            <b-col v-for="dinamic in dinamicsList" :key="dinamic.id_dinamicas" bg="6" md="6" sm="12" class="custom-card-item">
+            <!-- <b-col v-for="dinamic in dinamicsList" :key="dinamic.id_dinamicas" bg="6" md="6" sm="12" class="custom-card-item">
               <div :class="{'custom-card-item-content': true, 'active': (idDinamic === dinamic.id_dinamicas)}" @click="idDinamic = dinamic.id_dinamicas" >
                 <h4><b-icon :icon="getIcon(dinamic.clasification.clasificacion)" /> {{dinamic.dinamica}}</h4>                
+                <b-img v-bind:src="require('@/assets/dinamics/Crossword.png')" alt="Responsive image" class="custom-img mb-3"></b-img>
                 <p>{{dinamic.descripcion}}</p>
               </div>              
-            </b-col>            
+            </b-col>         -->
+
+            <b-col v-for="dinamic in dinamicsList" :key="dinamic.id_dinamicas" bg="6" md="6" sm="12" class="custom-card-item">
+              <div :class="{'custom-card-item-content': true, 'active': (idDinamic === dinamic.id_dinamicas)}" @click="idDinamic = dinamic.id_dinamicas" class="d-flex align-items-center">
+                <b-img v-bind:src="getImage(dinamic)" alt="Responsive image" class="custom-img mr-2"></b-img>
+                <div class="text-content mr-1">
+                  <h4>{{dinamic.dinamica}}</h4>                   
+                  <p class="text-justify mb-1">{{dinamic.descripcion}}</p>
+                </div>
+              </div>              
+            </b-col>                
 
             <!-- <b-col bg="6" md="6" sm="12" class="custom-card-item">
               <div class="custom-card-item-content">
@@ -93,7 +104,7 @@
 
           </b-row>
           
-          <b-button type="submit" variant="primary" class="mt-3" >Crear Evaluación</b-button>
+          <b-button type="submit" variant="primary" class="mt-3"><i class="bi bi-floppy"></i>Crear Evaluación</b-button>
 
         </b-form>
       </b-container>
@@ -156,8 +167,13 @@
     
 <script>
 import EvaluationService from '@/services/EvaluationService';
+import SortText from '@/assets/dinamics/Sort-text.png';
+import SortItems from '@/assets/dinamics/Sort-items.png';
+import Crossword from '@/assets/dinamics/Crossword.png';
+import Wordsearch from '@/assets/dinamics/Wordsearch.png';
+import BadImage from '@/assets/dinamics/Bad-image.png';
 
-    export default {
+export default {
       data() {
         return {
           isLoading: false,
@@ -178,7 +194,13 @@ import EvaluationService from '@/services/EvaluationService';
           mostrarSubcontenedores3: false,
           contenedorSeleccionado: 0, // Índice del contenedor seleccionado (por defecto, el primero)
             subcontenedorSeleccionado: 0, // Índice del subcontenedor seleccionado (por defecto, el primero)
-    
+          imagePaths: {
+            'Ordena el enunciado': SortText,
+            'Ordena los items': SortItems,
+            'Crucigrama': Crossword,
+            'Sopa de letras': Wordsearch,
+            'default': BadImage
+          }    
         };
       },
       created() {             
@@ -252,6 +274,11 @@ import EvaluationService from '@/services/EvaluationService';
 
           return icon
         },
+    
+        getImage(clasification) {
+          console.log("Clasificación: ", clasification.dinamica);
+          return this.imagePaths[clasification.dinamica] || this.imagePaths['default'];
+        },
 
         toggleContenedor() {
           this.mostrarSubcontenedores = !this.mostrarSubcontenedores;
@@ -320,7 +347,8 @@ import EvaluationService from '@/services/EvaluationService';
 }
 
 .custom-card-item-content.active {
-  border: 1px solid var(--primary);
+  border: 1px solid var(--primary) !important;
+  background-color: rgba(238, 111, 87, 0.05);
 }
 
     .custom-master-container {
@@ -385,4 +413,18 @@ import EvaluationService from '@/services/EvaluationService';
     .boton-redondo-azul:hover {
       background-color: #0056b3; /* Azul más oscuro al pasar el cursor */
     }
-    </style>
+
+.custom-card-item-content {
+  display: flex;
+  align-items: center;
+}
+
+.custom-img {
+  flex: 0 0 25%; 
+  max-width: 25%; 
+}
+
+.text-content {
+  flex: 1; 
+}    
+</style>
