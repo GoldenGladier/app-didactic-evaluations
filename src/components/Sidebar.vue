@@ -19,10 +19,7 @@
               <li :key="index" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
                 <a :href="item.link" class="nav-link" target="_blank">
                   <b-icon :icon="item.icon" class="sidebar-icon"></b-icon>
-                  <Transition name="bounce">
-                    <span v-if="!sidebarCollapsed" class="sidebar-text">{{ item.text }}</span>
-                  </Transition>
-                  
+                    <span v-if="!sidebarCollapsed" class="sidebar-text">{{ item.text }}</span>                 
                 </a>
               </li>
             </template>      
@@ -35,6 +32,22 @@
               </b-nav-item>
             </template>
           </template>
+          
+          <div v-if="isOverlay">
+            <hr class="custom-hr">             
+            <div v-if="!isLoggedIn">
+              <b-nav-item href="/login" class="custom-nav-item">
+                <b-icon icon="door-open" class="sidebar-icon" /> Login
+              </b-nav-item>
+              <b-nav-item href="/register" class="custom-nav-item">
+                <b-icon icon="person-plus" class="sidebar-icon" /> Registrarse
+              </b-nav-item>  
+            </div>
+            <b-nav-item v-else @click="logout()" class="custom-nav-item">
+              <b-icon icon="door-closed" class="sidebar-icon"></b-icon>
+                <span v-if="!sidebarCollapsed" class="sidebar-text">Cerrar sesión</span>
+            </b-nav-item>             
+          </div>          
         </b-nav>
       </ul>
     </div>
@@ -71,6 +84,7 @@ export default {
         { text: 'Administración', icon: 'gear', link: '/administracion' },
         { text: 'UI', icon: 'code-slash', link: '/testingUi' },
         { text: 'Icons', icon: 'suit-heart', link: 'https://icons.getbootstrap.com', isExternalLink: true },
+        { text: 'Desarrollo', icon: 'hammer', link: '/activity' },
         
         // Agrega más ítems aquí según tu necesidad
       ]

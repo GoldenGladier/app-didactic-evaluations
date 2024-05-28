@@ -178,6 +178,11 @@ i {
   vertical-align: middle !important; 
 }
 
+.table-align-middle td,
+.table-align-middle th {
+  vertical-align: middle;
+}
+
 @media (min-width: 768px) {
     .custom-table {
       padding: 1rem;
