@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { isLoggedIn } from '@/store/auth.js'
 
+import NotFound from '@/views/NotFound.vue' 
 import Home from '@/views/Home.vue' 
 import About from '@/views/About.vue'
 import Login from '@/views/Login.vue'
@@ -164,7 +165,13 @@ const router = new Router({
             name: 'Administration',
             component: Administration
         },              
-        
+
+
+        {
+            path: '/:notFound',
+            name: 'NotFound',
+            component: NotFound  
+        },         
     ]
 })
 
