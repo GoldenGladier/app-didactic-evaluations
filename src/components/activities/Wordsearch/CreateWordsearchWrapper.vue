@@ -48,7 +48,7 @@
                     </b-button>
                 </template>
             </b-table>     
-            <b-alert variant="warning" show dismissible> <i class="bi bi-exclamation-triangle-fill"></i>Aún no hay palabras agregadas para crear la sopa de letras. Debes agregar mínimo una palabra para poder crear un sopa de letras.</b-alert>                               
+            <b-alert v-else variant="warning" show dismissible> <i class="bi bi-exclamation-triangle-fill"></i>Aún no hay palabras agregadas para crear la sopa de letras. Debes agregar mínimo una palabra para poder crear un sopa de letras.</b-alert>                               
         </b-col>
 
         <b-col cols="12" class="px-0 px-md-1 d-flex justify-content-center" id="dimensiones">
@@ -116,11 +116,18 @@ export default {
     methods: {
         addWord() {
             if (this.newWord) {
-                this.words.push(this.newWord.replace(/\s+/g, '').toUpperCase());
+                // Quitar espacios, convertir a mayúsculas y eliminar acentos
+                const normalizedWord = this.newWord
+                    .replace(/\s+/g, '') // Quitar espacios
+                    .toUpperCase() // Convertir a mayúsculas
+                    .normalize("NFD") // Normalizar la cadena
+                    .replace(/[\u0300-\u036f]/g, ''); // Quitar diacríticos (acentos)
+
+                this.words.push(normalizedWord);
                 this.newWord = null;
                 this.updateGridDimensions();
             }
-        },  
+        },
         updateGridDimensions() {
             this.longestWordLength = Math.max(...this.words.map(word => word.length));
             if (this.longestWordLength > this.gridCols) {
