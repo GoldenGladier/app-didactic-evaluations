@@ -12,6 +12,12 @@ $text-color: #F6F5F5;
 @import  'node_modules/bootstrap/scss/bootstrap.scss' ;
 @import  'node_modules/bootstrap-vue/src/index.scss' ;
 
+:root {
+    --acivity-border-color: #3A2C60;
+    --acivity-background-color: #F0F0F0;
+    --primary-rgba-30-color: rgba(238, 111, 87, 0.3);
+}
+
 .custom-actions-button .btn-link {
     color: #FFFFFF;
 }
@@ -187,4 +193,14 @@ i {
     .custom-table {
       padding: 1rem;
     }
+}
+
+// Custom buttons
+i.custom-info-driver-button {
+    cursor: pointer;
+    font-size: 85%;
+    margin: 0;
+}
+i.custom-info-driver-button:hover {
+    color: var(--warning);
 }

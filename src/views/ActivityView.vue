@@ -9,26 +9,14 @@
             <b-col cols="12" class="my-5">
                 <CreateCrosswordWrapper :exampleWordsList="words" :modeRespondActivity="true"
                  :showAnswers="showAnswers"></CreateCrosswordWrapper>
+              <hr>
+            </b-col>            
+            <b-col cols="12" class="my-5">
+              <CreateWordsearchWrapper :words="words"
+                :showAnswers="showAnswers"></CreateWordsearchWrapper>
+              <hr>
             </b-col>
-            
-            <!-- <b-col cols="12" class="my-5">
-                <h3>Crossword Puzzle Generator</h3>
-                <CrossUlu :words="words"
-                 :showAnswers="showAnswers"></CrossUlu>
-                <button @click="toggleShowAnswers">Mostrar/Ocultar Respuestas</button>
-            </b-col> -->
 
-            <!-- <b-col cols="12" class="my-5">
-                <h3>Crossword Puzzle Generator</h3>
-                <crossword-generator2 :words="['estrella', 'astronauta', 'nebulosa', 'galaxia', 'satélite', 'cohete', 'orbita', 'planeta']"
-                 :showAnswers="showAnswers"></crossword-generator2>
-                <button @click="toggleShowAnswers">Mostrar/Ocultar Respuestas</button>
-            </b-col> -->
-
-            <!-- <b-col cols="12" class="my-5">
-                <crossword-generator :words="['estrella', 'astronauta', 'nebulosa', 'galaxia', 'satélite', 'cohete', 'orbita', 'planeta']" :showAnswers="showAnswers"></crossword-generator>
-                <button @click="toggleShowAnswers">Mostrar/Ocultar Respuestas</button>
-            </b-col> -->
             <b-col cols="12" class="my-5">
                 <h3>Sort Text</h3>
                 <SortText />
@@ -47,18 +35,15 @@
 </template>
 
 <script>
-// import CrosswordGenerator from '@/components/activities/Games/Crossword.vue';
-// import CrossUlu from '@/components/activities/Games/UluCross/CrossUlu.vue';
 import CreateCrosswordWrapper from '@/components/activities/Crossword/CreateCrosswordWrapper.vue';
-// import CrosswordGenerator2 from '@/components/activities/Games/CrosswordTest/Crossword2.vue';
+import CreateWordsearchWrapper from '@/components/activities/Wordsearch/CreateWordsearchWrapper.vue';
 import SortText from '@/components/activities/SortText.vue';
 import SortItems from '@/components/activities/SortItems.vue';
 
 export default {
   components: {
     CreateCrosswordWrapper,
-    // CrossUlu,
-    // CrosswordGenerator2,
+    CreateWordsearchWrapper,
     SortText,
     SortItems
   },

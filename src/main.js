@@ -4,12 +4,15 @@ import router from './router'
 import store from './store'
 import AuthService from '@/services/AuthService';
 // import './interceptors/axios'
-import VueSweetalert2 from 'vue-sweetalert2'
+import VueSweetalert2 from 'vue-sweetalert2';
+// import VueDriver from "vue-driver.js";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import './styles/app.scss'
 import './styles/custom-sweetalert2.scss'
+
+import "driver.js/dist/driver.css";
 // import 'sweetalert2/dist/sweetalert2.min.css';
 
 // const options = {
@@ -25,6 +28,7 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueSweetalert2)
+// Vue.use(VueDriver)
 
 const token = localStorage.getItem('token');
 if (token) {

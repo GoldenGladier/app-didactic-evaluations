@@ -10,13 +10,13 @@
         <b-form @submit.prevent="addWord" class="my-2 px-0">
             <b-row class="px-0">
                 <b-col cols="12" md="4">
-                    <b-form-group label="Palabra">
-                        <b-form-input v-model="newWord.respuesta" placeholder="Ingresa una palabra" required></b-form-input>
-                    </b-form-group>
+                    <b-form-group label="Palabra" label-for="respuesta" class="required-label">
+                        <b-form-input v-model="newWord.respuesta" id="respuesta" placeholder="Ingresa una palabra" required></b-form-input>
+                    </b-form-group>                 
                 </b-col>
                 <b-col cols="12" md="5">
-                    <b-form-group label="Pista">
-                        <b-form-input v-model="newWord.pregunta" placeholder="Ingresa una pista para adivinar la palabra" required></b-form-input>
+                    <b-form-group label="Pista" label-for="pregunta" class="required-label" >
+                        <b-form-input v-model="newWord.pregunta" id="pregunta" placeholder="Ingresa una pista para adivinar la palabra" required></b-form-input>
                     </b-form-group>
                 </b-col>
                 <b-col cols="12" md="3" class="d-flex align-items-end justify-content-center">
@@ -249,6 +249,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>
