@@ -22,8 +22,7 @@
                   id="subtitle"
                   type="text"
                   v-model="subtitle"                    
-                  placeholder="Ingresa el subtitle de la actividad"
-                  required
+                  placeholder="Ingresa el subtitle de la actividad"                  
                 ></b-form-input>
               </b-form-group>
               <b-form-group label="Descripción o instrucciones" label-for="description" class="mt-1">  
@@ -60,8 +59,8 @@
           <hr class="mt-4 mb-4">
           <b-row class="justify-content-center">  
             <b-col cols="12">
-              <p class="mt-2">
-                Selecciona el tipo de evaluación que deseas crear...
+              <p class="lead mt-4">
+                Selecciona el tipo de evaluación que deseas crear:
               </p>
             </b-col>
             
@@ -169,6 +168,7 @@
 import EvaluationService from '@/services/EvaluationService';
 import SortText from '@/assets/dinamics/Sort-text.png';
 import SortItems from '@/assets/dinamics/Sort-items.png';
+import MultipleChoice from '@/assets/dinamics/MultipleChoice.png';
 import Crossword from '@/assets/dinamics/Crossword.png';
 import Wordsearch from '@/assets/dinamics/Wordsearch.png';
 import BadImage from '@/assets/dinamics/Bad-image.png';
@@ -197,6 +197,7 @@ export default {
           imagePaths: {
             'Ordena el enunciado': SortText,
             'Ordena los items': SortItems,
+            'Opción multiple': MultipleChoice,
             'Crucigrama': Crossword,
             'Sopa de letras': Wordsearch,
             'default': BadImage

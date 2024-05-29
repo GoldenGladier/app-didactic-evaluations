@@ -204,3 +204,13 @@ i.custom-info-driver-button {
 i.custom-info-driver-button:hover {
     color: var(--warning);
 }
+
+.help-button {
+    background: none !important;
+    color: #B6BBC4 !important;
+    border: none !important;
+}
+.help-button:hover {
+    color: var(--acivity-border-color) !important;
+    text-decoration: underline;
+}

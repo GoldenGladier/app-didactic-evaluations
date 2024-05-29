@@ -2,11 +2,15 @@
   <div class="create-wordsearch-wrapper">
     <h3>
         Crear sopa de letras
-        <i class="bi bi-info-circle custom-info-driver-button"
+        <!-- <i class="bi bi-info-circle custom-info-driver-button"
             @click="startTutorial"
             v-b-tooltip.hover.top="'Haz clic aquí para recibir un tutorial sobre cómo crear una sopa de letras'"
-        ></i>      
+        ></i>       -->
     </h3>
+    <b-button class="help-button" @click="startTutorial"
+      v-b-tooltip.hover.top="'Haz clic aquí para recibir un tutorial sobre cómo crear una sopa de letras'" >
+      <i class="bi bi-question-circle"></i>Ayuda
+    </b-button>    
 
     <p class="text-justify">
         Utiliza el siguiente formulario para crear tu sopa de letras.
@@ -36,7 +40,7 @@
     <!-- Tabla para mostrar las palabras de la sopa -->
     <b-row class="align-items-center justify-content-center">
         <b-col cols="12" md="5" class="px-0 px-md-1" id="tabla-palabras-sopa-letras">
-            <h4>Lista de palabras para crear el crucigrama</h4>
+            <h4>Lista de palabras para crear la sopa de letras</h4>
             <b-table v-if="words.length" :items="formattedWordsForTable" :fields="fields" responsive="sm"
                 class="table-fixed table-align-middle" striped bordered borderless small>              
                 <template #cell(palabra)="data">
