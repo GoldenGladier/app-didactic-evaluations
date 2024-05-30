@@ -185,7 +185,7 @@ export default {
   .custom-actions-button:focus,
   .custom-actions-button:hover,
   .custom-actions-button:active{
-    position: absolute;
+    position: absolute !important;
     right: 1.5rem;
     background: #f0f0f0d7;
     color: var(--acivity-border-color) !important;  
