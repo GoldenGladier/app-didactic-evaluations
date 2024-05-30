@@ -114,7 +114,7 @@ export default {
           activationTime: null,
           deactivationDate: null,
           deactivationTime: null,
-          idDinamic: '',
+          idDinamic: 1,
 
           dinamicsList: [],
 
