@@ -11,7 +11,8 @@
                     <DetailsEvaluation :evaluationData="evaluationData" :dinamicsList="dinamicsList" />
                 </b-tab>
                 <b-tab title="Actividades de la evaluación" class="custom-tab-border" :active="activeTab === 'activities'">
-                    <DetailsActivities :evaluationData="evaluationData" :activitiesListData="activitiesListData" />
+                    <DetailsActivities :evaluationData="evaluationData"  />
+                    <!-- :activitiesListData="activitiesListData" -->
                 </b-tab>
             </b-tabs>
         </div>
@@ -25,7 +26,7 @@
     
 <script>
   import EvaluationService from '@/services/EvaluationService';
-  import ActivityService from '@/services/ActivityService';
+  // import ActivityService from '@/services/ActivityService';
   import DetailsEvaluation from '@/components/evaluations/DetailsEvaluation.vue';
   import DetailsActivities from '@/components/evaluations/DetailsActivities.vue';
 
@@ -40,7 +41,7 @@
           idEvaluation: null,
           evaluationData: null,
           dinamicsList: [],   
-          activitiesListData: [],   
+          // activitiesListData: [],   
         };
       },
       created() {           
@@ -54,16 +55,17 @@
         Promise.all([
           EvaluationService.getEvaluationById(this.idEvaluation),
           EvaluationService.getDinamics(),      
-          ActivityService.getActivities(this.idEvaluation).catch(error => {
-            if (error.message === "No hay actividades asociadas a la evaluación.") {
-              console.log("No hay actividades asociadas a la evaluación.");
-              return []; 
-            } else {
-              throw error;
-            }
-          })     
+          // ActivityService.getActivities(this.idEvaluation).catch(error => {
+          //   if (error.message === "No hay actividades asociadas a la evaluación.") {
+          //     console.log("No hay actividades asociadas a la evaluación.");
+          //     return []; 
+          //   } else {
+          //     throw error;
+          //   }
+          // })     
         ]).then(responses => {
-          const [evaluationResponse, dinamicsResponse, activitiesResponse] = responses;
+          const [evaluationResponse, dinamicsResponse, ] = responses;
+          // activitiesResponse
           console.log("Todos los datos de editar evaluación: ", responses);
 
           console.log("Datos de evaluation: ", evaluationResponse);
@@ -72,8 +74,8 @@
           console.log("Dinamicas: ", dinamicsResponse);
           this.dinamicsList = dinamicsResponse;
 
-          console.log("Actividades: ", activitiesResponse, typeof activitiesResponse);
-          this.activitiesListData = activitiesResponse;
+          // console.log("Actividades: ", activitiesResponse, typeof activitiesResponse);
+          // this.activitiesListData = activitiesResponse;
 
           this.isLoading = false 
         }).catch(error => {
