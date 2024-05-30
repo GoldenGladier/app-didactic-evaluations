@@ -32,25 +32,25 @@
                   placeholder="Ingresa una descripción o instrucciones de la actividad..."
                   rows="3"
                 ></b-form-textarea>     
-                <!-- max-rows="6"            -->
               </b-form-group>
               <b-form-checkbox v-model="feedback" id="feedback" name="check-button" class="custom-checkbox-switch" size="lg" switch >             
                 Los alumnos podrán ver sus resultados al finalizar la evaluación   
               </b-form-checkbox>      
             </b-col>
+
             <b-col bg="6" md="6" sm="12" class="custom-mini-form">             
-              <b-form-group label="Fecha de activación de la actividad" label-for="activationDate"> 
-                <b-form-datepicker id="activationDate" v-model="activationDate" locale="es" class="mb-2"></b-form-datepicker>
+              <b-form-group label="Fecha de activación de la actividad" label-for="activationDate" class="required-label"> 
+                <b-form-datepicker id="activationDate" v-model="activationDate" locale="es" class="mb-2" requerid></b-form-datepicker>
               </b-form-group>
-              <b-form-group label="Hora de activación de la actividad" label-for="subtitle" class="mt-1">
+              <b-form-group label="Hora de activación de la actividad" label-for="subtitle" class="mt-1 required-label">
                 <!-- <b-time v-model="activationTime" locale="es" @context="onContext" class="mb-2"></b-time> -->
-                <b-form-timepicker v-model="activationTime" class="mb-2"></b-form-timepicker>
+                <b-form-timepicker v-model="activationTime" class="mb-2" requerid></b-form-timepicker>
               </b-form-group>
                         
-              <b-form-group label="Fecha de finalización de la actividad" label-for="deactivationDate"> 
-                <b-form-datepicker id="deactivationDate" v-model="deactivationDate" locale="es" class="mb-2"></b-form-datepicker>
+              <b-form-group label="Fecha de finalización de la actividad" label-for="deactivationDate" class="required-label"> 
+                <b-form-datepicker id="deactivationDate" v-model="deactivationDate" locale="es" class="mb-2" requerid></b-form-datepicker>
               </b-form-group>
-              <b-form-group label="Hora de finalización de la actividad" label-for="subtitle" class="mt-1">
+              <b-form-group label="Hora de finalización de la actividad" label-for="subtitle" class="mt-1 required-label" requerid>
                 <b-form-timepicker v-model="deactivationTime" class="mb-2"></b-form-timepicker>
               </b-form-group>                           
             </b-col>
@@ -74,32 +74,13 @@
 
             <b-col v-for="dinamic in dinamicsList" :key="dinamic.id_dinamicas" bg="6" md="6" sm="12" class="custom-card-item">
               <div :class="{'custom-card-item-content': true, 'active': (idDinamic === dinamic.id_dinamicas)}" @click="idDinamic = dinamic.id_dinamicas" class="d-flex align-items-center">
-                <b-img v-bind:src="getImage(dinamic)" alt="Responsive image" class="custom-img mr-2"></b-img>
+                <b-img v-bind:src="getImage(dinamic)" alt="Responsive image" class="custom-img-evaluation mr-2"></b-img>
                 <div class="text-content mr-1">
                   <h4>{{dinamic.dinamica}}</h4>                   
                   <p class="text-justify mb-1">{{dinamic.descripcion}}</p>
                 </div>
               </div>              
             </b-col>                
-
-            <!-- <b-col bg="6" md="6" sm="12" class="custom-card-item">
-              <div class="custom-card-item-content">
-                <h4><b-icon icon="text-paragraph" /> Ordena el enunciado</h4>                
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-              </div>              
-            </b-col>
-            <b-col bg="6" md="6" sm="12" class="custom-card-item">
-              <div class="custom-card-item-content">                
-                <h4><b-icon icon="list-ol" /> Ordena los items</h4>                
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-              </div>   
-            </b-col>
-            <b-col bg="6" md="6" sm="12" class="custom-card-item">
-              <div class="custom-card-item-content">                
-                <h4><b-icon icon="question-lg" /> Pregunta y respuesta</h4>                
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-              </div>   
-            </b-col> -->
 
           </b-row>
           
@@ -108,58 +89,6 @@
         </b-form>
       </b-container>
     </b-overlay>
-
-
-  <!-- <div class="container">
-        <p class="text-center mb-3"> A continuación se muestran las dinámicas de evaluación que puedes seleccionar para crear.</p>
-        <div class="contenedor-principal">
-          <div class="contenedor" @click="toggleContenedor">
-            <h3 class="text-center mb-3" >Pregunta-Respuesta</h3>
-          </div>
-      
-          <div class="subcontenedores" v-if="mostrarSubcontenedores">
-            <div class="subcontenedor" @click="abrirSubcontenedor1">
-              <h4 class="text-center mb-3">Gato</h4>
-              <b-button id="Gato" variant="info" class="mr-2" @click="abrirBotonSubcontenedor1">Crear</b-button>
-            </div>
-            <div class="subcontenedor" @click="abrirSubcontenedor2">
-              <h4 class="text-center mb-3">Conecta 4</h4>
-              <b-button id="conecta4" variant="info" class="mr-2" @click="abrirBotonSubcontenedor2">Crear</b-button>
-            </div>
-          </div>
-        </div>
-
-        <div class="contenedor-principal">
-          <div class="contenedor" @click="toggleContenedor2">
-            <h3 class="text-center mb-3">Ordenamiento</h3>
-          </div>
-      
-          <div class="subcontenedores" v-if="mostrarSubcontenedores2">
-            <div class="subcontenedor" @click="abrirSubcontenedorOrd1">
-              <h4 class="text-center mb-3">Ordena los items</h4>
-              <b-button id="Ordenaritems" variant="info" class="mr-2" @click="abrirBotonSubcontenedorOrd1">Crear</b-button>
-            </div>
-              
-            </div>
-    
-          </div>
-          <div class="contenedor-principal">
-          <div class="contenedor" @click="toggleContenedor3">
-            <h3 class="text-center mb-3">Relación de columnas</h3>
-          </div>
-      
-          <div class="subcontenedores" v-if="mostrarSubcontenedores3">
-            <div class="subcontenedor" @click="abrirSubcontenedorCol1">
-              <h4 id="meroma" class="text-center mb-3">Memorama</h4>
-              <b-button variant="info" class="mr-2" @click="abrirBotonSubcontenedorCol1">Crear</b-button>
-            </div>
-            <div class="subcontenedor" @click="abrirSubcontenedorCol2">
-              <h4 class="text-center mb-3">Conecta los items</h4>
-              <b-button id="conecta-items" variant="info" class="mr-2" @click="abrirBotonSubcontenedorCol2">Crear</b-button>
-            </div>
-          </div>
-        </div>
-        </div> -->
   </b-container>       
 </template>
     
@@ -275,48 +204,12 @@ export default {
 
           return icon
         },
-    
         getImage(clasification) {
           console.log("Clasificación: ", clasification.dinamica);
           return this.imagePaths[clasification.dinamica] || this.imagePaths['default'];
-        },
-
-        toggleContenedor() {
-          this.mostrarSubcontenedores = !this.mostrarSubcontenedores;
-        },
-        abrirSubcontenedor1() {
-        },
-        abrirSubcontenedor2() {
-          
-        },
-        abrirBotonSubcontenedor1(){
-        },
-        abrirBotonSubcontenedor2(){
-        },
+        },       
     
-    
-        //esto es lo de Ordenamiento
-        toggleContenedor2() {
-          this.mostrarSubcontenedores2 = !this.mostrarSubcontenedores2;
-        },
-        abrirSubcontenedorOrd1() {
-        },
-        abrirBotonSubcontenedorOrd1(){
-        },
-    
-        //esto es lo de Relacion de columnas 
-        toggleContenedor3() {
-          this.mostrarSubcontenedores3 = !this.mostrarSubcontenedores3;
-        },
-        abrirSubcontenedorCol1() {
-        },
-        abrirSubcontenedorCol2() {
-        },
-        abrirBotonSubcontenedorCol1(){
-        },
-        abrirBotonSubcontenedorCol2(){
-        },
-        
+   
       },
     };
     </script>
@@ -420,7 +313,7 @@ export default {
   align-items: center;
 }
 
-.custom-img {
+.custom-img-evaluation {
   flex: 0 0 25%; 
   max-width: 25%; 
 }
