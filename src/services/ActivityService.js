@@ -1,24 +1,10 @@
-// import axios from 'axios';
 import axios from './axios';
 
 const API_URL = process.env.VUE_APP_API_URL + '/dinamic';
 
-// const axiosInstance = axios.create();
-
-// axiosInstance.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem('token');
-// if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
-
 class ActivityService {
+
+    // ---- Ordena el enunciado ----
   async addActivityOrderStatement(activityData) {
     try {
       const response = await axios.post(`${API_URL}/orderQuestion/add`, activityData);
@@ -46,6 +32,27 @@ class ActivityService {
       // throw error.response.data.message;
     }
   }
+
+    // ---- Ordena los items ----
+  async addActivitiesSortItems(activityData) {
+    try {
+      const response = await axios.post(`${API_URL}/orderItem/addItems`, activityData);
+      return response.data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
+  }
+
+  async deleteActivitySortItems(id) {
+    try {
+      const response = await axios.post(`${API_URL}/orderQuestion/delete`, { id });
+      return response.data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
+  }  
+
+    // ---- Actividades en general ----
 
   async getActivities(idEvaluation) {
     try {

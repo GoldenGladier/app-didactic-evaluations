@@ -16,6 +16,28 @@ $text-color: #F6F5F5;
     --acivity-border-color: #3A2C60;
     --acivity-background-color: #F0F0F0;
     --primary-rgba-30-color: rgba(238, 111, 87, 0.3);
+    --border-gray-color: #ccc;
+    --silent-letter-color: #B6BBC4;
+}
+
+// Custom buttons
+i.custom-info-driver-button {
+    cursor: pointer;
+    font-size: 85%;
+    margin: 0;
+}
+i.custom-info-driver-button:hover {
+    color: var(--warning);
+}
+
+.help-button {
+    background: none !important;
+    color: var(--silent-letter-color) !important;
+    border: none !important;
+}
+.help-button:hover {
+    color: var(--acivity-border-color) !important;
+    text-decoration: underline;
 }
 
 .custom-actions-button .btn-link {
@@ -27,8 +49,12 @@ $text-color: #F6F5F5;
 
 .custom-close-button {
     background: transparent;
-    color: #ccc;
+    color: var(--silent-letter-color);
     border: initial;
+}
+
+.custom-button {
+    cursor: pointer;
 }
 // Estilos para el botón principal
 .btn-primary {
@@ -128,7 +154,7 @@ form {
     }
 }   
 
-.required-label label::after {
+.required-label label:not(.text-muted)::after {
     content: "*";
     color: red;
     margin-left: 5px; 
@@ -144,6 +170,9 @@ form {
 i {
     margin-right: 0.5rem;
     font-size: 130%;
+}
+i.nm {
+    margin-right: 0 !important;
 }
 
 // Custom styles
@@ -193,24 +222,4 @@ i {
     .custom-table {
       padding: 1rem;
     }
-}
-
-// Custom buttons
-i.custom-info-driver-button {
-    cursor: pointer;
-    font-size: 85%;
-    margin: 0;
-}
-i.custom-info-driver-button:hover {
-    color: var(--warning);
-}
-
-.help-button {
-    background: none !important;
-    color: #B6BBC4 !important;
-    border: none !important;
-}
-.help-button:hover {
-    color: var(--acivity-border-color) !important;
-    text-decoration: underline;
 }

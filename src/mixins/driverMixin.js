@@ -18,6 +18,8 @@ export default {
     },
     methods: {
         startTour(steps) {
+            console.log("Pasos recividos: ");
+            console.log(steps);
             this.driver.setSteps(steps);
             this.driver.drive();
         },
