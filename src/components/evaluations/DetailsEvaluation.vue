@@ -61,9 +61,12 @@
             </b-col>
             
             <b-col v-for="dinamic in dinamicsList" :key="dinamic.id_dinamicas" bg="6" md="6" sm="12" class="custom-card-item">
-              <div :class="{'custom-card-item-content': true, 'active': (idDinamic == dinamic.id_dinamicas)}" @click="idDinamic = dinamic.id_dinamicas" >
-                <h4><b-icon :icon="getIcon(dinamic.clasification.clasificacion)" /> {{dinamic.dinamica}}</h4>                
-                <p>{{dinamic.descripcion}}</p>
+              <div :class="{'custom-card-item-content': true, 'active': (idDinamic === dinamic.id_dinamicas)}" @click="idDinamic = dinamic.id_dinamicas" class="d-flex align-items-center">
+                <b-img v-bind:src="getImage(dinamic)" alt="Responsive image" class="custom-img-evaluation mr-2"></b-img>
+                <div class="text-content mr-1">
+                  <h4>{{dinamic.dinamica}}</h4>                   
+                  <p class="text-justify mb-1">{{dinamic.descripcion}}</p>
+                </div>
               </div>              
             </b-col>            
 
@@ -82,7 +85,14 @@
 <script>
 import EvaluationService from '@/services/EvaluationService';
 
-  export default {
+import SortText from '@/assets/dinamics/Sort-text.png';
+import SortItems from '@/assets/dinamics/Sort-items.png';
+import MultipleChoice from '@/assets/dinamics/MultipleChoice.png';
+import Crossword from '@/assets/dinamics/Crossword.png';
+import Wordsearch from '@/assets/dinamics/Wordsearch.png';
+import BadImage from '@/assets/dinamics/Bad-image.png';
+
+export default {
       name: "DetailsEvaluation",
       props: {
         evaluationData: null,
@@ -102,6 +112,15 @@ import EvaluationService from '@/services/EvaluationService';
           deactivationTime: null,
           idDinamic: null,   
           id_evaluaciones: null,
+
+          imagePaths: {
+            'Ordena el enunciado': SortText,
+            'Ordena los items': SortItems,
+            'Opción multiple': MultipleChoice,
+            'Crucigrama': Crossword,
+            'Sopa de letras': Wordsearch,
+            'default': BadImage
+          }            
         };
       },
       created() {             
@@ -160,19 +179,9 @@ import EvaluationService from '@/services/EvaluationService';
             });     
           });           
         },
-        getIcon(clasification) {
-          let icon = ''
-          if(clasification == "ORDER"){
-            icon = 'text-paragraph'
-          }
-          else if(clasification == "LISTOFITEMS"){
-            icon = 'list-ol'
-          }
-          else if(clasification == "QUESTIONANSWER"){
-            icon = 'question-lg'
-          }
-
-          return icon
+        getImage(clasification) {
+          // console.log("Clasificación: ", clasification.dinamica);
+          return this.imagePaths[clasification.dinamica] || this.imagePaths['default'];
         },       
       },
       watch: {

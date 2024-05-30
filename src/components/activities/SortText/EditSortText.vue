@@ -70,7 +70,7 @@
       init_data() {
         this.isLoading = true;
         this.idEvaluation = this.$route.params.idEvaluation;
-        ActivityService.getActivities(this.idEvaluation).catch(error => {
+        ActivityService.getActivitiesOrderStatement(this.idEvaluation).catch(error => {
           if (error.message === "No hay actividades asociadas a la evaluación.") {
             console.log("No hay actividades asociadas a la evaluación.");
             return []; 

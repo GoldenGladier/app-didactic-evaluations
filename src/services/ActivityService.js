@@ -14,6 +14,19 @@ class ActivityService {
     }
   }
 
+  async getActivitiesOrderStatement(idEvaluation) {
+    try {
+      const response = await axios.get(`${API_URL}/orderQuestion/getActivity/${idEvaluation}`);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        throw new Error("No hay actividades asociadas a la evaluación.");
+      } else {
+        throw error;
+      }
+    }
+  }    
+
   async deleteActivityOrderStatement(idOrdenamiento) {
     try {
       const response = await axios.post(`${API_URL}/orderQuestion/delete`, { idOrdenamiento });
@@ -53,19 +66,6 @@ class ActivityService {
   }  
 
     // ---- Actividades en general ----
-
-  async getActivities(idEvaluation) {
-    try {
-      const response = await axios.get(`${API_URL}/orderQuestion/getActivity/${idEvaluation}`);
-      return response.data;
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        throw new Error("No hay actividades asociadas a la evaluación.");
-      } else {
-        throw error;
-      }
-    }
-  }  
 }
 
 export default new ActivityService();
