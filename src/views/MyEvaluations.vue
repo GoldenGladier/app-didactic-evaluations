@@ -16,7 +16,7 @@
           </b-button>           
         </b-col>
 
-        <b-col v-for="item in filteredItems" :key="item.id" lg="4" md="6" sm="12">
+        <b-col v-for="item in filteredItems" :key="item.id" md="3" sm="12">
           <div class="evaluacion-container">
             
             <div>
@@ -29,7 +29,9 @@
               </b-dropdown>
             </div>
 
-            <b-img :src="require('@/assets/default-image.png')" alt="activity-img" class="custom-img"></b-img>            
+            <!-- <b-img :src="require('@/assets/default-image.png')" alt="activity-img" class="custom-img"></b-img>            -->
+            <b-img v-bind:src="getImage(item)" alt="Responsive evaluation image" class="custom-img"></b-img>
+
             <h3 class="text-center">{{ item.nombre }}</h3>
             <h4 class="text-center">{{ item.subtitulo }}</h4>            
             <p class="pl-1 pr-1">{{ item.descripcion }}</p>
@@ -47,18 +49,7 @@
     </b-container>
 
     </div>
-    <!-- <div class="result-container">
-        <div v-for="item in filteredItems" :key="item.id" class="evaluacion-container"> 
-            <h3>{{ item.name }}</h3>
-            <p><strong>ID:</strong> {{ item.id }}</p>
-            <div class="button-container">
-                
-                <b-button @click="viewDetails(item)" variant="info" class="mt-2">Ver Detalles</b-button>
-                <b-button @click="editItem(item)" variant="primary" class="mt-2">Editar</b-button>
-                <b-button @click="removeItem(item)" variant="danger" class="mt-2">Eliminar</b-button>
-            </div>
-        </div>
-    </div> -->
+
     </b-overlay>
     <b-modal v-model="shareEvaluationModal" hide-footer centered>
       <template #modal-header="{close}">
@@ -76,8 +67,15 @@ import EvaluationService from '@/services/EvaluationService';
 
 import SearchBar from '@/components/SearchBar.vue';
 import ShareEvaluationModal from '@/components/evaluations/ShareEvaluationModal.vue';
+// Images
+import SortText from '@/assets/dinamics/Sort-text.png';
+import SortItems from '@/assets/dinamics/Sort-items.png';
+import MultipleChoice from '@/assets/dinamics/MultipleChoice.png';
+import Crossword from '@/assets/dinamics/Crossword.png';
+import Wordsearch from '@/assets/dinamics/Wordsearch.png';
+import BadImage from '@/assets/dinamics/Bad-image.png';
   
-  export default {
+export default {
     name: "MyEvaluations",
     components: {
       SearchBar, ShareEvaluationModal
@@ -85,10 +83,18 @@ import ShareEvaluationModal from '@/components/evaluations/ShareEvaluationModal.
     data() {
       return {
         isLoading: false,
-        items: [], // Aquí va los datos de la base de datos
+        items: [], 
         filteredItems: [],
         shareEvaluationModal: false,
         shareEvaluationId: null,
+        imagePaths: {
+          1: SortText,
+          2: SortItems,
+          3: MultipleChoice,
+          5: Crossword,
+          6: Wordsearch,
+          'default': BadImage
+        }           
       };
     },
     methods: {
@@ -96,16 +102,6 @@ import ShareEvaluationModal from '@/components/evaluations/ShareEvaluationModal.
         this.filteredItems = this.items.filter(item =>
           item.nombre.toLowerCase().includes(searchQuery.toLowerCase())
         );
-      },
-      editItem(item) {
-      // Lógica para agregar el elemento al carrito de compras
-      console.log('Edita la evaluacion:', item);
-      // Aquí puedes implementar la funcionalidad para agregar el elemento al carrito
-      },
-      viewDetails(item) {
-        // Lógica para ver detalles del elemento
-        console.log('Ver detalles de:', item);
-        // Aquí puedes implementar la funcionalidad para mostrar detalles del elemento
       },
       removeItem(id_evaluaciones) {    
         this.$swal({
@@ -141,7 +137,11 @@ import ShareEvaluationModal from '@/components/evaluations/ShareEvaluationModal.
         this.shareEvaluationId = id_evaluaciones;
         this.shareEvaluationModal = true;
         console.log('Compartir evaluación: ', id_evaluaciones);
-      }
+      },
+      getImage(dinamica) {
+        console.log("Clasificación: ", dinamica.id_dinamica);
+        return this.imagePaths[dinamica.id_dinamica] || this.imagePaths['default'];
+      },             
   },
   mounted() {
     this.isLoading = true;
@@ -156,24 +156,14 @@ import ShareEvaluationModal from '@/components/evaluations/ShareEvaluationModal.
       console.error('Error:', error);  
       this.isLoading = false;
     }); 
-
-    // this.items = [
-    //   { id: 1, name: 'Evaluacion A', imgUrl: '@/assets/good-email.png' },
-    //   { id: 2, name: 'Evaluacion B', imgUrl: '@/assets/default-image.png' },
-    //   { id: 3, name: 'Evaluacion C', imgUrl: '@/assets/default-image.png' },
-    //   { i: 4, name: 'examen 6', imgUrl: '@/assets/default-image.png' },
-    //   { id: 5, name: 'tarea 8', imgUrl: '@/assets/default-image.png' },
-    //   { id: 6, name: 'Evaluacion 9', imgUrl: '@/assets/default-image.png' }
-    // ];
-      // Mostrar todos los elementos al iniciod
   }
 };
 </script>
   
-<style scoped>
+<style>
   .custom-img {
     margin-bottom: 1rem;
-    width: 100%;
+    width: 90%;
     border-radius: 0.4rem;
   }
 
@@ -196,15 +186,18 @@ import ShareEvaluationModal from '@/components/evaluations/ShareEvaluationModal.
   .custom-actions-button:hover,
   .custom-actions-button:active{
     position: absolute;
-    right: 1rem;
-    background: transparent;
-    color: #FFFFFF !important;
-    border: none;
+    right: 1.5rem;
+    background: #f0f0f0d7;
+    color: var(--acivity-border-color) !important;  
+    border-radius: 0.4rem;
   }
 
+  .custom-actions-button .btn-link {
+    color: var(--acivity-border-color) !important;
+    padding: 0.5rem !important;
+  }
   .custom-actions-button button.btn-link:hover {
-    color: #FFFFFF !important;
-    background: skyblue;
+    color: var(--acivity-border-color) !important;
   }
 
   @media (max-width: 768px) {
@@ -230,7 +223,7 @@ p {
     margin-bottom: 20px;
   }
 
-.container {
+/* .container {
     background: #FFFFFF;
     max-width: 800px;
     margin: 0 auto;
@@ -238,7 +231,7 @@ p {
     border: 1px solid #ccc;
     border-radius: 0.4rem;
      box-shadow: 0 4px 24px 0 rgba(34,41,47, 0.15);
-  }
+  } */
 
 .result-container {
     display: flex;
