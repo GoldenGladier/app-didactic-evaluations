@@ -14,11 +14,11 @@
                     <b-col md="8" sm="12">
                         <b-alert v-if="!activities.length" variant="warning" show dismissible> <i class="bi bi-exclamation-triangle-fill"></i>Parece ser que aún no hay actividades en esta evaluación.</b-alert>                          
                     </b-col>                          
-                    <b-col v-for="(activity, index) in activities" :key="index" md="8" sm="12">
-                        <CreateSortItemActivity
-                        :index="index"
+                    <b-col v-for="(activity) in activities" :key="activity.idPregunta" md="8" sm="12">
+                        <EditSortItemsActivity
+                        :index="activity.idPregunta"
                         :activity="activity"
-                        :id="'activity-'+index"
+                        :id="'activity-'+activity.idPregunta"
                         @update-activity="updateActivity"
                         @remove-activity="removeActivity"              
                         />
@@ -46,13 +46,13 @@
 <script>
 import driverMixin from '@/mixins/driverMixin';
 import ActivityService from '@/services/ActivityService';
-import CreateSortItemActivity from '@/components/activities/SortItems/CreateSortItemActivity.vue';
+import EditSortItemsActivity from '@/components/activities/SortItems/EditSortItemsActivity.vue';
 
 export default {
     name: "EditSortItemsWrapper",
     mixins: [driverMixin],
     components: {
-        CreateSortItemActivity
+        EditSortItemsActivity
     },
     props: {       
         evaluationData: null,
@@ -66,7 +66,11 @@ export default {
     },
     methods: {
         addNewActivity() {
-            this.activities.push({ question: '', items: [''] });
+            let newIdPregunta = 1;
+            if (this.activities.length > 0) {
+                newIdPregunta = this.activities[this.activities.length - 1].idPregunta + 1;
+            }            
+            this.activities.push({ idPregunta: newIdPregunta, question: '', items: [''] });
         },
         updateActivity(index, activity) {
             this.activities.splice(index, 1, activity);
@@ -76,8 +80,8 @@ export default {
         },
         saveActivities() {
             this.isLoading = true;
-            const preguntas = this.activities.map((activity, index) => ({
-                idPregunta: index + 1,
+            const preguntas = this.activities.map((activity) => ({
+                idPregunta: activity.idPregunta,
                 descripcion: activity.question,
                 respuestas: activity.items.map((item, indexItem) => ({
                     id: indexItem,
@@ -86,8 +90,8 @@ export default {
             }));
 
             const activitiesToSave = {
-            idEvaluacion: this.evaluationData.id_evaluaciones,
-            preguntas: preguntas
+                idEvaluacion: this.evaluationData.id_evaluaciones,
+                preguntas: preguntas
             }
             console.log("Actividades a guardar: ")
             console.log(activitiesToSave)
@@ -157,7 +161,17 @@ export default {
     
     ActivityService.getActivitiesSortItems(this.idEvaluation)
     .then((response) => {
-        this.activities = response;
+        console.log("Recivo del servicio: ", response, typeof(response));
+        let formatActivities = response.sortItemsActivities.map(activity => {
+            return {
+                idPregunta: activity.numPregunta,
+                question: activity.descripcion,
+                items: activity.respuestas.map((ordenItem) => ( ordenItem.texto ))
+            }
+        });
+        this.activities = formatActivities;
+        // this.activities = response.sortItemsActivities;
+        console.log("Actividades: ", this.activities);
     })
     .catch(error => {
         console.error('Error al obtener las actividades de la evaluación:', error);
