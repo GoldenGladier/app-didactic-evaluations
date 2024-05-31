@@ -2,7 +2,7 @@
   <div>
       <EditSortText v-if="idDinamica == 1" :evaluationData="evaluationData" />
       <EditSortItemsWrapper v-else-if="idDinamica == 2" :evaluationData="evaluationData" />
-      <h1 v-else>Error al configurar editor de actividades</h1>
+      <b-alert v-else show variant="danger"><i class="bi bi-exclamation-triangle-fill"></i>Error al configurar editor de actividades</b-alert>
   </div>          
 </template>    
 
