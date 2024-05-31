@@ -12,7 +12,7 @@
       <b-form @submit.prevent="saveActivities()">
         <b-row class="justify-content-center">
           <b-col v-for="(activity, index) in activities" :key="index" md="8" sm="12">
-            <CreateSortItemActivity
+            <CreateSortItemsActivity
               :index="index"
               :activity="activity"
               :id="'activity-'+index"
@@ -46,13 +46,13 @@
 import driverMixin from '@/mixins/driverMixin';
 import EvaluationService from '@/services/EvaluationService';
 import ActivityService from '@/services/ActivityService';
-import CreateSortItemActivity from '@/components/activities/SortItems/CreateSortItemActivity.vue';
+import CreateSortItemsActivity from '@/components/activities/SortItems/CreateSortItemsActivity.vue';
 
 export default {
   name: "CreateSortItemsWrapper",
   mixins: [driverMixin],
   components: {
-    CreateSortItemActivity
+    CreateSortItemsActivity
   },
   data() {
     return {
@@ -198,10 +198,5 @@ export default {
 .custom-button-icon {
   display: flex;
   align-items: center;
-}
-.help-button {
-  position: absolute;
-  top: 0px;
-  left: 10px;
 }
 </style>
