@@ -180,6 +180,11 @@ export default {
       // Navegar a la página de creación de actividad correspondiente
       this.$router.push({ name: 'CreateActivity', params: { activityType: type } });
     }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.auth.isLoggedIn;
+    },
   }
 };
 </script>
