@@ -73,7 +73,7 @@
 
     <b-row class="justify-content-center">
         <b-col md="6" sm="12" class="custom-center-flex">
-            <b-button type="submit" variant="success" class="custom-button-icon" id="save-activities" :disabled="!grid.length" @click="saveActivities">
+            <b-button type="submit" variant="success" class="custom-button-icon" id="save-activities" :disabled="!words.length" @click="saveActivities">
                 <i class="bi bi-floppy"></i> <span class="button-text">Guardar sopa de letras</span>
             </b-button>
         </b-col>          
@@ -90,7 +90,7 @@ import ActivityService from '@/services/ActivityService';
 import WordsearchBoardVue from './WordsearchBoard.vue';
 
 export default {
-    name: 'CreateWordsearchWrapper',
+    name: 'EditWordsearchWrapper',
     mixins: [driverMixin],
     components: {
         WordsearchBoardVue
@@ -104,6 +104,7 @@ export default {
     },
     data() {
       return {
+        idEvaluation: null,
           fields: [
               { key: 'palabra', label: 'Palabra', tdClass: 'col-8' },
               { key: 'actions', label: '' }
@@ -116,17 +117,30 @@ export default {
           gridRows: 10,
           grid: [],
           puzzle: null,
-
-        // selectedCells: [],
-        // previewCells: [],
-        // foundCells: [],
-        // foundWords: [],
-        // notFoundCells: [],
-        // selecting: false,
-        // startCell: null,
       };
     },
     methods: {
+      initData() {
+        this.$emit('update:isLoading', true);
+        this.idEvaluation = this.$route.params.idEvaluation;
+        
+        ActivityService.getActivitiesWordsearch(this.idEvaluation)
+        .then((response) => {
+            console.log("Recivo del servicio: ", response, typeof(response));
+
+            this.gridCols = response.boardData.columna;
+            this.gridRows = response.boardData.fila;
+            this.words = Object.values(response?.words);
+
+            console.log("Actividades: ", this.activities);
+        })
+        .catch(error => {
+            console.error('Error al obtener las actividades de la evaluación:', error);
+        })
+        .finally(() => {
+          this.$emit('update:isLoading', false);
+        });   
+      },
         addWord() {
             if (this.newWord) {
                 // Quitar espacios, convertir a mayúsculas y eliminar acentos
@@ -265,90 +279,9 @@ export default {
                 },                                                                                            
             ]);
         },
-
-    isSelected(row, col) {
-      return this.selectedCells.some(cell => cell.row === row && cell.col === col);
-    },
-    isPreview(row, col) {
-      return this.previewCells.some(cell => cell.row === row && cell.col === col);
-    },
-    isFound(row, col) {
-      return this.foundCells.some(cell => cell.row === row && cell.col === col);
-    },
-    isNotFound(row, col) {
-      return this.notFoundCells.some(cell => cell.row === row && cell.col === col);
-    },
-    isWordFound(word) {
-      return this.foundWords.includes(word);
-    },
-    selectCell(row, col) {
-      if (!this.selecting) {
-        this.startCell = { row, col };
-        this.selectedCells = [{ row, col }];
-        this.selecting = true;
-      } else {
-        const endCell = { row, col };
-        this.selectedCells = this.getCellsInLine(this.startCell.row, this.startCell.col, endCell.row, endCell.col);
-        this.selecting = false;
-        this.handleSelection(this.startCell, endCell);
-        this.startCell = null;
-      }
-    },
-    previewSelection(row, col) {
-      if (this.selecting && this.startCell) {
-        this.previewCells = this.getCellsInLine(this.startCell.row, this.startCell.col, row, col);
-      } else {
-        this.previewCells = [];
-      }
-    },
-    getCellsInLine(startRow, startCol, endRow, endCol) {
-      const cells = [];
-      const dRow = endRow - startRow;
-      const dCol = endCol - startCol;
-
-      if (dRow !== 0 && dCol !== 0 && Math.abs(dRow) !== Math.abs(dCol)) {
-        return cells; // No es una línea recta ni una diagonal estricta
-      }
-
-      const steps = Math.max(Math.abs(dRow), Math.abs(dCol));
-
-      for (let i = 0; i <= steps; i++) {
-        const row = startRow + Math.round((i * dRow) / steps);
-        const col = startCol + Math.round((i * dCol) / steps);
-        cells.push({ row, col });
-      }
-
-      return cells;
-    },
-    handleSelection(startCell, endCell) {
-      const word = this.puzzle.read({ x: startCell.col, y: startCell.row }, { x: endCell.col, y: endCell.row });
-      const reversedWord = this.puzzle.read({ x: endCell.col, y: endCell.row }, { x: startCell.col, y: startCell.row });
-
-      if (this.words.includes(word) || this.words.includes(reversedWord)) {
-        const foundWord = this.words.includes(word) ? word : reversedWord;
-        console.log('Palabra encontrada:', foundWord);
-        this.foundCells.push(...this.selectedCells);
-        if (!this.foundWords.includes(foundWord)) {
-          this.foundWords.push(foundWord);
-        }
-      } else {
-        console.log('Palabra no válida:', word);
-        this.notFoundCells.push(...this.selectedCells);
-        setTimeout(() => {
-          this.notFoundCells = [];
-        }, 1000);
-      }
-
-      this.selectedCells = [];
-    },
-    splitWordsIntoColumns(words, numColumns) {
-      const wordsPerColumn = Math.ceil(words.length / numColumns);
-      const columns = [];
-      for (let i = 0; i < numColumns; i++) {
-        columns.push(words.slice(i * wordsPerColumn, (i + 1) * wordsPerColumn));
-      }
-      return columns;
-    }
+  },
+  mounted() {
+    this.initData();
   },
   computed: {
     formattedWordsForTable() {

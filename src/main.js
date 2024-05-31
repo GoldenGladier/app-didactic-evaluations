@@ -35,6 +35,7 @@ if (token) {
   AuthService.validateSession(token)
     .catch(error => {
       console.error('La sesión del usuario ha caducado.', error);
+      router.push({ name: 'Login' });
     });
 }
 
