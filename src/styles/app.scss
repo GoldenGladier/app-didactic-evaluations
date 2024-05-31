@@ -43,6 +43,14 @@ i.custom-info-driver-button:hover {
     text-decoration: underline;
 }
 
+.silent-button, .silent-button:hover, .silent-button:focus, .silent-button:active {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    outline: none;
+    color: var(--silent-letter-color);
+}
+
 .custom-actions-button .btn-link {
     color: #FFFFFF;
 }

@@ -11,6 +11,17 @@ class AdminService {
       throw error.response.data.message;
     }
   }      
+
+  async deleteUserById(id_info_usuario) {
+    try {
+      const response = await axios.delete(`${API_URL}/users/${id_info_usuario}`);        
+      return response.data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
+  }     
 }
+
+
 
 export default new AdminService();

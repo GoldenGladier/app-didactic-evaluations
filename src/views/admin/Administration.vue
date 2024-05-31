@@ -19,7 +19,12 @@
                         <span>
                             {{ data.value | capitalizeFirstLetter }}
                         </span>                    
-                    </template>                            
+                    </template>   
+                    <template v-slot:cell(acciones)="row">
+                        <button class="silent-button text-danger" v-b-tooltip.top title="Eliminar usuario" @click="deleteUser(row.item.id_info_usuario)">
+                            <i class="bi bi-trash3-fill nm"></i>
+                        </button>
+                    </template>                                               
                 </b-table> 
             </b-container>     
         </section>
@@ -44,7 +49,8 @@ export default {
                 { key: 'fullname', label: 'Nombre' },
                 { key: 'correo', label: 'Correo eléctronico' },
                 { key: 'verificado', label: 'Usuario verificado' },
-                { key: 'rol_de_usuario', label: 'Rol' }                
+                { key: 'rol_de_usuario', label: 'Rol' },                
+                { key: 'acciones', label: 'Acciones' }                
             ],   
         }
     },
@@ -65,7 +71,21 @@ export default {
             .finally(() => {
                 this.isLoading = false 
             })                
-        },       
+        },   
+        deleteUser(id_info_usuario) {
+            this.isLoading = true;
+            AdminService.deleteUserById(id_info_usuario)
+            .then(response => {
+                console.log("Usuario eliminado exitosamente", response);
+                this.init_data();                 
+            })
+            .catch(error => {
+                console.error('Error al eliminar usuario:', error);
+            })
+            .finally(() => {
+                this.isLoading = false 
+            })             
+        }            
     },
     created() {
         this.init_data();
