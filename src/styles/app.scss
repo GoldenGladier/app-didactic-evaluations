@@ -34,6 +34,9 @@ i.custom-info-driver-button:hover {
     background: none !important;
     color: var(--silent-letter-color) !important;
     border: none !important;
+    position: absolute;
+    top: 0px;
+    left: 10px;    
 }
 .help-button:hover {
     color: var(--acivity-border-color) !important;

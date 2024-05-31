@@ -22,7 +22,7 @@
                   id="subtitle"
                   type="text"
                   v-model="subtitle"                    
-                  placeholder="Ingresa el subtitle de la actividad"                  
+                  placeholder="Ingresa el subtitulo de la actividad"                  
                 ></b-form-input>
               </b-form-group>
               <b-form-group label="Descripción o instrucciones" label-for="description" class="mt-1">  
@@ -33,12 +33,12 @@
                   rows="3"
                 ></b-form-textarea>     
               </b-form-group>
-              <b-form-checkbox v-model="feedback" id="feedback" name="check-button" class="custom-checkbox-switch" size="lg" switch >             
+              <b-form-checkbox v-model="feedback" id="feedback" name="check-button" class="custom-checkbox-switch mb-4 mb-md-0" size="lg" switch >             
                 Los alumnos podrán ver sus resultados al finalizar la evaluación   
               </b-form-checkbox>      
             </b-col>
 
-            <b-col bg="6" md="6" sm="12" class="custom-mini-form">             
+            <b-col bg="6" md="6" sm="12" class="custom-mini-form mt-4 mt-md-0">             
               <b-form-group label="Fecha de activación de la actividad" label-for="activationDate" class="required-label"> 
                 <b-form-datepicker id="activationDate" v-model="activationDate" locale="es" class="mb-2" requerid></b-form-datepicker>
               </b-form-group>
@@ -62,15 +62,7 @@
               <p class="lead mt-4">
                 Selecciona el tipo de evaluación que deseas crear:
               </p>
-            </b-col>
-            
-            <!-- <b-col v-for="dinamic in dinamicsList" :key="dinamic.id_dinamicas" bg="6" md="6" sm="12" class="custom-card-item">
-              <div :class="{'custom-card-item-content': true, 'active': (idDinamic === dinamic.id_dinamicas)}" @click="idDinamic = dinamic.id_dinamicas" >
-                <h4><b-icon :icon="getIcon(dinamic.clasification.clasificacion)" /> {{dinamic.dinamica}}</h4>                
-                <b-img v-bind:src="require('@/assets/dinamics/Crossword.png')" alt="Responsive image" class="custom-img mb-3"></b-img>
-                <p>{{dinamic.descripcion}}</p>
-              </div>              
-            </b-col>         -->
+            </b-col>            
 
             <b-col v-for="dinamic in dinamicsList" :key="dinamic.id_dinamicas" bg="6" md="6" sm="12" class="custom-card-item">
               <div :class="{'custom-card-item-content': true, 'active': (idDinamic === dinamic.id_dinamicas)}" @click="idDinamic = dinamic.id_dinamicas" class="d-flex align-items-center">
@@ -103,128 +95,136 @@ import Wordsearch from '@/assets/dinamics/Wordsearch.png';
 import BadImage from '@/assets/dinamics/Bad-image.png';
 
 export default {
-      data() {
-        return {
-          isLoading: false,
-          title: '',
-          subtitle: '',
-          description: '',
-          feedback: false,
-          activationDate: null,
-          activationTime: null,
-          deactivationDate: null,
-          deactivationTime: null,
-          idDinamic: 1,
+  name: 'CreateEvaluation',
+  data() {
+    return {
+      isLoading: false,
+      title: '',
+      subtitle: '',
+      description: '',
+      feedback: false,
+      activationDate: null,
+      activationTime: null,
+      deactivationDate: null,
+      deactivationTime: null,
+      idDinamic: 1,
 
-          dinamicsList: [],
+      dinamicsList: [],
 
-          mostrarSubcontenedores: false,
-          mostrarSubcontenedores2: false,
-          mostrarSubcontenedores3: false,
-          contenedorSeleccionado: 0, // Índice del contenedor seleccionado (por defecto, el primero)
-            subcontenedorSeleccionado: 0, // Índice del subcontenedor seleccionado (por defecto, el primero)
-          imagePaths: {
-            'Ordena el enunciado': SortText,
-            'Ordena los items': SortItems,
-            'Opción multiple': MultipleChoice,
-            'Crucigrama': Crossword,
-            'Sopa de letras': Wordsearch,
-            'default': BadImage
-          }    
-        };
-      },
-      created() {             
-        EvaluationService.getDinamics()
-        .then(response => {
-          console.log("Dinamicas: ", response);
-          this.dinamicsList = response
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          this.$swal({
-            icon: 'error',
-            title: '¡Error!',
-            text: error,
-          });     
-        });           
-      },
-      methods: {
-        create() {
-          this.isLoading = true
-          let newEvaluation = {
-            title: this.title,
-            subtitle: this.subtitle,
-            description: this.description,
-            feedback: this.feedback,
-            activationDate: this.activationDate,
-            activationTime: this.activationTime,
-            deactivationDate: this.deactivationDate,
-            deactivationTime: this.deactivationTime,          
-            idDinamic: this.idDinamic.toString(),
-          }
-          console.log("Se quiere crear la evaluación: ", newEvaluation);
-
-          EvaluationService.create(newEvaluation)
-          .then(response => {
-            this.isLoading = false
-            console.log("Creando evaluación response.data: ", response);
-            let idEvaluation = response.evaluation.id_evaluaciones;
-          
-            this.$swal({
-              icon: 'success',
-              title: '¡Éxito!',
-              text: 'La evaluación se ha creado correctamente',
-            }).then(() => {
-              this.$router.push(`/evaluaciones/${idEvaluation}/crear-actividades`);
-            });            
-            
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            this.isLoading = false
-            this.$swal({
-              icon: 'error',
-              title: '¡Error!',
-              text: error,
-            });     
-          });           
-        },
-
-        getIcon(clasification) {
-          let icon = ''
-          if(clasification == "ORDER"){
-            icon = 'text-paragraph'
-          }
-          else if(clasification == "LISTOFITEMS"){
-            icon = 'list-ol'
-          }
-          else if(clasification == "QUESTIONANSWER"){
-            icon = 'question-lg'
-          }
-
-          return icon
-        },
-        getImage(clasification) {
-          console.log("Clasificación: ", clasification.dinamica);
-          return this.imagePaths[clasification.dinamica] || this.imagePaths['default'];
-        },       
-    
-   
-      },
+      mostrarSubcontenedores: false,
+      mostrarSubcontenedores2: false,
+      mostrarSubcontenedores3: false,
+      contenedorSeleccionado: 0, // Índice del contenedor seleccionado (por defecto, el primero)
+        subcontenedorSeleccionado: 0, // Índice del subcontenedor seleccionado (por defecto, el primero)
+      imagePaths: {
+        'Ordena el enunciado': SortText,
+        'Ordena los items': SortItems,
+        'Opción multiple': MultipleChoice,
+        'Crucigrama': Crossword,
+        'Sopa de letras': Wordsearch,
+        'default': BadImage
+      }    
     };
-    </script>
+  },
+  created() {             
+    EvaluationService.getDinamics()
+    .then(response => {
+      console.log("Dinamicas: ", response);
+      this.dinamicsList = response
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      this.$swal({
+        icon: 'error',
+        title: '¡Error!',
+        text: error,
+      });     
+    });           
+  },
+  methods: {
+    create() {
+      this.isLoading = true
+      let newEvaluation = {
+        title: this.title,
+        subtitle: this.subtitle,
+        description: this.description,
+        feedback: this.feedback,
+        activationDate: this.activationDate,
+        activationTime: this.activationTime,
+        deactivationDate: this.deactivationDate,
+        deactivationTime: this.deactivationTime,          
+        idDinamic: this.idDinamic.toString(),
+      }
+      console.log("Se quiere crear la evaluación: ", newEvaluation);
+
+      EvaluationService.create(newEvaluation)
+      .then(response => {
+        this.isLoading = false
+        console.log("Creando evaluación response.data: ", response);
+        let idEvaluation = response.evaluation.id_evaluaciones;
+      
+        this.$swal({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'La evaluación se ha creado correctamente',
+        }).then(() => {
+          this.$router.push(`/evaluaciones/${idEvaluation}/crear-actividades`);
+        });            
+        
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        this.isLoading = false
+        this.$swal({
+          icon: 'error',
+          title: '¡Error!',
+          text: error,
+        });     
+      });           
+    },
+
+    getIcon(clasification) {
+      let icon = ''
+      if(clasification == "ORDER"){
+        icon = 'text-paragraph'
+      }
+      else if(clasification == "LISTOFITEMS"){
+        icon = 'list-ol'
+      }
+      else if(clasification == "QUESTIONANSWER"){
+        icon = 'question-lg'
+      }
+
+      return icon
+    },
+    getImage(clasification) {
+      return this.imagePaths[clasification.dinamica] || this.imagePaths['default'];
+    },              
+  },
+  mounted() {
+    // Establecer fechas y horas por defecto
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(now.getDate() + 1);
+
+    this.activationDate = now.toISOString().split('T')[0]; // Fecha actual
+    this.activationTime = now.toTimeString().split(' ')[0].slice(0, 5); // Hora actual
+    this.deactivationDate = tomorrow.toISOString().split('T')[0]; // Fecha de mañana
+    this.deactivationTime = '23:59'; // 11:59 PM
+  },      
+};
+</script>
     
-    <style>
+<style>
 
 .custom-mini-form {
+  width: 100%;
   padding: 0 2rem;
 }
 .custom-checkbox-switch .custom-control-label {
   text-align: left;
   color: #2c3e50;
   font-size: 1rem !important; 
-  /* margin-top: 2rem; 
-  margin-bottom: 2rem; */
   padding-top: 0.2rem;
 }
 
@@ -244,69 +244,6 @@ export default {
   border: 1px solid var(--primary) !important;
   background-color: rgba(238, 111, 87, 0.05);
 }
-
-    .custom-master-container {
-      min-height: 100%;
-    }
-
-
-   .contenedor-principal {
-    width: 50%;
-    margin: 0 auto;
-    text-align: center;
-    padding: 20px;
-   
-    }
-
-    .contenedor:hover {
-      background-color: #759eca; /* Azul más oscuro al pasar el cursor */
-    }
-
-    .contenedor {
-      border: 1px solid #ccc;
-      padding: 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s ;
-    }
-    
-    .contenedor h2 {
-      margin-top: 0;
-    }
-    
-    .subcontenedores {
-      display: flex;
-      flex-direction: column;
-      margin-top: 20px;
-      border-radius: 10px;
-    }
-    
-    .subcontenedor {
-      margin-bottom: 10px;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    
-    .subcontenedor h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
-    }
-    
-    .boton-redondo-azul {
-        background-color: #fff; /* Color de fondo blanco */
-      color: #000; /* Color del texto negro */
-      padding: 10px 20px; /* Ajuste de relleno */
-      border: 1px solid #ccc; /* Borde gris claro */
-      border-radius: 5px; /* Bordes redondeados */
-      cursor: pointer; /* Cursor en forma de puntero */
-      transition: background-color 0.3s; /* Animación de hover */
-    }
-    
-    .boton-redondo-azul:hover {
-      background-color: #0056b3; /* Azul más oscuro al pasar el cursor */
-    }
 
 .custom-card-item-content {
   display: flex;

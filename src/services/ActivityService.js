@@ -78,6 +78,26 @@ class ActivityService {
     }
   }  
 
+    // ---- Crucigrama ----
+    async addActivitiesCrossword(activityData) {
+      try {
+        const response = await axios.post(`${API_URL}/crossword/add`, activityData);
+        return response.data;
+      } catch (error) {
+        throw error.response.data.message;
+      }
+    }  
+
+    // ---- Sopa de letras ----
+    async addActivitiesWordsearch(activityData) {
+      try {
+        const response = await axios.post(`${API_URL}/wordSearch/add`, activityData);
+        return response.data;
+      } catch (error) {
+        throw error.response.data.message;
+      }
+    }  
+
     // ---- Actividades en general ----
 }
 
