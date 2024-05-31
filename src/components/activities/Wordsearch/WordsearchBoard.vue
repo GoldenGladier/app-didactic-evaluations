@@ -1,11 +1,11 @@
 <template>
   <div v-if="grid.length">
+    <b-button class="help-button" @click="startTutorial"
+      v-b-tooltip.hover.top="'Haz clic aquí para recibir un tutorial sobre cómo responder la sopa de letras.'" >
+      <i class="bi bi-question-circle"></i>Ayuda
+    </b-button>      
     <h3>
-        Sopa de letras
-        <i class="bi bi-info-circle custom-info-driver-button"
-            @click="startTutorial"
-            v-b-tooltip.hover.top="'Haz clic aquí para recibir un tutorial sobre cómo responder la sopa de letras'"
-        ></i>   
+        Sopa de letras 
     </h3>
 
     <div class="word-search" id="word-search" v-if="grid.length">

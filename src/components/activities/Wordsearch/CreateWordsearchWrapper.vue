@@ -1,20 +1,12 @@
 <template>
-  <div class="create-wordsearch-wrapper">
-    <h3>
-        Crear sopa de letras
-        <!-- <i class="bi bi-info-circle custom-info-driver-button"
-            @click="startTutorial"
-            v-b-tooltip.hover.top="'Haz clic aquí para recibir un tutorial sobre cómo crear una sopa de letras'"
-        ></i>       -->
-    </h3>
+  <b-container class="create-wordsearch-wrapper">
     <b-button class="help-button" @click="startTutorial"
       v-b-tooltip.hover.top="'Haz clic aquí para recibir un tutorial sobre cómo crear una sopa de letras'" >
       <i class="bi bi-question-circle"></i>Ayuda
-    </b-button>    
-
-    <p class="text-justify">
-        Utiliza el siguiente formulario para crear tu sopa de letras.
-    </p>
+    </b-button>       
+    
+    <h3>Crear sopa de letras</h3>
+    <p>Utiliza el siguiente formulario para crear tu sopa de letras.</p>
 
     <!-- Form para agregar palabras -->
     <b-form @submit.prevent="addWord" class="p-0 mb-3">
@@ -79,12 +71,21 @@
         </b-col>
     </b-row>
 
-  </div>
+    <b-row class="justify-content-center">
+        <b-col md="6" sm="12" class="custom-center-flex">
+            <b-button type="submit" variant="success" class="custom-button-icon" id="save-activities" :disabled="!grid.length" @click="saveActivities">
+                <i class="bi bi-floppy"></i> <span class="button-text">Guardar sopa de letras</span>
+            </b-button>
+        </b-col>          
+    </b-row>         
+
+  </b-container>
 </template>
 
 <script>
 import WordSearch from '@blex41/word-search';
 import driverMixin from '@/mixins/driverMixin';
+import ActivityService from '@/services/ActivityService';
 
 import WordsearchBoardVue from './WordsearchBoard.vue';
 
@@ -94,29 +95,37 @@ export default {
     components: {
         WordsearchBoardVue
     },
-  data() {
-    return {
-        fields: [
-            { key: 'palabra', label: 'Palabra', tdClass: 'col-8' },
-            { key: 'actions', label: '' }
-        ],        
-        newWord: null,
-        wordsTest: ["GAME", "LEVEL", "QUEST", "BOSS", "PIXEL", "LOOT", "NPC", "HERO", "SPAWN", "GUILD"],
-        words: [],
-        longestWordLength: 1,
-        gridCols: 10,
-        gridRows: 10,
-      grid: [],
-      selectedCells: [],
-      previewCells: [],
-      foundCells: [],
-      foundWords: [],
-      notFoundCells: [],
-      selecting: false,
-      startCell: null,
-      puzzle: null,
-    };
-  },
+    props: {
+        evaluationData: null,
+        isLoading: {
+            type: Boolean,
+            required: true
+        },
+    },
+    data() {
+      return {
+          fields: [
+              { key: 'palabra', label: 'Palabra', tdClass: 'col-8' },
+              { key: 'actions', label: '' }
+          ],        
+          newWord: null,
+          wordsTest: ["GAME", "LEVEL", "QUEST", "BOSS", "PIXEL", "LOOT", "NPC", "HERO", "SPAWN", "GUILD"],
+          words: [],
+          longestWordLength: 1,
+          gridCols: 10,
+          gridRows: 10,
+          grid: [],
+          puzzle: null,
+
+        // selectedCells: [],
+        // previewCells: [],
+        // foundCells: [],
+        // foundWords: [],
+        // notFoundCells: [],
+        // selecting: false,
+        // startCell: null,
+      };
+    },
     methods: {
         addWord() {
             if (this.newWord) {
@@ -162,11 +171,47 @@ export default {
             this.startCell = null;
 
             console.log("Palabras escondidas: ", this.puzzle.words);
-            console.error("Palabras que no encajan: ", this.puzzle.forbiddenWords);
+        },
+        saveActivities() {
+            this.$emit('update:isLoading', true);
+            
+            const palabras = this.words.map( (word, index) => {
+                return {
+                    idPalabra: index,
+                    palabra: word
+                };
+            });      
 
-            if (this.puzzle.forbiddenWords) {
-                console.error("Palabras que no encajan: ", this.puzzle.forbiddenWords);
+            const activitiesToSave = {
+                idEvaluacion: this.evaluationData.id_evaluaciones,
+                gridCols: this.gridCols,
+                gridRows: this.gridRows,
+                palabras: palabras
             }
+            console.log("Sopa de letras a guardar: ")
+            console.log(activitiesToSave)
+
+            ActivityService.addActivitiesWordsearch(activitiesToSave)
+            .then(() => {
+                this.$swal({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: 'La sopa de letras fue guardada correctamente.',
+                }).then(() => {
+                    this.$router.push('/evaluaciones/mis-evaluaciones');
+                });
+            })
+            .catch(error => {
+                console.error('Error al intentar guardar la sopa de letras:', error);
+                this.$swal({
+                    icon: 'error',
+                    title: '¡Error!',
+                    text: 'Hubo un error al guardar la sopa de letras.',
+                });
+            })
+            .finally(() => {
+                this.$emit('update:isLoading', false);
+            });    
         },
         startTutorial() {
             this.startTour([
@@ -206,10 +251,18 @@ export default {
                     element: '#btn-generar-sopa',
                     popover: {
                         title: 'Paso 5: Generar la Sopa de Letras',
-                        description: 'Una vez que hayas agregado todas las palabras para tu sopa y configurado las dimensiones, haz clic en "Generar sopa de letras". La sopa se generará automáticamente con las palabras que has ingresado.',
+                        description: 'Una vez que hayas agregado todas las palabras para tu sopa y configurado las dimensiones, haz clic en "<i class="bi bi-shuffle"></i>Generar sopa de letras". La sopa se generará automáticamente con las palabras que has ingresado. Cada alumno recibirá una sopa de letras aleatoria usando las palabras y dimensiones que agregaste.',
                         position: 'top',
                     },
-                },                                                                             
+                }, 
+                {
+                    element: '#save-activities',
+                    popover: {
+                        title: 'Paso 6: Guardar la Sopa de Letras',
+                        description: 'Cuando estés contento con la sopa de letras que has generado, haz clic en "<i class="bi bi-floppy"></i>Guardar sopa de letras".',
+                        position: 'top',
+                    },
+                },                                                                                            
             ]);
         },
 
