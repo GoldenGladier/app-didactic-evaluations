@@ -172,7 +172,11 @@ const router = new Router({
             name: 'NotFound',
             component: NotFound  
         },         
-    ]
+    ],
+    scrollBehavior() {
+        // document.getElementById("master-container").scrollIntoView({ behavior: "smooth" });
+        document.getElementById("view-master-container").scrollIntoView({ behavior: "smooth" });
+    } 
 })
 
 // Guardia de navegación para verificar la autenticación

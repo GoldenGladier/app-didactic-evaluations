@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <Sidebar :sidebarWidth.sync="sidebarWidth" />
-    <div class="master-container" :class="{ 'with-sidebar': !isOverlay }" :style="{ 'margin-left': sidebarWidth }" >
+    <div class="master-container" id="master-container" :class="{ 'with-sidebar': !isOverlay }" :style="{ 'margin-left': sidebarWidth }" >
       <Navbar />
-      <div class="view-master-container">
+      <div class="view-master-container" id="view-master-container">
         <router-view></router-view>
       </div>
     </div>    
