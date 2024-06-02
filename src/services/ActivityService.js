@@ -78,6 +78,16 @@ class ActivityService {
     }
   }  
 
+    // ---- Pregunta de opción multiple ----
+  async addActivitiesMultipleChoice(activityData) {
+    try {
+      const response = await axios.post(`${API_URL}/questionAnswer/add`, activityData);
+      return response.data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
+  }
+
     // ---- Crucigrama ----
   async addActivitiesCrossword(activityData) {
     try {
@@ -87,6 +97,19 @@ class ActivityService {
       throw error.response.data.message;
     }
   }  
+  
+  async getActivitiesCrossword(idEvaluation) {
+    try {
+      const response = await axios.get(`${API_URL}/getActivity/crossword/${idEvaluation}`);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        throw new Error("No hay actividades asociadas a la evaluación.");
+      } else {
+        throw error;
+      }
+    }
+  }       
 
     // ---- Sopa de letras ----
   async addActivitiesWordsearch(activityData) {

@@ -5,6 +5,7 @@
 
       <CreateSortText v-if="idDinamica == 1" />
       <CreateSortItemsWrapper v-else-if="idDinamica == 2" />
+      <CreateMultipleChoiceWrapper v-else-if="idDinamica == 3" :evaluationData="evaluationData" :isLoading.sync="isLoading" />      
       <CreateCrosswordWrapper v-else-if="idDinamica == 5" :evaluationData="evaluationData" :isLoading.sync="isLoading" />
       <CreateWordsearchWrapper v-else-if="idDinamica == 6" :evaluationData="evaluationData" :isLoading.sync="isLoading" />
       <b-alert v-else-if="idDinamica != null" show variant="danger"><i class="bi bi-exclamation-triangle-fill"></i>Error al configurar editor de actividades</b-alert>
@@ -17,7 +18,7 @@
 import EvaluationService from '@/services/EvaluationService';
 import CreateSortText from '@/components/activities/SortText/CreateSortText.vue';
 import CreateSortItemsWrapper from '@/components/activities/SortItems/CreateSortItemsWrapper.vue';
-
+import CreateMultipleChoiceWrapper from '@/components/activities/MultipleChoice/CreateMultipleChoiceWrapper.vue';
 import CreateCrosswordWrapper from '@/components/activities/Crossword/CreateCrosswordWrapper.vue';
 import CreateWordsearchWrapper from '@/components/activities/Wordsearch/CreateWordsearchWrapper.vue';
 
@@ -26,7 +27,7 @@ export default {
     components: {
       CreateSortText,
       CreateSortItemsWrapper, 
-      
+      CreateMultipleChoiceWrapper,
       CreateCrosswordWrapper,
       CreateWordsearchWrapper,
     },
