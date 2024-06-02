@@ -11,7 +11,7 @@
 
     <h5>Pregunta {{ questionIndex + 1 }}:</h5>
     <b-form-group>
-      <b-form-input v-model="question.question" placeholder="Ingresa la pregunta" class="input-question"></b-form-input>
+      <b-form-input v-model="question.question" placeholder="Ingresa la pregunta" class="input-question" required></b-form-input>
     </b-form-group>
 
     <b-form-group label="Opciones:">
@@ -22,7 +22,7 @@
               <b-form-checkbox v-model="option.isCorrect"></b-form-checkbox>
             </b-input-group-text>
           </b-input-group-prepend>
-          <b-form-input v-model="option.text" :placeholder="'Opcion ' + (index + 1)" class="input-answer"></b-form-input>
+          <b-form-input v-model="option.text" :placeholder="'Opcion ' + (index + 1)" class="input-answer" required></b-form-input>
         </b-input-group>
         <b-button @click="removeOption(index)" variant="danger" size="sm" class="custom-close-button btn-delete-option mx-1" :id="'btn-delete-item-' + index" v-b-tooltip.hover title="Eliminar opción">
           <b-icon icon="x-lg"></b-icon>
