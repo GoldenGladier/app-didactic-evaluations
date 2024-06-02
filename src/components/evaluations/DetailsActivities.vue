@@ -3,6 +3,7 @@
   <!-- <div> -->
       <EditSortText v-if="idDinamica == 1" :evaluationData="evaluationData" />
       <EditSortItemsWrapper v-else-if="idDinamica == 2" :evaluationData="evaluationData" :isLoading.sync="isLoading" />
+      <EditMultipleChoiceWrapper v-else-if="idDinamica == 3" :evaluationData="evaluationData" :isLoading.sync="isLoading" />
       <EditCrosswordWrapper v-else-if="idDinamica == 5" :evaluationData="evaluationData" :isLoading.sync="isLoading" />
       <EditWordsearchWrapper v-else-if="idDinamica == 6" :evaluationData="evaluationData" :isLoading.sync="isLoading" />
     
@@ -14,6 +15,7 @@
 <script>
 import EditSortText from '@/components/activities/SortText/EditSortText.vue';
 import EditSortItemsWrapper from '@/components/activities/SortItems/EditSortItemsWrapper.vue';
+import EditMultipleChoiceWrapper from '@/components/activities/MultipleChoice/EditMultipleChoiceWrapper.vue';
 import EditCrosswordWrapper from '@/components/activities/Crossword/EditCrosswordWrapper.vue';
 import EditWordsearchWrapper from '@/components/activities/Wordsearch/EditWordsearchWrapper.vue';
 
@@ -22,6 +24,7 @@ export default {
     components: {
       EditSortText,
       EditSortItemsWrapper,  
+      EditMultipleChoiceWrapper,
       EditCrosswordWrapper,
       EditWordsearchWrapper
     },

@@ -88,6 +88,19 @@ class ActivityService {
     }
   }
 
+  async getActivitiesMultipleChoice(idEvaluation) {
+    try {
+      const response = await axios.get(`${API_URL}/questionAnswer/getActivity/${idEvaluation}`);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        throw new Error("No hay actividades asociadas a la evaluación.");
+      } else {
+        throw error;
+      }
+    }
+  }      
+
     // ---- Crucigrama ----
   async addActivitiesCrossword(activityData) {
     try {

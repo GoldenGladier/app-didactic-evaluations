@@ -1,5 +1,6 @@
 <template>  
     <b-container>  
+      <b-overlay :show="isLoading" class="width-100">      
         <h1 class="text-center mb-4">Detalles de la evaluación</h1>
         <b-form @submit.prevent="update()">
 
@@ -19,8 +20,7 @@
                   id="subtitle"
                   type="text"
                   v-model="subtitle"                    
-                  placeholder="Ingresa el subtitle de la actividad"
-                  required
+                  placeholder="Ingresa el subtitulo de la actividad"                  
                 ></b-form-input>
               </b-form-group>
               <b-form-group label="Descripción o instrucciones" label-for="description" class="mt-1">  
@@ -36,18 +36,18 @@
               </b-form-checkbox>      
             </b-col>
             <b-col bg="6" md="6" sm="12" class="custom-mini-form">             
-              <b-form-group label="Fecha de activación de la actividad" label-for="activationDate"> 
-                <b-form-datepicker id="activationDate" v-model="activationDate" locale="es" class="mb-2"></b-form-datepicker>
+              <b-form-group label="Fecha de activación de la actividad" label-for="activationDate" class="required-label"> 
+                <b-form-datepicker id="activationDate" v-model="activationDate" locale="es" class="mb-2" requerid></b-form-datepicker>
               </b-form-group>
-              <b-form-group label="Hora de activación de la actividad" label-for="subtitle" class="mt-1">
-                <b-form-timepicker v-model="activationTime" class="mb-2"></b-form-timepicker>
+              <b-form-group label="Hora de activación de la actividad" label-for="subtitle" class="mt-1 required-label">
+                <b-form-timepicker v-model="activationTime" class="mb-2" requerid></b-form-timepicker>
               </b-form-group>
                         
-              <b-form-group label="Fecha de finalización de la actividad" label-for="deactivationDate"> 
-                <b-form-datepicker id="deactivationDate" v-model="deactivationDate" locale="es" class="mb-2"></b-form-datepicker>
+              <b-form-group label="Fecha de finalización de la actividad" label-for="deactivationDate" class="required-label"> 
+                <b-form-datepicker id="deactivationDate" v-model="deactivationDate" locale="es" class="mb-2" requerid></b-form-datepicker>
               </b-form-group>
-              <b-form-group label="Hora de finalización de la actividad" label-for="subtitle" class="mt-1">
-                <b-form-timepicker v-model="deactivationTime" class="mb-2"></b-form-timepicker>
+              <b-form-group label="Hora de finalización de la actividad" label-for="subtitle" class="mt-1 required-label">
+                <b-form-timepicker v-model="deactivationTime" class="mb-2" requerid></b-form-timepicker>
               </b-form-group>                           
             </b-col>
 
@@ -78,6 +78,7 @@
           </b-button>
 
         </b-form>
+      </b-overlay>      
     </b-container>
 </template>
     
@@ -130,6 +131,7 @@ export default {
       },
       methods: {
         initData() {
+          this.isLoading = true;
           this.title = this.evaluationData.nombre;
           this.subtitle = this.evaluationData.subtitulo;
           this.description = this.evaluationData.descripcion;
@@ -140,6 +142,7 @@ export default {
           this.deactivationTime = this.evaluationData.hora_desactivacion;        
           this.idDinamic = this.evaluationData.id_dinamica;  
           this.id_evaluaciones = this.evaluationData.id_evaluaciones;  
+          this.isLoading = false;
         },        
         update() {
           this.isLoading = true
@@ -158,7 +161,6 @@ export default {
 
           EvaluationService.update(this.id_evaluaciones, newDataEvaluation)
           .then(response => {
-            this.isLoading = false
             console.log("Creando evaluación response.data: ", response);
           
             this.$swal({
@@ -171,12 +173,14 @@ export default {
           })
           .catch(error => {
             console.error('Error:', error);
-            this.isLoading = false
             this.$swal({
               icon: 'error',
               title: '¡Error!',
               text: error,
             });     
+          })
+          .finally(() => {
+            this.isLoading = false
           });           
         },
         getImage(clasification) {
@@ -221,4 +225,18 @@ export default {
 .custom-card-item-content.active {
   border: 1px solid var(--primary);
 }
+
+.custom-card-item-content {
+  display: flex;
+  align-items: center;
+}
+
+.custom-img-evaluation {
+  flex: 0 0 25%; 
+  max-width: 25%; 
+}
+
+.text-content {
+  flex: 1; 
+}    
 </style>
