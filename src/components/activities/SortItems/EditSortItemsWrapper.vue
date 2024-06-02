@@ -14,12 +14,14 @@
                     <b-col md="8" sm="12">
                         <b-alert v-if="!activities.length" variant="warning" show dismissible> <i class="bi bi-exclamation-triangle-fill"></i>Parece ser que aún no hay actividades en esta evaluación.</b-alert>                          
                     </b-col>                          
-                    <b-col v-for="(activity) in activities" :key="activity.idPregunta" md="8" sm="12">
+                    <b-col v-for="(activity, indexActivity) in activities" :key="activity.idPregunta" md="8" sm="12">
                         <EditSortItemsActivity
                         :index="activity.idPregunta"
                         :activity="activity"
+                        :idEvaluation="idEvaluation"
+                        :isLoading.sync="isLoading"
                         :id="'activity-'+activity.idPregunta"
-                        @update-activity="updateActivity"
+                        @update-activity="updateActivity(indexActivity, activity)"
                         @remove-activity="removeActivity"              
                         />
                     </b-col>
@@ -62,7 +64,7 @@ export default {
             isLoading: false,
             idEvaluation: null,
             activities: [],
-        };
+        };                
     },
     methods: {
         addNewActivity() {
@@ -85,7 +87,7 @@ export default {
                 descripcion: activity.question,
                 respuestas: activity.items.map((item, indexItem) => ({
                     id: indexItem,
-                    texto: item 
+                    texto: item.texto 
                 }))
             }));
 
@@ -166,7 +168,14 @@ export default {
             return {
                 idPregunta: activity.numPregunta,
                 question: activity.descripcion,
-                items: activity.respuestas.map((ordenItem) => ( ordenItem.texto ))
+                items: activity.respuestas
+                    .sort((a, b) => a.id - b.id)
+                    .map((ordenItem) => {
+                        return { 
+                            texto: ordenItem.texto,
+                            id: ordenItem.id 
+                        }
+                    })
             }
         });
         this.activities = formatActivities;

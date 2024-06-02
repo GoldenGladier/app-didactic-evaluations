@@ -32,12 +32,12 @@
                 </b-input-group-prepend>
                 <b-form-input
                   :id="'item' + index + '-' + itemIndex"
-                  v-model="activity.items[itemIndex]"
+                  v-model="activity.items[itemIndex].texto"
                   :placeholder="'Ingresa el item ' + (itemIndex + 1)"
                   required
                 ></b-form-input>
               </b-input-group>
-              <b-button @click="removeItem(itemIndex)" variant="danger" size="sm" class="custom-close-button mt-3" :id="'btn-delete-item-'+index" v-b-tooltip.hover title="Eliminar item">
+              <b-button @click="removeItem(item.id)" variant="danger" size="sm" class="custom-close-button mt-3" :id="'btn-delete-item-'+index" v-b-tooltip.hover title="Eliminar item">
                 <b-icon icon="x-lg"></b-icon>
               </b-button>
             </b-col>
@@ -54,6 +54,7 @@
 <script>
 import driverMixin from '@/mixins/driverMixin';
 import draggable from 'vuedraggable';
+import ActivityService from '@/services/ActivityService';
 
 export default {
   name: "EditSortItemActivity",
@@ -69,16 +70,66 @@ export default {
     activity: {
       type: Object,
       required: true
-    }
+    },
+    isLoading: {
+      type: Boolean,
+      required: true
+    },
+    idEvaluation: null
   },
   methods: {
     addItem() {
-      this.activity.items.push('');
+
+      const highestId = this.activity.items.reduce((max, item) => {
+          return item.id > max ? item.id : max;
+      }, 0);
+      const newId = highestId + 1;
+      this.activity.items.push({
+          texto: '',
+          id: newId,
+          isNew: true
+      });    
+
       this.updateActivity();
     },
     removeItem(itemIndex) {
-      this.activity.items.splice(itemIndex, 1);
-    //   this.updateActivity();
+      console.log("Quiero eliminar a: ", itemIndex);
+
+      const itemToRemove = this.activity.items.find(item => item.id === itemIndex);
+      if (itemToRemove.isNew) {
+          this.activity.items = this.activity.items.filter(item => item.id !== itemIndex);
+      }      
+      else{
+        let deleteItemData = {
+          idEvaluacion: Number(this.idEvaluation),
+          numPregunta: this.activity.idPregunta,
+          item: itemIndex
+        }
+        console.log("Voy a eliminar el item: ", deleteItemData);
+
+        this.$emit('update:isLoading', true);
+        ActivityService.deleteDeleteItemByNumItem(deleteItemData)
+        .then((response) => {
+          console.log("Item eliminado: ", response);
+          this.activity.items = this.activity.items.filter(item => item.id !== itemIndex);
+          this.$swal({
+              icon: 'success',
+              title: '¡Éxito!',
+              text: 'El item fue eliminado exitosamente.',
+          }) 
+        })
+        .catch((error) => {
+          console.error("Ocurrio un error al eliminar el item: ", error);
+          this.$swal({
+              icon: 'error',
+              title: '¡Error!',
+              text: 'Ocurrio un error al intentar eliminar el item.',
+          });          
+        })
+        .finally(() => {
+          this.$emit('update:isLoading', false);
+        })         
+      }                 
     },
     removeActivity() {
       this.$emit('remove-activity', this.index);
