@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Sidebar :sidebarWidth.sync="sidebarWidth" />
+    <Sidebar :sidebarWidth="sidebarWidth" v-if="isLoggedIn || this.isOverlay" />
     <div class="master-container" id="master-container" :class="{ 'with-sidebar': !isOverlay }" :style="{ 'margin-left': sidebarWidth }" >
       <Navbar />
       <div class="view-master-container" id="view-master-container">
@@ -23,13 +23,15 @@ export default {
   },  
   data() {
     return {
-      sidebarWidth: "250px",
+      // sidebarWidth: "250px",
+      collapsedSize: "calc(60px + 0.5rem)",
+
       isOverlay: false,
     };
   }, 
   created() {
     this.checkScreenSize();
-    this.sidebarWidth = this.$store.state.sidebar.sidebarCollapsed ? "calc(60px + 0.5rem)" : "250px";    
+    // this.sidebarWidth = this.isLoggedIn ? (this.$store.state.sidebar.sidebarCollapsed ? this.collapsedSize : this.sidebarWidth) : '0px';    
     window.addEventListener('resize', this.checkScreenSize);
     document.title = 'Actividades didácticas';
   },
@@ -43,7 +45,18 @@ export default {
         sidebar.commit("setCollapsed", true);
       }
     }
-  }  
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.auth.isLoggedIn;
+    },   
+    sidebarWidth() {
+      if(this.isLoggedIn || this.isOverlay) {
+        console.log("Mostrar sidebar");
+      }
+      return (this.isLoggedIn || this.isOverlay) ? (this.$store.state.sidebar.sidebarCollapsed ? this.collapsedSize : "250px") : '0px';   
+    }
+  },
 }
 </script>
 

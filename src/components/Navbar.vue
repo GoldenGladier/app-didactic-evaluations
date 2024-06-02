@@ -8,6 +8,9 @@
     <b-collapse id="navbarSupportedContent" class="custom-extra-options" is-nav>
       <b-navbar-nav class="ml-auto">
 
+        <b-nav-item v-if="!isLoggedIn" href="/join-to-activity" class="custom-nav-item d-flex align-items-center">
+          <b-icon icon="star" class="sidebar-icon" /> Unirse a actividad
+        </b-nav-item>
         <b-nav-item v-if="!isLoggedIn" href="/login" class="custom-nav-item d-flex align-items-center">
           <b-icon icon="door-open" class="sidebar-icon" /> Login
         </b-nav-item>

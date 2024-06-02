@@ -17,7 +17,7 @@
         <b-nav vertical class="custom-vertical-nav">
           <template v-for="(item, index) in items">
             <template v-if="item.isExternalLink">
-              <li :key="index" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
+              <li v-if="(item.requiresAuth && isLoggedIn) || (item.requiresAuth == false)" :key="index" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
                 <a :href="item.link" class="nav-link" target="_blank">
                   <b-icon :icon="item.icon" class="sidebar-icon"></b-icon>
                     <span v-if="!sidebarCollapsed" class="sidebar-text">{{ item.text }}</span>                 
@@ -25,7 +25,7 @@
               </li>
             </template>      
             <template v-else>      
-              <b-nav-item :key="index" :to="item.link" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
+              <b-nav-item v-if="(item.requiresAuth && isLoggedIn) || (item.requiresAuth == false)" :key="index" :to="item.link" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
                 <b-icon :icon="item.icon" class="sidebar-icon"></b-icon>
                 <!-- <Transition name="bounce"> -->
                   <span v-if="!sidebarCollapsed" class="sidebar-text">{{ item.text }}</span>
@@ -76,16 +76,16 @@ export default {
       isOverlay: false,
       sidebarFullWidth: 'calc(250px - 0.5rem)',
       items: [
-        { text: 'Inicio', icon: 'house-door', link: '/home' },
-        { text: 'Mis evaluaciones', icon: 'card-checklist', link: '/evaluaciones/mis-evaluaciones' },
-        { text: 'Crear evaluación', icon: 'plus-circle', link: '/evaluaciones/crear-evaluacion' },
-        { text: 'Unirse a actividad', icon: 'star', link: '/join-to-activity' },        
+        { text: 'Inicio', icon: 'house-door', link: '/home', requiresAuth: false },
+        { text: 'Mis evaluaciones', icon: 'card-checklist', link: '/evaluaciones/mis-evaluaciones', requiresAuth: true },
+        { text: 'Crear evaluación', icon: 'plus-circle', link: '/evaluaciones/crear-evaluacion', requiresAuth: true },
+        { text: 'Unirse a actividad', icon: 'star', link: '/join-to-activity', requiresAuth: false },        
         // { text: 'Login', icon: 'door-open', link: '/login' },
         // { text: 'Registrarse', icon: 'person-plus', link: '/register' },
-        { text: 'Administración', icon: 'gear', link: '/administracion' },
-        { text: 'UI', icon: 'code-slash', link: '/testingUi' },
-        { text: 'Icons', icon: 'suit-heart', link: 'https://icons.getbootstrap.com', isExternalLink: true },
-        { text: 'Desarrollo', icon: 'hammer', link: '/activity' },
+        { text: 'Administración', icon: 'gear', link: '/administracion', requiresAuth: true },
+        { text: 'UI', icon: 'code-slash', link: '/testingUi', requiresAuth: true },
+        { text: 'Icons', icon: 'suit-heart', link: 'https://icons.getbootstrap.com', isExternalLink: true, requiresAuth: false },
+        { text: 'Desarrollo', icon: 'hammer', link: '/activity', requiresAuth: true },
         
         // Agrega más ítems aquí según tu necesidad
       ]
