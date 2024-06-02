@@ -101,6 +101,15 @@ class ActivityService {
     }
   }      
 
+  async deleteDeleteItemByNumItem(itemData) {
+    try {
+      const response = await axios.post(`${API_URL}/orderItem/delete/item`, itemData);
+      return response.data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
+  }    
+
     // ---- Crucigrama ----
   async addActivitiesCrossword(activityData) {
     try {
@@ -113,7 +122,7 @@ class ActivityService {
   
   async getActivitiesCrossword(idEvaluation) {
     try {
-      const response = await axios.get(`${API_URL}/getActivity/crossword/${idEvaluation}`);
+      const response = await axios.get(`${API_URL}/crossword/getActivity/${idEvaluation}`);
       return response.data;
     } catch (error) {
       if (error.response && error.response.status === 404) {

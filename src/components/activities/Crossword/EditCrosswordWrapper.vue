@@ -9,7 +9,7 @@
         <h1 v-if="evaluationData">{{ evaluationData.nombre }}</h1>
 
         <!-- Form para agregar palabras y pistas -->
-        <h3>Crear crucigrama</h3>
+        <h3>Editar crucigrama</h3>
         <p>Ingresa las palabras y pistas en el formulario para generar tu crucigrama.</p>
         <!-- Sección de Aviso sobre formato de palabras -->
         <b-alert show dismissible variant="info" class="mb-4">
@@ -117,7 +117,7 @@ import { createCrossword } from 'ulu-crossword';
 import CrosswordBoard from '@/components/activities/Crossword/CrosswordBoard.vue';
 
 export default {
-    name: "CreateCrosswordWrapper",
+    name: "EditCrosswordWrapper",
     mixins: [driverMixin],
     components: {
         CrosswordBoard
@@ -152,6 +152,68 @@ export default {
         }
     },
     methods: {
+        initData() {
+            this.$emit('update:isLoading', true);
+            this.idEvaluation = this.$route.params.idEvaluation;
+            
+            ActivityService.getActivitiesCrossword(this.idEvaluation)
+            .then((response) => {
+                console.log("Recivo del servicio: ", response, typeof(response));
+
+                this.gridCols = response.activityInfo.board.columna;
+                this.gridRows = response.activityInfo.board.fila;
+
+                this.words = response?.activityInfo?.resultWordSearchEvaluation.map((word) => {
+                    return {
+                        idPregunta: word.position,
+                        pregunta: word.clue,
+                        respuesta: word.answers[0].answer,
+                    }
+                });                
+                
+                this.answers = response?.activityInfo?.resultWordSearchEvaluation.map((word) => {
+                    return {
+                        answer: word.answers[0].answer,
+                        clue: word.clue,      
+                        orientation: word.answers[0].orientation,                  
+                        position: word.position,
+                        startx: word.answers[0].startX,
+                        starty: word.answers[0].startY,
+                    }
+                });     
+                this.verticalClues = this.answers.filter(word => word.orientation === 'down');
+                this.horizontalClues = this.answers.filter(word => word.orientation === 'across');
+
+                this.grid = Array.from({ length: this.gridRows }, () => Array(this.gridCols).fill('-'));
+                // Llena la matriz grid con las palabras
+                this.answers.forEach(word => {
+                    const x = word.startx - 1;
+                    const y = word.starty - 1;
+                    const wordChars = word.answer.split('');
+                    const orientation = word.orientation;
+
+                    // console.log("Metiendo la palabra: ", word)
+
+                    for (let i = 0; i < wordChars.length; i++) {
+                        if (orientation === "across") {
+                            this.grid[y][x + i] = wordChars[i];
+                        } else {
+                            // console.log("Metiendo datos en: ", x, (y+i))
+                            this.grid[y + i][x] = wordChars[i];
+                        }
+                    }
+                });
+
+
+                console.log("Actividades: ", this.activities);
+            })
+            .catch(error => {
+                console.error('Error al obtener las actividades de la evaluación:', error);
+            })
+            .finally(() => {
+                this.$emit('update:isLoading', false);
+            });   
+        },
         addWord() {
             if (this.newWord.respuesta && this.newWord.pregunta) {
                 const normalizedWord = this.newWord.respuesta
@@ -187,7 +249,7 @@ export default {
             this.gridRows = layout.rows;
             this.gridCols = layout.cols;
             this.grid = layout.table;       
-
+            console.log("Grid: ", this.grid);
             // console.log("grid: ");
             // console.log(this.grid);
             
@@ -206,11 +268,14 @@ export default {
 
                 // console.log("Probando creador de grid: ");
                 this.gridRows = gridSize;
-                this.gridCols = gridSize;            
+                this.gridCols = gridSize;         
+                console.log("Layaout: ", layout)
+                this.answers = this.transformUluToAnswersFormat(layout);
                 this.grid = this.createGrid(gridSize, layout);
+                console.log("Grid: ", this.grid);
+
                 // console.log(this.grid);
                 
-                this.answers = this.transformUluToAnswersFormat(layout);
                 // console.log("Answers: ", this.answers)
                 this.verticalClues = this.answers.filter(word => word.orientation === 'down');
                 this.horizontalClues = this.answers.filter(word => word.orientation === 'across');                
@@ -232,7 +297,7 @@ export default {
                     startx: startx,
                     starty: starty,
                     orientation: orientation,
-                    position: item.idPregunta + 1
+                    position: item.idPregunta
                 };
             });
         },  
@@ -390,5 +455,8 @@ export default {
             ]);
         },         
     },
+    mounted() { 
+        this.initData();
+    }
 }
 </script>
