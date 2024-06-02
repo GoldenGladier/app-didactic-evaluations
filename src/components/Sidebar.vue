@@ -37,10 +37,10 @@
           <div v-if="isOverlay">
             <hr class="custom-hr">             
             <div v-if="!isLoggedIn">
-              <b-nav-item href="/login" class="custom-nav-item">
+              <b-nav-item href="/login" class="custom-nav-item" :class="{ 'active': isActive('/login') }">
                 <b-icon icon="door-open" class="sidebar-icon" /> Login
               </b-nav-item>
-              <b-nav-item href="/register" class="custom-nav-item">
+              <b-nav-item href="/register" class="custom-nav-item" :class="{ 'active': isActive('/register') }">
                 <b-icon icon="person-plus" class="sidebar-icon" /> Registrarse
               </b-nav-item>  
             </div>
