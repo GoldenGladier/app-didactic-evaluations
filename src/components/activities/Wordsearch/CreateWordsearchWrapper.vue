@@ -64,17 +64,15 @@
 
     <!-- Tablero de sopa de letras -->
     <b-row class="my-3">        
-        <b-col cols="12">
-            <div class="custom-center-flex">
-                <WordsearchBoardVue :words="words" :gridCols="gridCols" :gridRows="gridRows" :puzzle="puzzle" />
-            </div>  
+        <b-col cols="12 p-0 pd-md-3">
+            <WordsearchBoardVue :words="words" :gridCols="gridCols" :gridRows="gridRows" :puzzle="puzzle" />
         </b-col>
     </b-row>
 
     <b-row class="justify-content-center">
         <b-col md="6" sm="12" class="custom-center-flex">
             <b-button type="submit" variant="success" class="custom-button-icon" id="save-activities" :disabled="!grid.length" @click="saveActivities">
-                <i class="bi bi-floppy"></i> <span class="button-text">Guardar sopa de letras</span>
+                <i class="bi bi-floppy"></i>Guardar sopa de letras
             </b-button>
         </b-col>          
     </b-row>         

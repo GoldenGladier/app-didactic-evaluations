@@ -4,12 +4,10 @@
       v-b-tooltip.hover.top="'Haz clic aquí para recibir un tutorial sobre cómo responder la sopa de letras.'" >
       <i class="bi bi-question-circle"></i>Ayuda
     </b-button>      
-    <h3>
-        Sopa de letras 
-    </h3>
+    <h3>Sopa de letras</h3>
 
-    <div class="word-search" id="word-search" v-if="grid.length">
-      <table>
+    <div class="word-search p-0" id="word-search" v-if="grid.length">
+      <table class="grid-table">
         <tbody>
           <tr v-for="(row, rowIndex) in grid" :key="rowIndex">
             <td
@@ -36,7 +34,7 @@
         <div class="word-list mt-0">
             <div class="column" v-for="(column, colIndex) in splitWordsIntoColumns(words, 3)" :key="colIndex">
                 <ul>
-                    <li v-for="word in column" :key="word" :class="{ 'found-word': isWordFound(word) }">{{ word }}</li>
+                    <li v-for="word in column" :key="word" :class="{ 'found-word text-success': isWordFound(word) }">{{ word }}</li>
                 </ul>
             </div>
         </div>
@@ -222,13 +220,18 @@ export default {
 }
 
 .word-search {
-    /* padding: 0.5rem;
-    background: var(--acivity-background-color); */
-    width: fit-content;
+    max-width: 100%; /* Máximo ancho del contenedor */
+    overflow: auto; /* Permitir desplazamiento */
     margin: auto;
+    overflow-x: auto;
+    white-space: nowrap;
+    background: transparent !important;
 }
-.word-search table {
+.word-search table.grid-table {
     border-collapse: collapse;
+    width: max-content; /* Asegurar que la tabla ocupe el espacio necesario */
+    margin: auto;
+    margin-bottom: 1rem;
 }
 .word-search td {
     width: 30px;
@@ -236,40 +239,63 @@ export default {
     text-align: center;
     vertical-align: middle;
     border: 1px solid var(--acivity-border-color);
-    background: white;
     cursor: pointer;
 }
-.word-search .selected {
-    background-color: yellow;
+
+@media (max-width: 576px) {
+    .word-search td {
+        width: 40px;
+        height: 40px;        
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid var(--acivity-border-color);
+        cursor: pointer;
+    }
+
+  .word-list {
+    flex-wrap: wrap;
+  }
+
+  .word-list .column {
+    flex: 0 0 50%; /* Hacer que cada columna ocupe el 50% del ancho */
+    max-width: 50%; /* Asegurar que cada columna no exceda el 50% */
+  }    
 }
-.word-search .preview {
-    background-color: yellow;
+
+.selected {
+    background-color: var(--primary);
+    /* color: white; */
 }
-.word-search .found {
+.preview {
+    background-color: var(--primary-light);
+    /* color: white; */
+}
+.found {
     background-color: var(--green-rgba);
-    border: solid 2px var(--green);
 }
-.word-search .not-found {
+.not-found {
     background-color: var(--red-rgba);
-    border: solid 2px var(--red);
 }
 .word-list {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-between; /* Ajusta el espacio entre columnas */
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%; /* Ocupa el ancho disponible */
 }
+
 .word-list .column {
-    flex: 1;
-    margin: 0 10px;
+  flex: 1;
+  padding: 0 1rem; /* Espacio entre columnas */
 }
-.word-list ul {
-    list-style: none;
-    padding: 0;
+
+ul {
+  padding: 0;
+  list-style: none;
 }
-.word-list li {
-    margin: 5px 0;
-}
-.word-list .found-word {
-    text-decoration: line-through;
-    color: var(--success);
+
+.found-word {
+  text-decoration: line-through;
 }
 </style>

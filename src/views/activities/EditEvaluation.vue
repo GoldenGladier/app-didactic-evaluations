@@ -1,8 +1,8 @@
 <template>
-  <b-container class="custom-master-container custom-card-box custom-center-flex">
+  <b-container class="custom-master-container custom-card-box custom-center-flex p-1 p-md-3">
 
     <b-overlay :show="isLoading" class="width-100">      
-      <b-container>  
+      <b-container id="editar-evaluacion-container" class="p-0 p-md-3">  
         <h1 class="text-center mb-4">Editar evaluación</h1>
 
         <div>
@@ -10,7 +10,7 @@
                 <b-tab title="Detalles de la evaluación" class="custom-tab-border" :active="activeTab === 'details'">
                     <DetailsEvaluation :evaluationData="evaluationData" :dinamicsList="dinamicsList" />
                 </b-tab>
-                <b-tab title="Actividades de la evaluación" class="custom-tab-border" :active="activeTab === 'activities'">
+                <b-tab title="Actividades de la evaluación" class="custom-tab-border p-1 p-md-3" :active="activeTab === 'activities'">
                     <DetailsActivities :evaluationData="evaluationData"  />
                     <!-- :activitiesListData="activitiesListData" -->
                 </b-tab>
@@ -90,6 +90,6 @@
 .custom-tab-border {
   border: solid 1px #dee2e6;
   border-top: none;
-  padding: 1rem 0;
+  padding: 1rem 1rem;
 }
 </style>

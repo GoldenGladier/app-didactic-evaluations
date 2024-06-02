@@ -66,18 +66,16 @@
 
     <!-- Tablero de sopa de letras -->
     <b-row class="my-3">        
-        <b-col cols="12">
+        <b-col cols="12" class="p-0 pd-md-3">
             <h3>Ejemplo de tu sopa de letras</h3>
-            <div class="custom-center-flex">
-                <WordsearchBoardVue :words="words.map(word => { return word.palabra })" :gridCols="gridCols" :gridRows="gridRows" :puzzle="puzzle" />
-            </div>  
+            <WordsearchBoardVue :words="words.map(word => { return word.palabra })" :gridCols="gridCols" :gridRows="gridRows" :puzzle="puzzle" />
         </b-col>
     </b-row>
 
     <b-row class="justify-content-center">
         <b-col md="6" sm="12" class="custom-center-flex">
             <b-button type="submit" variant="success" class="custom-button-icon" id="save-activities" :disabled="!words.length" @click="saveActivities">
-                <i class="bi bi-floppy"></i> <span class="button-text">Guardar sopa de letras</span>
+                <i class="bi bi-floppy"></i> Guardar sopa de letras
             </b-button>
         </b-col>          
     </b-row>         

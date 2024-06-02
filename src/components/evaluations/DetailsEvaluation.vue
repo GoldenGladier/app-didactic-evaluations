@@ -1,5 +1,5 @@
 <template>  
-    <b-container>  
+    <b-container class="p-1 p-md-3">  
       <b-overlay :show="isLoading" class="width-100">      
         <h1 class="text-center mb-4">Detalles de la evaluación</h1>
         <b-form @submit.prevent="update()">
@@ -31,7 +31,7 @@
                   rows="3"
                 ></b-form-textarea>     
               </b-form-group>
-              <b-form-checkbox v-model="feedback" id="feedback" name="check-button" class="custom-checkbox-switch" size="lg" switch >             
+              <b-form-checkbox v-model="feedback" id="feedback" name="check-button" class="custom-checkbox-switch mb-4 mb-md-0" size="lg" switch >             
                 Los alumnos podrán ver sus resultados al finalizar la evaluación   
               </b-form-checkbox>      
             </b-col>
