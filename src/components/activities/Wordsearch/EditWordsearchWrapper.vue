@@ -40,7 +40,7 @@
                     {{ data.value.palabra }}
                 </template>                
                 <template #cell(actions)="data">
-                    {{data.item.palabra.index}}
+                    <!-- {{data.item.palabra.index}} -->
                     <b-button size="sm" variant="danger" @click="removeWord(data.item.palabra.index)">
                         <i class="bi bi-trash"></i>Eliminar
                     </b-button>
@@ -158,7 +158,7 @@ export default {
                     .toUpperCase() // Convertir a mayúsculas
                     .normalize("NFD") // Normalizar la cadena
                     .replace(/[\u0300-\u036f]/g, ''); // Quitar diacríticos (acentos)
-
+                
                 const highestIndex = this.words.reduce((max, word) => {
                     return word.index > max ? word.index : max;
                 }, 0);
@@ -175,7 +175,8 @@ export default {
             }
         },
         updateGridDimensions() {
-            this.longestWordLength = Math.max(...this.words.map(word => word.length));
+            this.longestWordLength = Math.max(...this.words.map(word => word.palabra.length));
+            console.log("longestWordLength: ", this.longestWordLength)
             if (this.longestWordLength > this.gridCols) {
                 this.gridCols = this.longestWordLength;
             }
