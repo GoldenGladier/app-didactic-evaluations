@@ -18,10 +18,10 @@
             </router-link>
 
             <div v-else>
-              <router-link to="/register" class="btn btn-primary mr-2">
+              <router-link to="/register" class="btn btn-primary mr-0 mr-md-2">
                 <i class="bi bi-plus-lg"></i>Crear evaluación
               </router-link>
-              <router-link to="/register" class="btn btn-outline-primary mr-2">
+              <router-link to="/register" class="btn btn-outline-primary mt-3 mt-md-0 ml-0 ml-md-2">
                 <i class="bi bi-card-checklist"></i>Ver mis evaluaciones
               </router-link>              
             </div>

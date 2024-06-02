@@ -1,9 +1,9 @@
 <template>
-  <b-navbar toggleable="md" type="dark" class="custom-navbar">
-    <div class="custom-info-brand">
+  <b-navbar toggleable="md" type="dark" class="custom-navbar justify-content-center justify-content-md-between">
+    <b-nav-item to="/home" class="custom-info-brand">
       <AppIcon color="#ffffff" />
-      <b-navbar-brand href="#">Actividades didácticas</b-navbar-brand>      
-    </div>
+      <b-navbar-brand>Actividades didácticas</b-navbar-brand>   
+    </b-nav-item>    
 
     <b-collapse id="navbarSupportedContent" class="custom-extra-options" is-nav>
       <b-navbar-nav class="ml-auto">
@@ -89,6 +89,13 @@ export default {
 
 .custom-info-brand {
   padding-left: 2rem;
+  list-style-type: none; 
+  padding: 0;
+  margin: 0; 
+  display: flex; 
+}
+.custom-info-brand .nav-link {
+  padding: 0;
 }
 
 .sidebar-icon {

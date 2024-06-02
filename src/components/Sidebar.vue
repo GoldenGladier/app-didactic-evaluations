@@ -2,10 +2,11 @@
   <div>
     <div :class="['sidebar', { 'collapsed': sidebarCollapsed, 'is-overlay': isOverlay }]" v-click-outside="handleClickOutside">
       <ul class="list-unstyled mb-0">
-        <li class="extra-nav-item" >
+
+        <b-nav-item to="/home" class="extra-nav-item px-0">
           <AppIcon color="#ffffff" size="25px"/>
           <span v-if="!sidebarCollapsed" class="sidebar-text">Actividades didácticas</span>
-        </li>   
+        </b-nav-item> 
         <li :class="sidebarCollapsed ? 'extra-nav-item' : ''">          
           <b-icon v-if="isOverlay" @click="toggleCollapse" icon="x" class="collapse-icon"></b-icon>    
           <b-icon v-else @click="toggleCollapse" :icon="sidebarCollapsed ? 'chevron-double-right' : 'chevron-double-left'" class="collapse-icon"></b-icon>    
