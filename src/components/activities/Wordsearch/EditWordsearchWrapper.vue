@@ -5,7 +5,8 @@
       <i class="bi bi-question-circle"></i>Ayuda
     </b-button>       
     
-    <h3>Crear sopa de letras</h3>
+    <h1>{{ evaluationData.nombre }}</h1>
+    <h3>Editar sopa de letras</h3>
     <p>Utiliza el siguiente formulario para crear tu sopa de letras.</p>
 
     <!-- Form para agregar palabras -->
@@ -36,10 +37,11 @@
             <b-table v-if="words.length" :items="formattedWordsForTable" :fields="fields" responsive="sm"
                 class="table-fixed table-align-middle" striped bordered borderless small>              
                 <template #cell(palabra)="data">
-                    {{ data.value }}
+                    {{ data.value.palabra }}
                 </template>                
                 <template #cell(actions)="data">
-                    <b-button size="sm" variant="danger" @click="removeWord(data.index)">
+                    {{data.item.palabra.index}}
+                    <b-button size="sm" variant="danger" @click="removeWord(data.item.palabra.index)">
                         <i class="bi bi-trash"></i>Eliminar
                     </b-button>
                 </template>
@@ -57,7 +59,7 @@
         </b-col>   
         <b-col cols="12" class="custom-center-flex">
             <b-button variant="warning" class="custom-center-flex" @click="generateWordsearch" :disabled="!words.length" id="btn-generar-sopa">
-                <i class="bi bi-shuffle"></i>Generar sopa de letras
+                <i class="bi bi-shuffle"></i>Generar ejemplo de sopa de letras
             </b-button>
         </b-col>             
     </b-row>       
@@ -65,8 +67,9 @@
     <!-- Tablero de sopa de letras -->
     <b-row class="my-3">        
         <b-col cols="12">
+            <h3>Ejemplo de tu sopa de letras</h3>
             <div class="custom-center-flex">
-                <WordsearchBoardVue :words="words" :gridCols="gridCols" :gridRows="gridRows" :puzzle="puzzle" />
+                <WordsearchBoardVue :words="words.map(word => { return word.palabra })" :gridCols="gridCols" :gridRows="gridRows" :puzzle="puzzle" />
             </div>  
         </b-col>
     </b-row>
@@ -103,21 +106,21 @@ export default {
         },
     },
     data() {
-      return {
-        idEvaluation: null,
-          fields: [
-              { key: 'palabra', label: 'Palabra', tdClass: 'col-8' },
-              { key: 'actions', label: '' }
-          ],        
-          newWord: null,
-          wordsTest: ["GAME", "LEVEL", "QUEST", "BOSS", "PIXEL", "LOOT", "NPC", "HERO", "SPAWN", "GUILD"],
-          words: [],
-          longestWordLength: 1,
-          gridCols: 10,
-          gridRows: 10,
-          grid: [],
-          puzzle: null,
-      };
+        return {
+            idEvaluation: null,
+            fields: [
+                { key: 'palabra', label: 'Palabra', tdClass: 'col-8' },
+                { key: 'actions', label: '' }
+            ],        
+            newWord: null,
+            wordsTest: ["GAME", "LEVEL", "QUEST", "BOSS", "PIXEL", "LOOT", "NPC", "HERO", "SPAWN", "GUILD"],
+            words: [],
+            longestWordLength: 1,
+            gridCols: 10,
+            gridRows: 10,
+            grid: [],
+            puzzle: null,
+        };
     },
     methods: {
       initData() {
@@ -128,9 +131,15 @@ export default {
         .then((response) => {
             console.log("Recivo del servicio: ", response, typeof(response));
 
-            this.gridCols = response.boardData.columna;
-            this.gridRows = response.boardData.fila;
-            this.words = Object.values(response?.words);
+            this.gridCols = response.activityInfo.board.columna;
+            this.gridRows = response.activityInfo.board.fila;
+            this.words = response?.activityInfo?.resultWordSearchEvaluation.map(word => {
+                return {
+                    palabra: word.palabra,
+                    index: word.numPregunta
+                };
+            });
+            this.generateWordsearch();
 
             console.log("Actividades: ", this.activities);
         })
@@ -150,9 +159,19 @@ export default {
                     .normalize("NFD") // Normalizar la cadena
                     .replace(/[\u0300-\u036f]/g, ''); // Quitar diacríticos (acentos)
 
-                this.words.push(normalizedWord);
+                const highestIndex = this.words.reduce((max, word) => {
+                    return word.index > max ? word.index : max;
+                }, 0);
+                const newIndex = highestIndex + 1;
+                this.words.push({
+                    palabra: normalizedWord,
+                    index: newIndex,
+                    isNew: true
+                });                    
+
                 this.newWord = null;
                 this.updateGridDimensions();
+                this.generateWordsearch();
             }
         },
         updateGridDimensions() {
@@ -164,25 +183,65 @@ export default {
                 this.gridRows = this.longestWordLength;
             }
         },        
-        removeWord(index) {
-            this.words.splice(index, 1);
+        removeWord(index) {    
+            console.log('Buscando palabra con indice:  ', index)
+            const wordToRemove = this.words.find(word => word.index === index);
+
+            if (wordToRemove.isNew) {
+                this.words = this.words.filter(word => word.index !== index);
+                this.generateWordsearch();
+            }
+            else {
+                this.$emit('update:isLoading', true);
+                let wordData = {
+                    idEvaluacion: this.idEvaluation,
+                    numPregunta: index
+                }
+                console.log("Quiero eliminar la palabra: ", wordData);
+                ActivityService.deleteWordFromWordsearch(wordData)
+                .then((response) => {
+                    console.log("La palabra se elimino correctamente: ", response);
+                    this.words = this.words.filter(word => word.index !== index);
+                    this.generateWordsearch();
+                    this.$swal({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: 'La palabra fue eliminada correctamente.',
+                    });
+                })
+                .catch((error) => {
+                    console.error("Ocurrio un error al eliminar la palabra: ", error);
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'La palabra no pudo ser eliminada correctamente.',
+                    })                
+                })
+                .finally(() => {
+                    this.$emit('update:isLoading', false);
+                })
+            }
+
         },         
         generateWordsearch() {
+            let dictionary = this.words.map(word => {
+                return word.palabra
+            })
             const options = {
                 cols: this.gridCols,
                 rows: this.gridRows,
-                dictionary: this.words,
+                dictionary: dictionary,
             };
 
             this.puzzle = new WordSearch(options);
             this.grid = this.puzzle.grid;
-            this.selectedCells = [];
-            this.previewCells = [];
-            this.foundCells = [];
-            this.foundWords = [];
-            this.notFoundCells = [];
-            this.selecting = false;
-            this.startCell = null;
+            // this.selectedCells = [];
+            // this.previewCells = [];
+            // this.foundCells = [];
+            // this.foundWords = [];
+            // this.notFoundCells = [];
+            // this.selecting = false;
+            // this.startCell = null;
 
             console.log("Palabras escondidas: ", this.puzzle.words);
         },
@@ -192,7 +251,7 @@ export default {
             const palabras = this.words.map( (word, index) => {
                 return {
                     idPalabra: index,
-                    palabra: word
+                    palabra: word.palabra
                 };
             });      
 

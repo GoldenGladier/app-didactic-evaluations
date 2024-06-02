@@ -145,7 +145,7 @@ class ActivityService {
 
   async getActivitiesWordsearch(idEvaluation) {
     try {
-      const response = await axios.get(`${API_URL}/getActivity/wordSearch/${idEvaluation}`);
+      const response = await axios.get(`${API_URL}/wordSearch/getActivity/${idEvaluation}`);
       return response.data;
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -156,6 +156,14 @@ class ActivityService {
     }
   }      
 
+  async deleteWordFromWordsearch(wordData) {
+    try {
+      const response = await axios.post(`${API_URL}/deleteQuestion`, wordData);
+      return response.data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
+  }  
     // ---- Actividades en general ----
 }
 
