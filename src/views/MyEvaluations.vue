@@ -1,5 +1,5 @@
 <template>
-  <b-container class="custom-master-container">
+  <b-container class="custom-master-container custom-card-box custom-center-flex">
     <b-overlay :show="isLoading" class="width-100">      
     <h1 class="text-center mb-3"> Mis Evaluaciones</h1>
     <div class="search-container">

@@ -93,7 +93,10 @@ export default {
   computed: {
     sidebarWidth() {
       return this.sidebarCollapsed ? 'calc(60px + 0.5rem)' : '250px';
-    }
+    },
+    isLoggedIn() {
+      return this.$store.state.auth.isLoggedIn;
+    },
   },
   methods: {
     checkScreenSize() {
