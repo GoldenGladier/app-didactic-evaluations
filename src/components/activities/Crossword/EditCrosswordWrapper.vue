@@ -43,7 +43,7 @@
             <b-table :items="words" :fields="fields" responsive="sm" class="table-fixed table-align-middle" 
                 empty-text="Aún no hay palabras agregadas para crear el crucigrama" striped bordered borderless small>
                 <template #cell(actions)="data">
-                    <b-button size="sm" variant="danger" @click="removeWord(data.index)">
+                    <b-button size="sm" variant="danger" @click="removeWord(data.item.idPregunta)">
                         <i class="bi bi-trash"></i>Eliminar
                     </b-button>
                 </template>
@@ -221,18 +221,58 @@ export default {
                     .toUpperCase() // Convertir a mayúsculas
                     .normalize("NFD") // Normalizar la cadena
                     .replace(/[\u0300-\u036f]/g, ''); // Quitar diacríticos (acentos)
+                
+                const highestIndex = this.words.reduce((max, word) => {
+                    return word.idPregunta > max ? word.idPregunta : max;
+                }, 0);
+                const newIndex = highestIndex + 1;
 
                 this.words.push({
                     respuesta: normalizedWord,
                     pregunta: this.newWord.pregunta.trim(),
-                    idPregunta: this.words.length,
+                    idPregunta: newIndex,
+                    isNew: true
                 });
                 this.newWord.respuesta = '';
                 this.newWord.pregunta = '';
             }
         },  
         removeWord(index) {
-            this.words.splice(index, 1);
+            console.log('Buscando palabra con indice:  ', index)
+            const wordToRemove = this.words.find(word => word.idPregunta === index);
+
+            if (wordToRemove.isNew) {
+                this.words = this.words.filter(word => word.idPregunta !== index);
+            }
+            else {
+                this.$emit('update:isLoading', true);
+                let wordData = {
+                    idEvaluacion: this.idEvaluation,
+                    numPregunta: index
+                }
+                console.log("Quiero eliminar la palabra: ", wordData);
+                ActivityService.deleteWordFromCrossword(wordData)
+                .then((response) => {
+                    console.log("La palabra se elimino correctamente: ", response);
+                    this.words = this.words.filter(word => word.idPregunta !== index);
+                    this.$swal({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: 'La palabra fue eliminada correctamente.',
+                    });
+                })
+                .catch((error) => {
+                    console.error("Ocurrio un error al eliminar la palabra: ", error);
+                    this.$swal({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'La palabra no pudo ser eliminada correctamente.',
+                    })                
+                })
+                .finally(() => {
+                    this.$emit('update:isLoading', false);
+                })
+            }
         },              
         transformWordsToClues(wordsArray) {
             return wordsArray.map(word => ({

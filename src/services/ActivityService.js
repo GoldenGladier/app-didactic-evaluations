@@ -133,6 +133,14 @@ class ActivityService {
     }
   }       
 
+  async deleteWordFromCrossword(wordData) {
+    try {
+      const response = await axios.post(`${API_URL}/deleteQuestion`, wordData);
+      return response.data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
+  }    
     // ---- Sopa de letras ----
   async addActivitiesWordsearch(activityData) {
     try {
