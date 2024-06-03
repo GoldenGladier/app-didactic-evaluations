@@ -84,12 +84,19 @@ export default {
             ActivityService.respondActivityOrderStatement(data)
             .then(response => {
                 console.log("sendAnswers status: ", response);
+                let text = 'Tus respuestas han sido enviadas correctamente. '
+                text += this.infoEvaluation?.retroalimentacion_activa ? 'Tu profesor te informará acerca de tus resultados.' : ''
                 this.$swal({
                     icon: 'success',
                     title: '¡Éxito!',
-                    text: 'Tus respuestas han sido enviadas correctamente',
+                    text: text,
                 }).then(() => {
-                    this.answerReview = response;
+                    if(this.infoEvaluation?.retroalimentacion_activa) {
+                        this.answerReview = response;
+                    }
+                    else {
+                        this.logout();
+                    }
                 });                   
             })
             .catch(error => {
