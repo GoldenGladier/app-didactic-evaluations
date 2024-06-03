@@ -99,12 +99,15 @@
           ActivityService.deleteActivityOrderStatement(id_ordenamiento)
           .then(response => {
             console.log("Elimine la actividad: ", response);
+            this.activities.splice(index, 1);
             this.$router.replace({ name: 'EditEvaluation', params: { idEvaluation: this.$route.params.idEvaluation, tabId: 'activities' } });     
           })
           .catch(error => {
             console.error('Error al intentar eliminar la actividad:', error);  
+          })
+          .finally(() => {
             this.isLoading = false
-          });           
+          });        
         }
         else{
           this.activities.splice(index, 1);
