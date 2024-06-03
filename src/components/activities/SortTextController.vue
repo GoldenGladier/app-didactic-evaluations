@@ -84,8 +84,8 @@ export default {
             ActivityService.respondActivityOrderStatement(data)
             .then(response => {
                 console.log("sendAnswers status: ", response);
-                let text = 'Tus respuestas han sido enviadas correctamente. '
-                text += this.infoEvaluation?.retroalimentacion_activa ? 'Tu profesor te informará acerca de tus resultados.' : ''
+                let text = 'Tus respuestas han sido enviadas correctamente. ';
+                text += this.infoEvaluation?.retroalimentacion_activa ? '' : 'Tu profesor te informará acerca de tus resultados.';
                 this.$swal({
                     icon: 'success',
                     title: '¡Éxito!',
