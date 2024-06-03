@@ -14,6 +14,7 @@
                   type="text"
                   v-model="title"                    
                   placeholder="Ingresa el titulo de la actividad"
+                  maxlength="100"
                   required
                 ></b-form-input>
               </b-form-group>
@@ -22,7 +23,8 @@
                   id="subtitle"
                   type="text"
                   v-model="subtitle"                    
-                  placeholder="Ingresa el subtitulo de la actividad"                  
+                  placeholder="Ingresa el subtitulo de la actividad"
+                  maxlength="200"                  
                 ></b-form-input>
               </b-form-group>
               <b-form-group label="Descripción o instrucciones" label-for="description" class="mt-1">  
@@ -31,6 +33,7 @@
                   v-model="description"
                   placeholder="Ingresa una descripción o instrucciones de la actividad..."
                   rows="3"
+                  maxlength="500"
                 ></b-form-textarea>     
               </b-form-group>
               <b-form-checkbox v-model="feedback" id="feedback" name="check-button" class="custom-checkbox-switch mb-4 mb-md-0" size="lg" switch >             
