@@ -34,7 +34,7 @@
 
             <h3 class="text-center">{{ item.nombre }}</h3>
             <h4 class="text-center">{{ item.subtitulo }}</h4>            
-            <p class="pl-1 pr-1">{{ item.descripcion }}</p>
+            <p class="pl-1 pr-1">{{ item.descripcion.length > 45 ? item.descripcion.substring(0, 45) + '...' : item.descripcion }}</p>
             <div class="button-container">                
                 <b-button @click="$router.push(`/evaluaciones/${item.id_evaluaciones}/editar`)" variant="warning" class="custom-button-icon">
                   <b-icon icon="pen"></b-icon> <span class="button-text">Editar</span>
