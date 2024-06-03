@@ -9,6 +9,7 @@
             <hr class="my-4">
 
             <SortTextController v-if="dinamicSelected == 'Ordena el enunciado'" :infoEvaluation="infoEvaluation" :sentences="activities.sentence" @updateLoading="updateLoading" :answerReviewActive.sync="answerReviewActive" />
+            <SolveSortItemsWrapper v-else-if="dinamicSelected == 'Ordena los items'" :infoEvaluation="infoEvaluation" :activities="activities.sentence" @updateLoading="updateLoading" :answerReviewActive.sync="answerReviewActive" />
             
         </b-container>
     </b-overlay>
@@ -20,10 +21,12 @@ import EvaluationService from '@/services/EvaluationService.js'
 // import store from '@/store/auth';
 
 import SortTextController from '@/components/activities/SortTextController.vue'
+import SolveSortItemsWrapper from '@/components/activities/SortItems/SolveSortItemsWrapper.vue'
 
 export default {
     components: {
         SortTextController,
+        SolveSortItemsWrapper,
     },
     data() {
         return {

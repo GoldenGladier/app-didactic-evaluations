@@ -78,6 +78,16 @@ class ActivityService {
     }
   }  
 
+  async solveActivitySortItems(data) {
+    try {
+      const response = await axios.post(`${process.env.VUE_APP_API_URL}/answer/sortItem`, data);      
+      return response.data;
+    } catch (error) {
+      throw error.response;
+      // throw error.response.data.message;
+    }
+  }  
+
     // ---- Pregunta de opción multiple ----
   async addActivitiesMultipleChoice(activityData) {
     try {

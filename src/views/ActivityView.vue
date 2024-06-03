@@ -38,7 +38,7 @@
 import CreateCrosswordWrapper from '@/components/activities/Crossword/CreateCrosswordWrapper.vue';
 import CreateWordsearchWrapper from '@/components/activities/Wordsearch/CreateWordsearchWrapper.vue';
 import SortText from '@/components/activities/SortText.vue';
-import SortItems from '@/components/activities/SortItems.vue';
+import SortItems from '@/components/activities/SortItems/SortItems.vue';
 
 export default {
   components: {
