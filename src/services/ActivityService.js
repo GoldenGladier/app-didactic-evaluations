@@ -120,6 +120,16 @@ class ActivityService {
     }
   }    
 
+  async solveActivityMultipleChoice(data) {
+    try {
+      const response = await axios.post(`${process.env.VUE_APP_API_URL}/answer/multipleChoice`, data);      
+      return response.data;
+    } catch (error) {
+      throw error.response;
+      // throw error.response.data.message;
+    }
+  }  
+
     // ---- Crucigrama ----
   async addActivitiesCrossword(activityData) {
     try {

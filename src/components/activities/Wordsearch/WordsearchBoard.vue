@@ -214,11 +214,6 @@ export default {
 </script>
 
 <style>
-:root {
-  --green-rgba: rgba(40, 167, 69, 0.3);
-  --red-rgba: rgba(220, 53, 69, 0.3);
-}
-
 .word-search {
     max-width: 100%; /* Máximo ancho del contenedor */
     overflow: auto; /* Permitir desplazamiento */
