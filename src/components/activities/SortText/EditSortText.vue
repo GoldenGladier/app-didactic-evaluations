@@ -1,8 +1,8 @@
 <template>
-  <b-container>
+  <b-container class="p-0 p-md-3">
 
     <b-overlay :show="isLoading" class="width-100">      
-      <b-container>  
+      <b-container class="p-0 p-md-3">  
         <h1 class="text-center mb-4">Editar actividades de la evaluación</h1>
 
         <b-form @submit.prevent="updateActivities()">
@@ -17,7 +17,7 @@
                     :id="'description' + index"
                     v-model="activities[index].oracion"
                     placeholder="El enunciado que ingreses así será mostrado a los alumnos de forma desordenada"
-                    rows="2"
+                    rows="3"
                     class="mr-2"
                     @input="markChanges()"
                     required
@@ -31,7 +31,7 @@
             </b-col>
             <b-col bg="10" md="8" sm="12" class="custom-button">
               <b-card class="mt-3 custom-button" @click="addNewActivity()" id="add-activity">
-                <b-icon icon="plus"></b-icon> <span class="button-text">Agregar otra actividad</span>
+                <b-icon icon="plus"></b-icon> Agregar otra actividad
               </b-card>                
             </b-col>
           </b-row>   
@@ -39,7 +39,7 @@
           <hr class="mt-4 mb-4">
           
           <b-button type="submit" variant="success" class="custom-button-iconmt-3" :disabled="cambiosSinGuardar" >
-            <i class="bi bi-floppy"></i> <span class="button-text">Guardar actividades de la evaluación</span>
+            <i class="bi bi-floppy"></i> Guardar actividades
           </b-button>
 
         </b-form>

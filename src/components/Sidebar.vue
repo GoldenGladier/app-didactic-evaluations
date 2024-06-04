@@ -15,9 +15,17 @@
         <hr class="custom-hr">
 
         <b-nav vertical class="custom-vertical-nav">
+          <div v-if="isLoggedIn && isOverlay">
+            <b-nav-item class="custom-nav-item">
+                <b-icon icon="person" class="sidebar-icon"></b-icon>
+                <span v-if="!sidebarCollapsed" class="sidebar-text">{{ username }}</span>
+            </b-nav-item>     
+            <hr class="custom-hr">
+          </div>
+
           <template v-for="(item, index) in items">
             <template v-if="item.isExternalLink">
-              <li v-if="(item.requiresAuth && isLoggedIn) || (item.requiresAuth == false)" :key="index" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
+              <li v-if="(item.requiresAuth && isLoggedIn && !isGuestUser) || (item.requiresAuth == false)" :key="index" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
                 <a :href="item.link" class="nav-link" target="_blank">
                   <b-icon :icon="item.icon" class="sidebar-icon"></b-icon>
                     <span v-if="!sidebarCollapsed" class="sidebar-text">{{ item.text }}</span>                 
@@ -25,7 +33,7 @@
               </li>
             </template>      
             <template v-else>      
-              <b-nav-item v-if="(item.requiresAuth && isLoggedIn) || (item.requiresAuth == false)" :key="index" :to="item.link" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
+              <b-nav-item v-if="(item.requiresAuth && isLoggedIn && !isGuestUser) || (item.requiresAuth == false)" :key="index" :to="item.link" :class="{ 'custom-nav-item': true, 'active': isActive(item.link) }">
                 <b-icon :icon="item.icon" class="sidebar-icon"></b-icon>
                 <!-- <Transition name="bounce"> -->
                   <span v-if="!sidebarCollapsed" class="sidebar-text">{{ item.text }}</span>
@@ -65,6 +73,7 @@ import AppIcon from './navegation/AppIcon.vue';
 import sidebar from '@/store/sidebar';
 
 import ClickOutside from 'vue-click-outside'
+import store from '@/store/auth';
 
 export default {
   components: {
@@ -75,19 +84,16 @@ export default {
       sidebarCollapsed: false,
       isOverlay: false,
       sidebarFullWidth: 'calc(250px - 0.5rem)',
+      devMode: true,
       items: [
         { text: 'Inicio', icon: 'house-door', link: '/home', requiresAuth: false },
         { text: 'Mis evaluaciones', icon: 'card-checklist', link: '/evaluaciones/mis-evaluaciones', requiresAuth: true },
         { text: 'Crear evaluación', icon: 'plus-circle', link: '/evaluaciones/crear-evaluacion', requiresAuth: true },
         { text: 'Unirse a actividad', icon: 'star', link: '/join-to-activity', requiresAuth: false },        
-        // { text: 'Login', icon: 'door-open', link: '/login' },
-        // { text: 'Registrarse', icon: 'person-plus', link: '/register' },
         { text: 'Administración', icon: 'gear', link: '/administracion', requiresAuth: true },
-        { text: 'UI', icon: 'code-slash', link: '/testingUi', requiresAuth: true },
-        { text: 'Icons', icon: 'suit-heart', link: 'https://icons.getbootstrap.com', isExternalLink: true, requiresAuth: false },
-        { text: 'Desarrollo', icon: 'hammer', link: '/activity', requiresAuth: true },
-        
-        // Agrega más ítems aquí según tu necesidad
+        // { text: 'UI', icon: 'code-slash', link: '/testingUi', requiresAuth: true },
+        // { text: 'Icons', icon: 'suit-heart', link: 'https://icons.getbootstrap.com', isExternalLink: true, requiresAuth: false },
+        // { text: 'Desarrollo', icon: 'hammer', link: '/activity', requiresAuth: true },
       ]
     }
   },
@@ -98,6 +104,12 @@ export default {
     isLoggedIn() {
       return this.$store.state.auth.isLoggedIn;
     },
+    isGuestUser() {
+      return this.$store.state.auth.user?.isGuestUser;
+    },    
+    username() {
+      return this.$store.state.auth.user?.nombre + ' ' + this.$store.state.auth.user?.apellido_paterno + ' ' + (this.$store.state.auth.user?.apellido_materno ? this.$store.state.auth.user?.apellido_materno : '')
+    }    
   },
   methods: {
     checkScreenSize() {
@@ -116,7 +128,14 @@ export default {
     },    
     isActive(route) {
       return this.$route.path === route;
-    }
+    },
+    logout() {
+      console.log("Close sesion")
+      store.commit('logout');   
+      if(this.$route.path !== '/login') {
+        this.$router.push('/login');
+      }
+    },    
   },
   created() {
     this.checkScreenSize();

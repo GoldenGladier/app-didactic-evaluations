@@ -7,7 +7,7 @@
             <h1 class="title-bold">Usuarios</h1>
             <hr class="my-4">     
             <b-container>
-                <b-table small bordered striped :items="users" :fields="fields" class="table text-center">
+                <b-table small bordered striped responsive :items="users" :fields="fields" class="table text-center">
                     <template v-slot:cell(verificado)="row">
                         <b-form-checkbox v-model="row.item.verificado" :disabled="row.item.rol_de_usuario == 'ADMIN'" switch></b-form-checkbox>
                     </template>        

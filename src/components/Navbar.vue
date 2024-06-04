@@ -8,8 +8,10 @@
     <b-collapse id="navbarSupportedContent" class="custom-extra-options" is-nav>
       <b-navbar-nav class="ml-auto">
 
-        <b-nav-item v-if="!isLoggedIn" href="/join-to-activity" class="custom-nav-item d-flex align-items-center">
-          <b-icon icon="star" class="sidebar-icon" /> Unirse a actividad
+        <b-nav-item v-if="!isLoggedIn || isGuestUser" href="/join-to-activity" class="custom-nav-item d-flex align-items-center">
+          <b-icon icon="star" class="sidebar-icon" /> 
+          <span v-if="isGuestUser">Unirse a otra actividad</span>
+          <span v-else>Unirse a actividad</span>
         </b-nav-item>
         <b-nav-item v-if="!isLoggedIn" href="/login" class="custom-nav-item d-flex align-items-center">
           <b-icon icon="door-open" class="sidebar-icon" /> Login
@@ -56,6 +58,9 @@ export default {
     isLoggedIn() {
       return this.$store.state.auth.isLoggedIn;
     },
+    isGuestUser() {
+      return this.$store.state.auth.user?.isGuestUser;
+    },    
     user() {
       return this.$store.state.auth.user;
     },
@@ -75,10 +80,6 @@ export default {
       return this.$route.path === route;
     }    
   },  
-  // created() {
-  //   console.log("localStorage.getItem('token'): ", localStorage.getItem('token'))
-  //   console.log("localStorage.getItem('user'): ", localStorage.getItem('user'))
-  // }, 
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Sidebar :sidebarWidth="sidebarWidth" v-if="isLoggedIn || this.isOverlay" />
+    <Sidebar :sidebarWidth="sidebarWidth" v-if="(isLoggedIn && !isGuestUser) || this.isOverlay" />
     <div class="master-container" id="master-container" :class="{ 'with-sidebar': !isOverlay }" :style="{ 'margin-left': sidebarWidth }" >
       <Navbar />
       <div class="view-master-container" id="view-master-container">
@@ -50,11 +50,14 @@ export default {
     isLoggedIn() {
       return this.$store.state.auth.isLoggedIn;
     },   
+    isGuestUser() {
+      return this.$store.state.auth.user?.isGuestUser;
+    },
     sidebarWidth() {
-      if(this.isLoggedIn || this.isOverlay) {
+      if((this.isLoggedIn && !this.isGuestUser) || this.isOverlay) {
         console.log("Mostrar sidebar");
       }
-      return (this.isLoggedIn || this.isOverlay) ? (this.$store.state.sidebar.sidebarCollapsed ? this.collapsedSize : "250px") : '0px';   
+      return ((this.isLoggedIn && !this.isGuestUser) || this.isOverlay) ? (this.$store.state.sidebar.sidebarCollapsed ? this.collapsedSize : "250px") : '0px';   
     }
   },
 }

@@ -14,7 +14,7 @@
                     :id="'description' + index"
                     v-model="activities[index].letter"
                     placeholder="El enunciado que ingreses así será mostrado a los alumnos de forma desordenada"
-                    rows="2"
+                    rows="3"                    
                     class="mr-2"
                     required
                   ></b-form-textarea>
@@ -29,13 +29,13 @@
           </b-row>
 
           <b-button type="submit" variant="success" class="custom-button-iconmt-3" >
-            <b-icon icon="journals"></b-icon> <span class="button-text">Guardar actividades de la evaluación</span>
+            <b-icon icon="journals"></b-icon> Guardar actividades de la evaluación
           </b-button>
 
           <hr class="mt-4 mb-4">
           
           <b-button @click="addNewActivity()" :disabled="activities.length <= 0" variant="warning" class="custom-button-icon" >
-            <b-icon icon="plus"></b-icon> <span class="button-text">Agregar otra actividad</span>
+            <b-icon icon="plus"></b-icon> Agregar otra actividad
           </b-button>
 
         </b-form>
