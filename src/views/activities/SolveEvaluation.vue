@@ -12,7 +12,7 @@
             <SolveSortItemsWrapper v-else-if="dinamicSelected == 'Ordena los items'" :infoEvaluation="infoEvaluation" :activities="activities.sentence" @updateLoading="updateLoading" :answerReviewActive.sync="answerReviewActive" />
             <SolveMultipleChoiceWrapper v-else-if="dinamicSelected == 'Opción multiple'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />
             <SolveCrosswordWrapper v-else-if="dinamicSelected == 'Crucigrama'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />
-            <!-- Sopa de letras -->
+            <SolveWordsearchWrapper v-else-if="dinamicSelected == 'Sopa de letras'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />
         </b-container>
     </b-overlay>
   </b-container>
@@ -25,13 +25,15 @@ import SortTextController from '@/components/activities/SortTextController.vue'
 import SolveSortItemsWrapper from '@/components/activities/SortItems/SolveSortItemsWrapper.vue'
 import SolveMultipleChoiceWrapper from '@/components/activities/MultipleChoice/SolveMultipleChoiceWrapper.vue'
 import SolveCrosswordWrapper from '@/components/activities/Crossword/SolveCrosswordWrapper.vue'
+import SolveWordsearchWrapper from '@/components/activities/Wordsearch/SolveWordsearchWrapper.vue'
 
 export default {
     components: {
         SortTextController,
         SolveSortItemsWrapper,
         SolveMultipleChoiceWrapper,
-        SolveCrosswordWrapper
+        SolveCrosswordWrapper,
+        SolveWordsearchWrapper
     },
     data() {
         return {

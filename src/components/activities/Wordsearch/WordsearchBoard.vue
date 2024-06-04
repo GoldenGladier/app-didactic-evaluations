@@ -1,13 +1,13 @@
 <template>
-  <div v-if="grid.length">
-    <b-button class="help-button" @click="startTutorial"
+  <div v-if="grid && grid.length">
+    <b-button class="help-button btn-help-dinamic-middle" @click="startTutorial"
       v-b-tooltip.hover.top="'Haz clic aquí para recibir un tutorial sobre cómo responder la sopa de letras.'" >
       <i class="bi bi-question-circle"></i>Ayuda
     </b-button>      
-    <h3>Sopa de letras</h3>
+    <!-- <h3>Sopa de letras</h3> -->
 
-    <div class="word-search p-0" id="word-search" v-if="grid.length">
-      <table class="grid-table">
+    <div class="word-search p-0 pt-2" id="word-search" v-if="grid.length">
+      <table class="grid-table" v-if="!answerReviewActive">
         <tbody>
           <tr v-for="(row, rowIndex) in grid" :key="rowIndex">
             <td
@@ -27,6 +27,23 @@
           </tr>
         </tbody>
       </table>
+      <table class="grid-table" v-else >
+        <tbody>
+          <tr v-for="(row, rowIndex) in grid" :key="rowIndex">
+            <td
+              v-for="(cell, colIndex) in row"
+              :key="colIndex"
+              :class="{ 
+                found: isFound(rowIndex, colIndex), 
+                'not-found': isNotFound(rowIndex, colIndex) 
+              }"              
+            >
+              {{ cell }}
+            </td>
+          </tr>
+        </tbody>
+      </table>      
+      <!-- <b-button @click="feedback()">Generar tablero</b-button> -->
     </div>
 
     <div v-if="words.length && grid.length" id="lista-palabras-buscar" class="mt-2">
@@ -65,7 +82,15 @@ export default {
         puzzle: {
             type: Object,
             default: null
-        }        
+        },
+        answerReviewActive: {
+            type: Boolean,
+            default: false
+        },
+        answers: {
+            type: Array,
+            default: () => []
+        },                   
     },
     data() {
         return {       
@@ -172,6 +197,23 @@ export default {
             }
             return columns;
         },
+        feedback(){
+            this.puzzle.words.forEach(word => {
+                console.log("Analizando palabras...")
+                if(this.answers.includes(word.word)){
+                    word.path.forEach(path => {
+                        this.foundCells.push( {col: path.x, row: path.y} );   
+                        this.foundWords.push(word.word)                 
+                    })
+                }
+                else {
+                    console.log("Marcando  palabras faltantes, ", word.word);
+                    word.path.forEach(path => {
+                        this.notFoundCells.push( {col: path.x, row: path.y} );                    
+                    })                    
+                }
+            })
+        },
         startTutorial() {
             this.startTour([
                 {
@@ -208,8 +250,27 @@ export default {
                 console.log('El objeto puzzle ha cambiado:', newPuzzle);
             },
             deep: true
+        },
+        answerReviewActive: {
+            handler() {
+                this.feedback();
+            }
         }
-    }
+    },
+    created() {
+        this.grid = this.puzzle?.grid;
+        this.selectedCells = [];
+        this.previewCells = [];
+        this.foundCells = [];
+        this.foundWords = [];
+        this.notFoundCells = [];
+        this.selecting = false;
+        this.startCell = null;     
+        if(this.answerReviewActive){
+            this.feedback();
+        }        
+        console.log('El objeto puzzle ha cambiado:', this.puzzle);
+    },
 };
 </script>
 
@@ -292,5 +353,15 @@ ul {
 
 .found-word {
   text-decoration: line-through;
+}
+
+.correct-cell {
+  border-color: var(--success) !important;
+  background-color: var(--green-rgba) !important;
+}
+
+.incorrect-cell {
+  border-color: var(--danger) !important;
+  background-color: var(--red-rgba) !important;
 }
 </style>

@@ -65,6 +65,8 @@
     <!-- Tablero de sopa de letras -->
     <b-row class="my-3">        
         <b-col cols="12 p-0 pd-md-3">
+            <h3>Ejemplo de tu sopa de letras</h3>
+            <b-alert v-if="efficiencyModifiedSizeAlert" variant="warning" show dismissible> <i class="bi bi-exclamation-triangle-fill"></i>Tuvimos que incrementar el tamaño de la sopa para lograr insertar todas las palabras.</b-alert>                  
             <WordsearchBoardVue :words="words" :gridCols="gridCols" :gridRows="gridRows" :puzzle="puzzle" />
         </b-col>
     </b-row>
@@ -114,14 +116,6 @@ export default {
           gridRows: 10,
           grid: [],
           puzzle: null,
-
-        // selectedCells: [],
-        // previewCells: [],
-        // foundCells: [],
-        // foundWords: [],
-        // notFoundCells: [],
-        // selecting: false,
-        // startCell: null,
       };
     },
     methods: {
@@ -159,14 +153,30 @@ export default {
             };
 
             this.puzzle = new WordSearch(options);
+            if (this.puzzle.words.length < this.words.length) {
+                let attempts = 0;
+                const maxAttempts = 15;
+                if (attempts === maxAttempts) {
+                    this.gridCols++;
+                    this.gridRows++;
+                    options.gridCols = this.gridCols;
+                    options.gridRows = this.gridRows;
+                    attempts = 0;
+                }
+                while (this.puzzle.words.length < this.words.length && attempts < maxAttempts) {
+                    console.log("No caben las palabras escondidas:", this.puzzle.words);
+                    this.puzzle = new WordSearch(options);
+                    attempts++;
+                }
+            }            
             this.grid = this.puzzle.grid;
-            this.selectedCells = [];
-            this.previewCells = [];
-            this.foundCells = [];
-            this.foundWords = [];
-            this.notFoundCells = [];
-            this.selecting = false;
-            this.startCell = null;
+            // this.selectedCells = [];
+            // this.previewCells = [];
+            // this.foundCells = [];
+            // this.foundWords = [];
+            // this.notFoundCells = [];
+            // this.selecting = false;
+            // this.startCell = null;
 
             console.log("Palabras escondidas: ", this.puzzle.words);
         },
@@ -263,90 +273,6 @@ export default {
                 },                                                                                            
             ]);
         },
-
-    isSelected(row, col) {
-      return this.selectedCells.some(cell => cell.row === row && cell.col === col);
-    },
-    isPreview(row, col) {
-      return this.previewCells.some(cell => cell.row === row && cell.col === col);
-    },
-    isFound(row, col) {
-      return this.foundCells.some(cell => cell.row === row && cell.col === col);
-    },
-    isNotFound(row, col) {
-      return this.notFoundCells.some(cell => cell.row === row && cell.col === col);
-    },
-    isWordFound(word) {
-      return this.foundWords.includes(word);
-    },
-    selectCell(row, col) {
-      if (!this.selecting) {
-        this.startCell = { row, col };
-        this.selectedCells = [{ row, col }];
-        this.selecting = true;
-      } else {
-        const endCell = { row, col };
-        this.selectedCells = this.getCellsInLine(this.startCell.row, this.startCell.col, endCell.row, endCell.col);
-        this.selecting = false;
-        this.handleSelection(this.startCell, endCell);
-        this.startCell = null;
-      }
-    },
-    previewSelection(row, col) {
-      if (this.selecting && this.startCell) {
-        this.previewCells = this.getCellsInLine(this.startCell.row, this.startCell.col, row, col);
-      } else {
-        this.previewCells = [];
-      }
-    },
-    getCellsInLine(startRow, startCol, endRow, endCol) {
-      const cells = [];
-      const dRow = endRow - startRow;
-      const dCol = endCol - startCol;
-
-      if (dRow !== 0 && dCol !== 0 && Math.abs(dRow) !== Math.abs(dCol)) {
-        return cells; // No es una línea recta ni una diagonal estricta
-      }
-
-      const steps = Math.max(Math.abs(dRow), Math.abs(dCol));
-
-      for (let i = 0; i <= steps; i++) {
-        const row = startRow + Math.round((i * dRow) / steps);
-        const col = startCol + Math.round((i * dCol) / steps);
-        cells.push({ row, col });
-      }
-
-      return cells;
-    },
-    handleSelection(startCell, endCell) {
-      const word = this.puzzle.read({ x: startCell.col, y: startCell.row }, { x: endCell.col, y: endCell.row });
-      const reversedWord = this.puzzle.read({ x: endCell.col, y: endCell.row }, { x: startCell.col, y: startCell.row });
-
-      if (this.words.includes(word) || this.words.includes(reversedWord)) {
-        const foundWord = this.words.includes(word) ? word : reversedWord;
-        console.log('Palabra encontrada:', foundWord);
-        this.foundCells.push(...this.selectedCells);
-        if (!this.foundWords.includes(foundWord)) {
-          this.foundWords.push(foundWord);
-        }
-      } else {
-        console.log('Palabra no válida:', word);
-        this.notFoundCells.push(...this.selectedCells);
-        setTimeout(() => {
-          this.notFoundCells = [];
-        }, 1000);
-      }
-
-      this.selectedCells = [];
-    },
-    splitWordsIntoColumns(words, numColumns) {
-      const wordsPerColumn = Math.ceil(words.length / numColumns);
-      const columns = [];
-      for (let i = 0; i < numColumns; i++) {
-        columns.push(words.slice(i * wordsPerColumn, (i + 1) * wordsPerColumn));
-      }
-      return columns;
-    }
   },
   computed: {
     formattedWordsForTable() {

@@ -46,6 +46,14 @@ i.custom-info-driver-button:hover {
     text-decoration: underline;
 }
 
+@media (max-width: 576px) {
+    .btn-help-dinamic-middle {
+        position: relative;
+        top: 0px;
+        left: 0px;       
+    }
+}
+
 .silent-button, .silent-button:hover, .silent-button:focus, .silent-button:active {
     background-color: transparent;
     border-color: transparent;

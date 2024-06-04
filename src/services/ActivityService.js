@@ -202,7 +202,18 @@ class ActivityService {
     } catch (error) {
       throw error.response.data.message;
     }
+  } 
+  
+  async solveActivityWordsearch(data) {
+    try {
+      const response = await axios.post(`${process.env.VUE_APP_API_URL}/answer/wordSearch`, data);      
+      return response.data;
+    } catch (error) {
+      throw error.response;
+      // throw error.response.data.message;
+    }
   }  
+  
     // ---- Actividades en general ----
 }
 

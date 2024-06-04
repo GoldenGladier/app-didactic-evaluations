@@ -68,6 +68,7 @@
     <b-row class="my-3">        
         <b-col cols="12" class="p-0 pd-md-3">
             <h3>Ejemplo de tu sopa de letras</h3>
+            <b-alert v-if="efficiencyModifiedSizeAlert" variant="warning" show dismissible> <i class="bi bi-exclamation-triangle-fill"></i>Tuvimos que incrementar el tamaño de la sopa para lograr insertar todas las palabras.</b-alert>                               
             <WordsearchBoardVue :words="words.map(word => { return word.palabra })" :gridCols="gridCols" :gridRows="gridRows" :puzzle="puzzle" />
         </b-col>
     </b-row>
@@ -118,6 +119,7 @@ export default {
             gridRows: 10,
             grid: [],
             puzzle: null,
+            efficiencyModifiedSizeAlert: false
         };
     },
     methods: {
@@ -233,14 +235,23 @@ export default {
             };
 
             this.puzzle = new WordSearch(options);
+            if (this.puzzle.words.length < this.words.length) {
+                let attempts = 0;
+                const maxAttempts = 15;
+                if (attempts === maxAttempts) {
+                    this.gridCols++;
+                    this.gridRows++;
+                    options.gridCols = this.gridCols;
+                    options.gridRows = this.gridRows;
+                    attempts = 0;
+                }
+                while (this.puzzle.words.length < this.words.length && attempts < maxAttempts) {
+                    console.log("No caben las palabras escondidas:", this.puzzle.words);
+                    this.puzzle = new WordSearch(options);
+                    attempts++;
+                }
+            }
             this.grid = this.puzzle.grid;
-            // this.selectedCells = [];
-            // this.previewCells = [];
-            // this.foundCells = [];
-            // this.foundWords = [];
-            // this.notFoundCells = [];
-            // this.selecting = false;
-            // this.startCell = null;
 
             console.log("Palabras escondidas: ", this.puzzle.words);
         },
