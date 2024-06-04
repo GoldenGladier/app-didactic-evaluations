@@ -70,6 +70,13 @@
 
 
         <b-row id="grid-crucigrama">
+            <b-col cols="12" v-if="unusedWords.length">
+                <b-alert variant="warning" show dismissible> <i class="bi bi-exclamation-triangle-fill"></i>
+                    <span v-if="unusedWords.length > 1">Las palabras {{ this.unusedWords.map(word => word.answer).join(', ') }} no pudierón ser utilizadas en el crucigama.</span>
+                    <span v-else>La palabra {{ this.unusedWords.map(word => word.answer).join(', ') }} no pudo ser utilizada en el crucigama.</span>
+                    Intenta agregando más palabras para poder conectar el crucigrama o dando clic en generar otras opciones.
+                </b-alert>            
+            </b-col>
             <b-col cols="12" class="d-flex justify-content-center align-items-center p-0 p-md-3">
                 <CrosswordBoard :grid="grid" :gridRows="gridRows" :gridCols="gridCols" :answers.sync="answers" :modeRespondActivity="modeRespondActivity" />
             </b-col>
@@ -141,7 +148,8 @@ export default {
                 respuesta: '',
                 pregunta: ''
             },
-            words: [],      
+            words: [],     
+            unusedWords: [], 
             fields: [
                 { key: 'respuesta', label: 'Palabra' },
                 { key: 'pregunta', label: 'Pista' },
@@ -286,6 +294,13 @@ export default {
             const layout = clg.generateLayout(clues);        
             this.answers = layout.result;      
 
+            this.unusedWords = this.answers.filter(answer => answer.orientation == 'none');
+            if(this.unusedWords.length){
+                console.log("unusedWords: ", this.unusedWords);
+                let text = this.unusedWords.map(word => word.answer).join(', ');
+                console.log("unusedWords list: ", text);
+            }
+
             this.gridRows = layout.rows;
             this.gridCols = layout.cols;
             this.grid = layout.table;       
@@ -311,6 +326,7 @@ export default {
                 this.gridCols = gridSize;         
                 console.log("Layaout: ", layout)
                 this.answers = this.transformUluToAnswersFormat(layout);
+                this.unusedWords = [];
                 this.grid = this.createGrid(gridSize, layout);
                 console.log("Grid: ", this.grid);
 
