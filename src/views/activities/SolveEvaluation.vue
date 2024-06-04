@@ -11,7 +11,8 @@
             <SortTextController v-if="dinamicSelected == 'Ordena el enunciado'" :infoEvaluation="infoEvaluation" :sentences="activities.sentence" @updateLoading="updateLoading" :answerReviewActive.sync="answerReviewActive" />
             <SolveSortItemsWrapper v-else-if="dinamicSelected == 'Ordena los items'" :infoEvaluation="infoEvaluation" :activities="activities.sentence" @updateLoading="updateLoading" :answerReviewActive.sync="answerReviewActive" />
             <SolveMultipleChoiceWrapper v-else-if="dinamicSelected == 'Opción multiple'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />
-            
+            <SolveCrosswordWrapper v-else-if="dinamicSelected == 'Crucigrama'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />
+            <!-- Sopa de letras -->
         </b-container>
     </b-overlay>
   </b-container>
@@ -19,17 +20,18 @@
 
 <script>
 import EvaluationService from '@/services/EvaluationService.js'
-// import store from '@/store/auth';
 
 import SortTextController from '@/components/activities/SortTextController.vue'
 import SolveSortItemsWrapper from '@/components/activities/SortItems/SolveSortItemsWrapper.vue'
 import SolveMultipleChoiceWrapper from '@/components/activities/MultipleChoice/SolveMultipleChoiceWrapper.vue'
+import SolveCrosswordWrapper from '@/components/activities/Crossword/SolveCrosswordWrapper.vue'
 
 export default {
     components: {
         SortTextController,
         SolveSortItemsWrapper,
-        SolveMultipleChoiceWrapper
+        SolveMultipleChoiceWrapper,
+        SolveCrosswordWrapper
     },
     data() {
         return {

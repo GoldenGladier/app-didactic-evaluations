@@ -1,22 +1,28 @@
 <template>
     <div id="grid" class="crossword-container">
-        <h3 v-if="grid.length" class="font-weight-bold mt-2 mb-4">Crucigrama generado</h3>
-        <table class="grid-table my-2">  
+        <!-- <h3 v-if="grid.length" class="font-weight-bold mt-2 mb-4">Crucigrama generado</h3> -->
+        <table class="grid-table my-2" v-if="modeRespondActivity && userGrid.length">  
             <tbody>
                 <tr v-for="(row, rowIndex) in grid" :key="rowIndex">
                     <td v-for="(cell, colIndex) in row" :key="colIndex" class="grid-cell" :class="{'empty-cell': cell == '-'}">
-                        <template v-if="modeRespondActivity">
-                            <input v-if="cell !== '-'" type="text" maxlength="1" class="grid-input" v-model="userGrid[rowIndex][colIndex]" @input="updateWord(rowIndex, colIndex, $event)" autocapitalize="off" />
-                            <span v-if="hasWordAtPosition(rowIndex, colIndex)" class="span-position-word text-danger">{{ getWordPosition(rowIndex, colIndex) }}</span>
-                        </template>
-                        <template v-else>
-                            {{ cell == '-' ? ' ' : cell }}
-                            <span v-if="hasWordAtPosition(rowIndex, colIndex)" class="span-position-word text-danger">{{ getWordPosition(rowIndex, colIndex) }}</span>
-                        </template>                                
+                        <input v-if="cell !== '-'" type="text" maxlength="1" class="grid-input" v-model="userGrid[rowIndex][colIndex]" @input="updateWord(rowIndex, colIndex, $event)" autocapitalize="off" />
+                        <span v-if="hasWordAtPosition(rowIndex, colIndex)" class="span-position-word text-danger">{{ getWordPosition(rowIndex, colIndex) }}</span>                             
                     </td>
                 </tr>
             </tbody>
         </table>  
+
+        <table class="grid-table my-2" v-else>  
+            <tbody>
+                <tr v-for="(row, rowIndex) in grid" :key="rowIndex" >
+                    <td v-for="(cell, colIndex) in row"  :key="colIndex" class="grid-cell" :class="getCellClass(rowIndex, colIndex, cell)">
+                        {{ cell == '-' ? ' ' : cell }}
+                        <span v-if="hasWordAtPosition(rowIndex, colIndex)" class="span-position-word text-danger">{{ getWordPosition(rowIndex, colIndex) }}</span>
+                    </td>                  
+                </tr>
+            </tbody>
+        </table>  
+
     </div>    
 </template>
 
@@ -38,7 +44,11 @@ export default {
             type: Number,
             default: 0
         },
-        answers: [],     
+        colorReviewActived: {
+            type: Boolean,
+            default: false
+        },
+        answers: Array,     
     },
     data() {
         return {
@@ -57,29 +67,62 @@ export default {
             return word ? word.position : '';
         },
         updateWord(rowIndex, colIndex, event) {
-            this.userGrid[rowIndex][colIndex] = event.target.value.toLowerCase();
+            this.userGrid[rowIndex][colIndex] = event.target.value.toUpperCase();
             this.answers.forEach(word => {
                 if (word.orientation === 'across') {
-                    // Verifica si la celda editada está dentro de una palabra horizontal
                     if (word.starty - 1 === rowIndex && colIndex >= word.startx - 1 && colIndex < word.startx - 1 + word.answer.length) {
-                        // Actualiza la respuesta actual usando la fila específica en userGrid
                         word.currentAnswer = this.userGrid[rowIndex].slice(word.startx - 1, word.startx - 1 + word.answer.length).join('');
-                        console.log("Respuesta actualizada: ", word, word.currentAnswer);
                     }
                 } else if (word.orientation === 'down') {
-                    // Verifica si la celda editada está dentro de una palabra vertical
                     if (word.startx - 1 === colIndex && rowIndex >= word.starty - 1 && rowIndex < word.starty - 1 + word.answer.length) {
-                        // Construye la respuesta actual concatenando valores de las filas en userGrid para esa columna
                         let tempAnswer = '';
                         for (let i = 0; i < word.answer.length; i++) {
                             tempAnswer += this.userGrid[word.starty - 1 + i][colIndex];
                         }
                         word.currentAnswer = tempAnswer;
-                        console.log("Respuesta actualizada: ", word, tempAnswer);
                     }
                 }
             });
-        }       
+        },
+        getCellClass(rowIndex, colIndex, cell) {
+            let isCorrect = false;
+            let isIncorrect = false;
+
+            if(this.colorReviewActived){
+                for (let word of this.answers) {
+                    if (word.orientation === 'across' && rowIndex === word.starty - 1 && colIndex >= word.startx - 1 && colIndex < word.startx - 1 + word.answer.length) {
+                        if (word.correct) {
+                            isCorrect = true;
+                        } else {
+                            isIncorrect = true;
+                        }
+                    } else if (word.orientation === 'down' && colIndex === word.startx - 1 && rowIndex >= word.starty - 1 && rowIndex < word.starty - 1 + word.answer.length) {
+                        if (word.correct) {
+                            isCorrect = true;
+                        } else {
+                            isIncorrect = true;
+                        }
+                    }
+                } 
+
+                if (isCorrect) {
+                    return 'correct-cell';
+                } else if (isIncorrect) {
+                    return 'incorrect-cell';
+                } else {
+                    return 'empty-cell';
+                }
+            }
+            else {
+                if(cell == '-'){
+                    return 'empty-cell';
+                }
+                else {
+                    return '';
+                }
+            }
+
+        }
     },
     watch: {
         grid: {
@@ -89,6 +132,9 @@ export default {
             deep: true
         }
     },
+    mounted() {
+        this.initData();
+    },
 }
 </script>
 
@@ -96,15 +142,23 @@ export default {
 
 .crossword-container {
     padding: 0px;
-    /* background: #F0F0F0; */
     border-radius: 3px;
-
     overflow-x: auto;
     white-space: nowrap;
 }
 
 .empty-cell {
     background-color: #F0F0F0 !important;
+}
+
+.correct-cell {
+  border-color: var(--success) !important;
+  background-color: var(--green-rgba) !important;
+}
+
+.incorrect-cell {
+  border-color: var(--danger) !important;
+  background-color: var(--red-rgba) !important;
 }
 
 .grid-table {

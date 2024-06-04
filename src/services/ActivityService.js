@@ -161,6 +161,17 @@ class ActivityService {
       throw error.response.data.message;
     }
   }    
+
+  async solveActivityCrossword(data) {
+    try {
+      const response = await axios.post(`${process.env.VUE_APP_API_URL}/answer/crossWord`, data);      
+      return response.data;
+    } catch (error) {
+      throw error.response;
+      // throw error.response.data.message;
+    }
+  }  
+
     // ---- Sopa de letras ----
   async addActivitiesWordsearch(activityData) {
     try {

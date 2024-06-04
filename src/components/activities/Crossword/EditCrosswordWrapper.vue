@@ -13,9 +13,8 @@
         <p>Ingresa las palabras y pistas en el formulario para generar tu crucigrama.</p>
         <!-- Sección de Aviso sobre formato de palabras -->
         <b-alert show dismissible variant="info" class="mb-4">
-            <i class="bi bi-info-circle-fill"></i>Todas las palabras agregadas serán convertidas a <strong>mayúsculas</strong>, se les quitarán los <strong>espacios</strong> y los <strong>acentos</strong> para generar un mejor crucigrama.
+            <i class="bi bi-info-circle-fill"></i>Todas las palabras agregadas serán convertidas a <strong>mayúsculas</strong>, se les quitarán los <strong>espacios</strong>, los <strong>acentos</strong> y los <strong>caracteres especiales</strong> para generar un mejor crucigrama.
         </b-alert>
-
         <b-form @submit.prevent="addWord" class="my-2 px-0">
             <b-row class="px-0">
                 <b-col cols="12" md="4">
@@ -220,7 +219,8 @@ export default {
                     .replace(/\s+/g, '') // Quitar espacios
                     .toUpperCase() // Convertir a mayúsculas
                     .normalize("NFD") // Normalizar la cadena
-                    .replace(/[\u0300-\u036f]/g, ''); // Quitar diacríticos (acentos)
+                    .replace(/[\u0300-\u036f]/g, '') // Quitar diacríticos (acentos)
+                    .replace(/[^A-Z0-9]/g, ''); // Quitar guiones, caracteres especiales y mantener sólo letras y números
                 
                 const highestIndex = this.words.reduce((max, word) => {
                     return word.idPregunta > max ? word.idPregunta : max;
