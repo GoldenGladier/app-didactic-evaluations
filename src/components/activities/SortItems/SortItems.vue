@@ -1,7 +1,7 @@
 <template>
   <div class="mt-3">
     <p>{{ `${numQuestion}. ${question}` }}</p>
-    <draggable v-model="localItems" group="people" @start="drag=true" @end="onDragEnd">
+    <draggable v-model="localItems" :group="{ name: 'items', pull: false, put: false }" :id="'items-list-'+numQuestion" @start="drag=true" @end="onDragEnd">
       <span class="custom-span-drag" v-for="(element, index) in localItems" :key="index">{{element.oracion}}</span>
     </draggable>
   </div>
