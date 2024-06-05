@@ -24,8 +24,8 @@
                 <template #button-content>
                   <b-icon icon="three-dots-vertical"></b-icon><span class="sr-only">Search</span>
                 </template>
+                <b-dropdown-item @click="goToEvaluationResults(item.id_evaluaciones)"><i class="bi bi-card-checklist"></i>Ver resultados</b-dropdown-item>
                 <b-dropdown-item @click="removeItem(item.id_evaluaciones)"><b-icon icon="trash"/> Eliminar</b-dropdown-item>
-                <b-dropdown-item @click="goToEvaluationResults(item.id_evaluaciones)"><i class="bi bi-card-checklist"></i>Resultados</b-dropdown-item>
               </b-dropdown>
             </div>
 
