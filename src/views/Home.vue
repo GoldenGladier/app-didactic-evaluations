@@ -41,7 +41,7 @@
 
       <!-- <b-row class="text-center my-5">
         <b-col>
-          <h1 class="display-3 font-weight-bold">Bienvenido a EvaluApp</h1>
+          <h1 class="display-3 font-weight-bold">Bienvenido a Donkademy</h1>
           <p class="lead">Transforma la manera en que evalúas a tus estudiantes con herramientas interactivas y dinámicas.</p>
         </b-col>
       </b-row> -->
@@ -50,7 +50,7 @@
       <b-row class="text-center my-5">
         <b-col cols="12" class="mb-4">
           <h2 class="display-4 font-weight-bold ">Instrumentos de Evaluación</h2>
-          <p class="lead">Descubre la variedad de actividades de evaluación que EvaluApp ofrece. Desde clasificación hasta resolución de crucigramas, nuestras herramientas están diseñadas para fomentar el aprendizaje interactivo y el pensamiento crítico. Explora nuestras actividades personalizables y lleva la evaluación al siguiente nivel con EvaluApp.</p>
+          <p class="lead">Descubre la variedad de actividades de evaluación que Donkademy ofrece. Desde clasificación hasta resolución de crucigramas, nuestras herramientas están diseñadas para fomentar el aprendizaje interactivo y el pensamiento crítico. Explora nuestras actividades personalizables y lleva la evaluación al siguiente nivel con Donkademy.</p>
         </b-col>
 
         <b-col md="6" lg="3" class="mb-4" v-for="(activity, index) in activities" :key="index">
@@ -71,7 +71,7 @@
         <b-col cols="12" md="7" order-md="2">
           <div class="banner-text my-4">
             <h2 class="font-weight-bold">Comparte tus evaluaciones fácilmente</h2>
-            <p class="lead">Con EvaluApp, compartir tus evaluaciones es simple y seguro. Generamos un PIN único para cada actividad, asegurando su exclusividad. Además, puedes enviar el enlace directo a tus alumnos, facilitando su acceso con un solo clic. Simplifica la distribución y acceso a tus evaluaciones con EvaluApp.</p>            
+            <p class="lead">Con Donkademy, compartir tus evaluaciones es simple y seguro. Generamos un PIN único para cada actividad, asegurando su exclusividad. Además, puedes enviar el enlace directo a tus alumnos, facilitando su acceso con un solo clic. Simplifica la distribución y acceso a tus evaluaciones con Donkademy.</p>            
           </div>
         </b-col>     
       </b-row>      
@@ -85,7 +85,7 @@
           <div class="banner-text my-4">
             <h2 class="font-weight-bold">Configuraciones de Respuesta Personalizadas</h2>
             <p class="lead">
-              En EvaluApp, tú decides cómo los alumnos reciben retroalimentación al entregar sus respuestas. Puedes optar por mostrarles las respuestas correctas al instante, sin permitirles corregir sus respuestas previas. Esta opción fomenta un aprendizaje activo y la corrección inmediata de errores. Alternativamente, puedes elegir que los alumnos envíen sus respuestas sin ver ninguna retroalimentación inmediata, promoviendo un enfoque más reflexivo y desafiante. Tú tienes el control total sobre la experiencia de evaluación.            
+              En Donkademy, tú decides cómo los alumnos reciben retroalimentación al entregar sus respuestas. Puedes optar por mostrarles las respuestas correctas al instante, sin permitirles corregir sus respuestas previas. Esta opción fomenta un aprendizaje activo y la corrección inmediata de errores. Alternativamente, puedes elegir que los alumnos envíen sus respuestas sin ver ninguna retroalimentación inmediata, promoviendo un enfoque más reflexivo y desafiante. Tú tienes el control total sobre la experiencia de evaluación.            
             </p>
           </div>
         </b-col>                  
@@ -115,7 +115,7 @@
           <div class="banner-text my-4">
             <h2 class="font-weight-bold">Acceso Multiplataforma</h2>
             <p class="lead">
-              EvaluApp ofrece acceso multiplataforma para una experiencia sin complicaciones. Tanto tú como tus alumnos pueden acceder a la plataforma desde cualquier dispositivo con conexión a internet: ya sea un celular, una computadora o una tableta. No es necesario instalar ninguna aplicación adicional; simplemente abre tu navegador web favorito y accede a EvaluApp. Esto asegura una experiencia fluida y conveniente, independientemente de dónde te encuentres o qué dispositivo estés utilizando.
+              Donkademy ofrece acceso multiplataforma para una experiencia sin complicaciones. Tanto tú como tus alumnos pueden acceder a la plataforma desde cualquier dispositivo con conexión a internet: ya sea un celular, una computadora o una tableta. No es necesario instalar ninguna aplicación adicional; simplemente abre tu navegador web favorito y accede a Donkademy. Esto asegura una experiencia fluida y conveniente, independientemente de dónde te encuentres o qué dispositivo estés utilizando.
             </p>
           </div>
         </b-col>                    
@@ -165,7 +165,7 @@ export default {
   methods: {
     // Function to animate text
     animateText() {
-      const text = 'Bienvenido a EvaluApp';
+      const text = 'Bienvenido a Donkademy';
       let index = 0;
       const intervalId = setInterval(() => {
         if (index <= text.length) {

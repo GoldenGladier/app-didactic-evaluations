@@ -2,7 +2,7 @@
   <b-navbar toggleable="md" type="dark" class="custom-navbar justify-content-center justify-content-md-between">
     <b-nav-item to="/home" class="custom-info-brand">
       <AppIcon color="#ffffff" />
-      <b-navbar-brand>Actividades didácticas</b-navbar-brand>   
+      <b-navbar-brand>Donkademy</b-navbar-brand>   
     </b-nav-item>    
 
     <b-collapse id="navbarSupportedContent" class="custom-extra-options" is-nav>

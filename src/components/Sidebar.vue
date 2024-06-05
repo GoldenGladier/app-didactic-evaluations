@@ -5,7 +5,7 @@
 
         <b-nav-item to="/home" class="extra-nav-item px-0">
           <AppIcon color="#ffffff" size="25px"/>
-          <span v-if="!sidebarCollapsed" class="sidebar-text">Actividades didácticas</span>
+          <span v-if="!sidebarCollapsed" class="sidebar-text">Donkademy</span>
         </b-nav-item> 
         <li :class="sidebarCollapsed ? 'extra-nav-item' : ''">          
           <b-icon v-if="isOverlay" @click="toggleCollapse" icon="x" class="collapse-icon"></b-icon>    

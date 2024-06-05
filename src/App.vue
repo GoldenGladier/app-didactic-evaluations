@@ -33,7 +33,7 @@ export default {
     this.checkScreenSize();
     // this.sidebarWidth = this.isLoggedIn ? (this.$store.state.sidebar.sidebarCollapsed ? this.collapsedSize : this.sidebarWidth) : '0px';    
     window.addEventListener('resize', this.checkScreenSize);
-    document.title = 'Actividades didácticas';
+    document.title = 'Donkademy';
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.checkScreenSize);
