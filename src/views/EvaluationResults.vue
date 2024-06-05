@@ -16,8 +16,8 @@
                     Exportar a Excel
                 </b-button>   
             </b-container>
-            <b-container>
-                <b-table striped small :items="results" :fields="fields" bordered class="table custom-table rounded-table text-center"></b-table> 
+            <b-container class="p-0 px-md-3">
+                <b-table striped small responsive :items="results" :fields="fields" bordered class="table custom-table rounded-table text-center"></b-table> 
             </b-container>     
         </section>
         </b-overlay>
