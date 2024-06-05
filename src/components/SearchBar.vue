@@ -1,6 +1,6 @@
 <template>
-  <div class="search-bar-container">
-    <input
+  <div class="search-bar-container custom-center-flex">
+    <b-input
       type="text"
       v-model="searchQuery"
       placeholder="Search"
@@ -19,7 +19,6 @@ export default {
   },
   methods: {
     handleSearch() {
-      // Emitir un evento con el término de búsqueda
       this.$emit('search', this.searchQuery);
     }
   }
@@ -27,18 +26,19 @@ export default {
 </script>
   
 <style scoped>
-  /* Estilos para el campo de búsqueda redondo */
+  .search-bar-container {
+    margin: auto;
+  }
   .round-input {
     padding: 8px;
     width: auto ;
     border: 1px solid #ccc;
-    border-radius: 20px; /* Ajusta el valor de border-radius según prefieras */
-    outline: none; /* Eliminar el borde de enfoque predeterminado */
+    border-radius: 0.4rem;
+    outline: none;
   }
   
-  /* Estilos para el contenedor del componente */
   div {
-    text-align: center; /* Alineación centrada del campo de búsqueda */
+    text-align: center; 
   }
 </style>
   

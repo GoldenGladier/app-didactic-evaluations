@@ -99,8 +99,10 @@ export default {
     },
     methods: {
       performSearch(searchQuery) {
+        const lowerCaseQuery = searchQuery.toLowerCase();
         this.filteredItems = this.items.filter(item =>
-          item.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+          item.nombre.toLowerCase().includes(lowerCaseQuery) ||
+          item.subtitulo.toLowerCase().includes(lowerCaseQuery)
         );
       },
       removeItem(id_evaluaciones) {    
