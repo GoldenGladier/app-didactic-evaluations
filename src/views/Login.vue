@@ -89,7 +89,7 @@ export default {
   },
   created() {
     if(this.$store.state.auth.isLoggedIn) {
-      this.$router.push('/mis-evaluaciones');
+      this.$router.push('/evaluaciones/mis-evaluaciones');
     }
   },
 }
