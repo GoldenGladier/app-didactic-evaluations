@@ -4,7 +4,7 @@
     <h1 class="text-center mb-3"> Mis Evaluaciones</h1>
     <div class="search-container">
     <!-- Barra de búsqueda -->
-    <SearchBar @search="performSearch" class="mb-3"/>
+    <SearchBar v-if="!items.length" @search="performSearch" class="mb-3"/>
 
     <b-container fluid>
       <b-row class="justify-content-md-center">
