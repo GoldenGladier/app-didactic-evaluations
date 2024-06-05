@@ -83,6 +83,14 @@ class EvaluationService {
             throw error.response.data.message;
         }
     }      
+    async getExcelEvaluationResults(idEvaluation) {
+        try {
+            const response = await axios.get(`${process.env.VUE_APP_API_URL}/report/excel/download/${idEvaluation}`);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    }         
 }
 
 export default new EvaluationService();
