@@ -5,7 +5,7 @@
         <b-row class="justify-content-center">
           <b-col cols="12" sm="10" >
             <h2 class="text-center mb-3">Crear cuenta</h2>
-            <b-form @submit.prevent="register()">
+            <b-form @submit.prevent="register">
               <b-form-group label="Nombre" label-for="nombre">
                 <b-form-input
                   id="nombre"
@@ -22,10 +22,11 @@
                   type="text"
                   v-model="apellidos"                
                   placeholder="Ingrese sus apellidos"
-                  required />
+                  required
+                />
               </b-form-group>
 
-              <b-form-group label="Correo electrónico" label-for="email" >
+              <b-form-group label="Correo electrónico" label-for="email">
                 <b-form-input
                   id="email"
                   type="email"
@@ -35,17 +36,22 @@
                 ></b-form-input>
               </b-form-group>
 
-              <b-form-group label="Contraseña" label-for="password" >
+              <b-form-group label="Contraseña" label-for="password">
                 <b-form-input
                   id="password"
                   type="password"
                   v-model="password"
                   required
                   placeholder="Ingrese su contraseña"
+                  @input="validatePassword"
+                  :state="passwordState"
                 ></b-form-input>
+                <b-form-invalid-feedback>
+                  La contraseña debe tener entre 8 y 15 caracteres, incluir letras mayúsculas y minúsculas, al menos un número y un carácter especial (# $ & %).
+                </b-form-invalid-feedback>
               </b-form-group>
 
-              <b-form-group label="Confirmar contraseña" label-for="password-confirm" >
+              <b-form-group label="Confirmar contraseña" label-for="password-confirm">
                 <b-form-input
                   id="password-confirm"
                   type="password"
@@ -55,7 +61,9 @@
                 ></b-form-input>
               </b-form-group>            
 
-              <b-button type="submit" variant="primary" class="mt-2 mb-3" block>Registrarse</b-button>
+              <b-button type="submit" variant="primary" class="mt-2 mb-3" block :disabled="!isFormValid">
+                Registrarse
+              </b-button>
 
               <hr class="my-4">
 
@@ -84,16 +92,41 @@ export default {
       apellidos: '',
       email: '',
       password: '',
-      passwordConfirm: ''
+      passwordConfirm: '',
+      passwordState: null,
     };
   },
+  computed: {
+    isFormValid() {
+      return (
+        this.passwordState === true &&
+        this.password === this.passwordConfirm &&
+        this.nombre.trim() !== '' &&
+        this.apellidos.trim() !== '' &&
+        this.email.trim() !== ''
+      );
+    },
+  },
   methods: {
+    validatePassword() {
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#&$%])[A-Za-z\d#&$%]{8,15}$/;
+      this.passwordState = passwordRegex.test(this.password);
+    },
     register() {
+      if (!this.isFormValid) {
+        this.$swal({
+          icon: 'error',
+          title: '¡Error!',
+          text: 'Por favor, completa todos los campos correctamente.',
+        });
+        return;
+      }
+
       this.isLoading = true;
       let apellidos = this.apellidos.trim();
       let bothSurnames = apellidos.split(' ');
 
-      let fathersLastname = bothSurnames[0]
+      let fathersLastname = bothSurnames[0];
       let mothersLastname = bothSurnames.length > 1 ? bothSurnames[1] : '';
 
       let newUserData = {
@@ -103,30 +136,30 @@ export default {
         email: this.email,
         password: this.password,
         confirmPassword: this.passwordConfirm
-      } 
+      };
       console.log('Datos del nuevo usuario:', newUserData);
 
       AuthService.register(newUserData)
-      .then(response => {
-        console.log("El server devolvio la data: ", response);
-        this.isLoading = false
-        this.$swal({
-          icon: 'success',
-          title: '¡Éxito!',
-          text: 'El usuario se ha creado correctamente',
-        }).then(() => {
-          this.$router.push('/login');        
-        });      
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        this.isLoading = false
-        this.$swal({
-          icon: 'error',
-          title: '¡Error!',
-          text: error,
-        });     
-      })
+        .then(response => {
+          console.log("El server devolvio la data: ", response);
+          this.isLoading = false;
+          this.$swal({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: 'El usuario se ha creado correctamente',
+          }).then(() => {
+            this.$router.push('/login');        
+          });      
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          this.isLoading = false;
+          this.$swal({
+            icon: 'error',
+            title: '¡Error!',
+            text: error,
+          });     
+        });
     }
   }
 }
@@ -143,10 +176,7 @@ export default {
 
 .login-form {
   max-width: 400px;
-  /* width: 100%; */
-  /* padding: 20px; */
   border-radius: 5px;  
-  /* background: tomato; */
 }
 
 .login-form input {
