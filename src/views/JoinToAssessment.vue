@@ -29,12 +29,13 @@
                 ></b-form-input>
               </b-form-group>          
 
-              <b-form-group v-if="showInputPin" label="Pin de acceso a la evaluación" label-for="pin" class="required-label">
+              <b-form-group label="Pin de acceso a la evaluación" label-for="pin" class="required-label">
                 <b-form-input
                   id="pin"
                   type="text"
                   v-model="pin"                
                   placeholder="Ingresa el pin de acceso"
+                  :disabled="!showInputPin"
                   required
                 ></b-form-input>
               </b-form-group>                   
