@@ -6,15 +6,6 @@
           <b-col cols="12" sm="8" >
             <h2 class="text-center mb-3">Unirse a actividad</h2>
             <b-form @submit.prevent="joinToAssessment">
-              <b-form-group label="Pin" label-for="pin" class="required-label">
-                <b-form-input
-                  id="pin"
-                  type="text"
-                  v-model="pin"                
-                  placeholder="Ingresa el Pin de la actividad"
-                  required
-                ></b-form-input>
-              </b-form-group>
 
               <b-form-group label="Nombre" label-for="name" class="required-label">
                 <b-form-input
@@ -36,7 +27,17 @@
                   placeholder="Ingresa tus apellidos"
                   required
                 ></b-form-input>
-              </b-form-group>               
+              </b-form-group>          
+
+              <b-form-group v-if="showInputPin" label="Pin de acceso a la evaluación" label-for="pin" class="required-label">
+                <b-form-input
+                  id="pin"
+                  type="text"
+                  v-model="pin"                
+                  placeholder="Ingresa el pin de acceso"
+                  required
+                ></b-form-input>
+              </b-form-group>                   
 
               <b-button type="submit" variant="primary" class="mt-4 mb-2" block :disabled="!pin"><i class="bi bi-arrow-right"></i>Siguiente</b-button>
               <b-button v-if="isLoggedIn" type="submit" variant="outline-primary" class="mt-2 mb-2" block @click="logout()"><i class="bi bi-person-fill-x"></i>No soy yo</b-button>
@@ -64,11 +65,15 @@ export default {
       pin: '',
       name: '',
       lastname: '',
+      showInputPin: true,
     };
   },
   methods: {
     init_data() {
       this.pin = this.$route.params.pin ? this.$route.params.pin : '';
+      if(this.$route.params.pin){
+        this.showInputPin = false;
+      }
       if(this.isLoggedIn) {
         this.name = this.username
         this.lastname = this.userLastname
