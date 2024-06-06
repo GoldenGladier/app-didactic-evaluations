@@ -6,22 +6,22 @@
 
           <b-row class="justify-content-center">          
             <b-col bg="6" md="6" sm="12" class="custom-mini-form">
-              <b-form-group label="Titulo" label-for="title" class="mt-1 required-label">
+              <b-form-group label="título" label-for="title" class="mt-1 required-label">
                 <b-form-input
                   id="title"
                   type="text"
                   v-model="title"                    
-                  placeholder="Ingresa el titulo de la actividad"
+                  placeholder="Ingresa el título de la actividad"
                   maxlength="100"
                   required
                 ></b-form-input>
               </b-form-group>
-              <b-form-group label="Subtitulo" label-for="subtitle" class="mt-1">
+              <b-form-group label="Subtítulo" label-for="subtitle" class="mt-1">
                 <b-form-input
                   id="subtitle"
                   type="text"
                   v-model="subtitle"                    
-                  placeholder="Ingresa el subtitulo de la actividad"
+                  placeholder="Ingresa el subtítulo de la actividad"
                   maxlength="200"                   
                 ></b-form-input>
               </b-form-group>
