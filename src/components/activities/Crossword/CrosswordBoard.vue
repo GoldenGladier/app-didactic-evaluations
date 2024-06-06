@@ -67,7 +67,13 @@ export default {
             return word ? word.position : '';
         },
         updateWord(rowIndex, colIndex, event) {
-            this.userGrid[rowIndex][colIndex] = event.target.value.toUpperCase();
+            let newLetter = event.target.value
+                .replace(/\s+/g, '') // Quitar espacios
+                .toUpperCase() // Convertir a mayúsculas
+                .normalize("NFD") // Normalizar la cadena
+                .replace(/[\u0300-\u036f]/g, '') // Quitar diacríticos (acentos)
+                .replace(/[^A-Z0-9]/g, ''); // Quitar guiones, caracteres especiales y mantener sólo letras y números
+            this.userGrid[rowIndex][colIndex] = newLetter;
             this.answers.forEach(word => {
                 if (word.orientation === 'across') {
                     if (word.starty - 1 === rowIndex && colIndex >= word.startx - 1 && colIndex < word.startx - 1 + word.answer.length) {
