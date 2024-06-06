@@ -105,7 +105,7 @@
         <b-row class="justify-content-center">
             <b-col md="6" sm="12" class="custom-center-flex">
                 <b-button type="submit" variant="success" class="custom-button-icon" id="save-activities" :disabled="!grid.length" @click="saveActivities">
-                    <i class="bi bi-floppy"></i> <span class="button-text">Guardar crucigama</span>
+                    <i class="bi bi-floppy"></i>Guardar crucigama
                 </b-button>
             </b-col>          
         </b-row>        

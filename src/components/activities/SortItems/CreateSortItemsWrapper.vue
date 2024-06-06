@@ -23,7 +23,7 @@
           <b-col md="8" sm="12">
             <b-card class="mb-4 custom-button" @click="addNewActivity()" id="add-activity">
               <!-- <b-button @click="addNewActivity()" variant="warning" class="custom-button-icon"> -->
-                <i class="bi bi-plus-lg"></i> <span class="button-text">Agregar actividad</span>
+                <i class="bi bi-plus-lg"></i>Agregar actividad
               <!-- </b-button>   -->
             </b-card>           
           </b-col>
@@ -32,7 +32,7 @@
         <b-row class="justify-content-center">
           <b-col md="6" sm="12" class="custom-center-flex">
             <b-button type="submit" variant="success" class="custom-button-icon" id="save-activities">
-              <i class="bi bi-floppy"></i> <span class="button-text">Guardar actividades de la evaluación</span>
+              <i class="bi bi-floppy"></i>Guardar actividades de la evaluación
             </b-button>
           </b-col>          
         </b-row>        
