@@ -19,7 +19,7 @@
         <b-input-group :class="{'answer-active': option.isCorrect}">
           <b-input-group-prepend>
             <b-input-group-text class="check-answer-active">
-              <b-form-checkbox v-model="option.isCorrect"></b-form-checkbox>
+              <b-form-checkbox v-model="option.isCorrect" @change="selectCorrectOption(index)"></b-form-checkbox>
             </b-input-group-text>
           </b-input-group-prepend>
           <b-form-input v-model="option.text" :placeholder="'Opcion ' + (index + 1)" class="input-answer" required></b-form-input>
@@ -60,6 +60,11 @@ export default {
     removeQuestion() {
       this.$emit('removeQuestion', this.question.key);
     },
+    selectCorrectOption(index) {
+      this.question.options.forEach((option, i) => {
+        option.isCorrect = i === index;
+      });
+    },    
     startTutorial() {
       this.startTour([
         {

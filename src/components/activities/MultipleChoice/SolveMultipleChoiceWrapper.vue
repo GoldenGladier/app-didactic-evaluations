@@ -167,13 +167,9 @@ export default {
       return this.responses[idPregunta]?.includes(option);
     },
     toggleSelection(idPregunta, option) {
-      const index = this.responses[idPregunta].indexOf(option);
-      if (index > -1) {
-        this.responses[idPregunta].splice(index, 1);
-      } else {
-        this.responses[idPregunta].push(option);
-      }
-      this.updateResponse(idPregunta, this.responses[idPregunta]);
+      this.responses[idPregunta] = [];
+      this.responses[idPregunta].push(option);
+      this.updateResponse(idPregunta, this.responses[idPregunta]);   
     },
     updateResponse(idPregunta, selectedOptions) {
       this.$set(this.responses, idPregunta, selectedOptions);

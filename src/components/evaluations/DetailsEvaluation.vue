@@ -6,7 +6,7 @@
 
           <b-row class="justify-content-center">          
             <b-col bg="6" md="6" sm="12" class="custom-mini-form">
-              <b-form-group label="título" label-for="title" class="mt-1 required-label">
+              <b-form-group label="Título" label-for="title" class="mt-1 required-label">
                 <b-form-input
                   id="title"
                   type="text"
