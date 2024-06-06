@@ -6,7 +6,7 @@
           <b-col cols="12" sm="10" >
             <h2 class="text-center mb-3">Crear cuenta</h2>
             <b-form @submit.prevent="register">
-              <b-form-group label="Nombre" label-for="nombre">
+              <b-form-group label="Nombre" label-for="nombre" class="required-label">
                 <b-form-input
                   id="nombre"
                   type="text"
@@ -16,7 +16,7 @@
                 ></b-form-input>
               </b-form-group>
 
-              <b-form-group label="Apellidos" label-for="apellidos">
+              <b-form-group label="Apellidos" label-for="apellidos" class="required-label">
                 <b-form-input
                   id="apellidos"
                   type="text"
@@ -26,7 +26,7 @@
                 />
               </b-form-group>
 
-              <b-form-group label="Correo electrónico" label-for="email">
+              <b-form-group label="Correo electrónico" label-for="email" class="required-label">
                 <b-form-input
                   id="email"
                   type="email"
@@ -36,33 +36,58 @@
                 ></b-form-input>
               </b-form-group>
 
-              <b-form-group label="Contraseña" label-for="password">
-                <b-form-input
-                  id="password"
-                  type="password"
-                  v-model="password"
-                  required
-                  placeholder="Ingrese su contraseña"
-                  @input="validatePassword"
-                  :state="passwordState"
-                ></b-form-input>
-                <b-form-invalid-feedback>
-                  La contraseña debe tener entre 8 y 15 caracteres, incluir letras mayúsculas y minúsculas, al menos un número y un carácter especial (# $ & %).
-                </b-form-invalid-feedback>
+              <b-form-group label="Contraseña" label-for="password" class="required-label">
+                <b-input-group>
+                  <b-form-input
+                    id="password"
+                    :type="showPassword ? 'text' : 'password'"
+                    v-model="password"
+                    required
+                    placeholder="Ingrese su contraseña"
+                    @input="validatePassword"
+                    :state="passwordState"
+                    aria-describedby="password-feedback"
+                    class="mb-0"
+                    maxLength="15"
+                  ></b-form-input>      
+                  <b-input-group-append>
+                    <b-button @click="toggleShowPassword" class="silent-button simple-gray-button" :class="{'btn-invalid': (passwordState == false), 'btn-valid': (passwordState == true)}">
+                      <b-icon :icon="showPassword ? 'eye-slash' : 'eye'"></b-icon>
+                    </b-button>
+                  </b-input-group-append>
+                  <b-form-invalid-feedback id="password-feedback" class="mb-2">
+                    La contraseña debe tener entre 8 y 15 caracteres, incluir letras mayúsculas y minúsculas, al menos un número y un carácter especial (# $ & %).
+                  </b-form-invalid-feedback>                              
+                </b-input-group>
               </b-form-group>
 
-              <b-form-group label="Confirmar contraseña" label-for="password-confirm">
-                <b-form-input
-                  id="password-confirm"
-                  type="password"
-                  v-model="passwordConfirm"
-                  required
-                  placeholder="Confirmar su contraseña"
-                ></b-form-input>
+              <b-form-group label="Confirmar contraseña" label-for="password-confirm" class="mt-2 required-label">
+                <b-input-group>
+                  <b-form-input
+                    id="password-confirm"
+                    :type="showPasswordConfirm ? 'text' : 'password'"
+                    v-model="passwordConfirm"
+                    required
+                    placeholder="Confirmar su contraseña"
+                    class="mb-0"
+                    @input="validatePasswordConfirm"
+                    :state="passwordConfirmState"
+                    aria-describedby="password-confirm-feedback"
+                    maxLength="15"
+                  ></b-form-input>
+                  <b-input-group-append>
+                    <b-button @click="toggleShowPasswordConfirm" class="silent-button simple-gray-button" :class="{'btn-invalid': (passwordConfirmState == false), 'btn-valid': (passwordConfirmState == true)}">
+                      <b-icon :icon="showPasswordConfirm ? 'eye-slash' : 'eye'"></b-icon>
+                    </b-button>
+                  </b-input-group-append>
+                  <b-form-invalid-feedback id="password-confirm-feedback" class="mb-2">
+                    Las contraseñas no coinciden.
+                  </b-form-invalid-feedback>                  
+                </b-input-group>
               </b-form-group>            
 
               <b-button type="submit" variant="primary" class="mt-2 mb-3" block :disabled="!isFormValid">
-                Registrarse
+                <b-icon icon="person-plus" class="sidebar-icon" />Registrarse
               </b-button>
 
               <hr class="my-4">
@@ -94,12 +119,16 @@ export default {
       password: '',
       passwordConfirm: '',
       passwordState: null,
+      passwordConfirmState: null,
+      showPassword: false,
+      showPasswordConfirm: false,
     };
   },
   computed: {
     isFormValid() {
       return (
         this.passwordState === true &&
+        this.passwordConfirmState === true &&
         this.password === this.passwordConfirm &&
         this.nombre.trim() !== '' &&
         this.apellidos.trim() !== '' &&
@@ -111,6 +140,16 @@ export default {
     validatePassword() {
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#&$%])[A-Za-z\d#&$%]{8,15}$/;
       this.passwordState = passwordRegex.test(this.password);
+      this.validatePasswordConfirm();
+    },
+    validatePasswordConfirm() {
+      this.passwordConfirmState = this.password === this.passwordConfirm;
+    },
+    toggleShowPassword() {
+      this.showPassword = !this.showPassword;
+    },
+    toggleShowPasswordConfirm() {
+      this.showPasswordConfirm = !this.showPasswordConfirm;
     },
     register() {
       if (!this.isFormValid) {
@@ -175,7 +214,7 @@ export default {
 }
 
 .login-form {
-  max-width: 400px;
+  max-width: 500px;
   border-radius: 5px;  
 }
 

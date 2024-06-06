@@ -14,10 +14,10 @@
           <span v-else>Unirse a actividad</span>
         </b-nav-item>
         <b-nav-item v-if="!isLoggedIn" href="/login" class="custom-nav-item d-flex align-items-center">
-          <b-icon icon="door-open" class="sidebar-icon" /> Login
+          <b-icon icon="door-open" class="sidebar-icon" />Login
         </b-nav-item>
         <b-nav-item v-if="!isLoggedIn" href="/register" class="custom-nav-item d-flex align-items-center">
-          <b-icon icon="person-plus" class="sidebar-icon" /> Registrarse
+          <b-icon icon="person-plus" class="sidebar-icon" />Registrarse
         </b-nav-item>
 
         <b-nav-item-dropdown v-if="isLoggedIn">
