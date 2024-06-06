@@ -5,7 +5,7 @@
 
       <!-- Banner Section -->
       <b-row class="banner-section my-5 d-flex justify-content-center align-items-center">
-        <b-col cols="12" md="6">
+        <b-col cols="12" sm="12" md="12" lg="5">
           <div class="banner-text">
             <h1 class="display-3 font-weight-bold">{{ bannerText }}</h1>
             <p class="lead mt-4">{{ bannerDescription }}</p>
@@ -18,22 +18,16 @@
             </router-link>
 
             <div v-else>
-              <router-link to="/evaluaciones/crear-evaluacion" class="btn btn-primary mr-0 mr-md-2">
+              <router-link to="/evaluaciones/crear-evaluacion" class="btn btn-primary mt-3 mt-md-2 mr-0 mr-md-2">
                 <i class="bi bi-plus-lg"></i>Crear evaluación
               </router-link>
-              <router-link to="/evaluaciones/mis-evaluaciones" class="btn btn-outline-primary mt-3 mt-md-0 ml-0 ml-md-2">
+              <router-link to="/evaluaciones/mis-evaluaciones" class="btn btn-outline-primary mt-3 mt-md-2 ml-0 ml-md-2">
                 <i class="bi bi-card-checklist"></i>Ver mis evaluaciones
               </router-link>              
             </div>
-            <!-- <b-button type="submit" variant="primary" class="mr-2"><i class="bi bi-plus-lg"></i>Crear evaluación</b-button>
-            <b-button type="submit" variant="outline-primary" class="ml-2"><i class="bi bi-card-checklist"></i>Ver mis evaluaciones</b-button> -->
-
-
-            <!-- <b-button type="submit" variant="primary" class="mr-2"><i class="bi bi-plus-lg"></i>Crear evaluación</b-button> -->
-            <!-- <b-button type="submit" variant="outline-primary" class="ml-2" @click="logout()"><i class="bi bi-person-fill-x"></i>No soy yo</b-button> -->
           </div>
         </b-col>
-        <b-col cols="12" md="6">
+        <b-col cols="12" sm="12" md="12" lg="6">
           <img src="img/online_test.svg" alt="Banner Image" class="img-fluid">
         </b-col>     
       </b-row>
@@ -83,7 +77,7 @@
         </b-col>           
         <b-col cols="12" md="7" order-md="1">
           <div class="banner-text my-4">
-            <h2 class="font-weight-bold">Configuraciones de Respuesta Personalizadas</h2>
+            <h2 class="font-weight-bold">Configuraciones de respuesta personalizadas</h2>
             <p class="lead">
               En Donkademy, tú decides cómo los alumnos reciben retroalimentación al entregar sus respuestas. Puedes optar por mostrarles las respuestas correctas al instante, sin permitirles corregir sus respuestas previas. Esta opción fomenta un aprendizaje activo y la corrección inmediata de errores. Alternativamente, puedes elegir que los alumnos envíen sus respuestas sin ver ninguna retroalimentación inmediata, promoviendo un enfoque más reflexivo y desafiante. Tú tienes el control total sobre la experiencia de evaluación.            
             </p>
@@ -98,9 +92,9 @@
         </b-col>        
         <b-col cols="12" md="7" order-md="2">
           <div class="banner-text my-4">
-            <h2 class="font-weight-bold">Revisión de Calificaciones</h2>
+            <h2 class="font-weight-bold">Revisión de calificaciones</h2>
             <p class="lead">
-              Accede a las calificaciones y respuestas de cada alumno para una evaluación detallada. Esta función te permite a ti mismo ver el rendimiento individual, identificar áreas de mejora y proporcionar retroalimentación específica en tu aula. Con un análisis claro, puedes adaptar tus estrategias de enseñanza para satisfacer las necesidades de cada alumno, mejorando el aprendizaje en tu aula.
+              Accede a las calificaciones de cada alumno para una evaluación detallada. Esta función te permite a ti mismo ver el rendimiento individual, identificar áreas de mejora y proporcionar retroalimentación específica en tu aula. Con un análisis claro, puedes adaptar tus estrategias de enseñanza para satisfacer las necesidades de cada alumno, mejorando el aprendizaje en tu aula.
             </p>
           </div>
         </b-col>     
@@ -113,9 +107,9 @@
         </b-col>         
         <b-col cols="12" md="7" order-md="1">
           <div class="banner-text my-4">
-            <h2 class="font-weight-bold">Acceso Multiplataforma</h2>
+            <h2 class="font-weight-bold">Acceso desde múltiples dispositivos</h2>
             <p class="lead">
-              Donkademy ofrece acceso multiplataforma para una experiencia sin complicaciones. Tanto tú como tus alumnos pueden acceder a la plataforma desde cualquier dispositivo con conexión a internet: ya sea un celular, una computadora o una tableta. No es necesario instalar ninguna aplicación adicional; simplemente abre tu navegador web favorito y accede a Donkademy. Esto asegura una experiencia fluida y conveniente, independientemente de dónde te encuentres o qué dispositivo estés utilizando.
+              Donkademy ofrece acceso desde múltiples dispositivos para una experiencia sin complicaciones. Tanto tú como tus alumnos pueden acceder a la plataforma desde diferentes dispositivos con conexión a internet: ya sea un celular, una computadora o una tableta. No es necesario instalar ninguna aplicación adicional; simplemente abre tu navegador web favorito y accede a Donkademy. Esto asegura una experiencia fluida y conveniente, independientemente de dónde te encuentres o qué dispositivo estés utilizando.
             </p>
           </div>
         </b-col>                    
