@@ -58,7 +58,7 @@ import ActivityService from '@/services/ActivityService';
 
 export default {
   name: "EditSortItemActivity",
-    mixins: [driverMixin],
+  mixins: [driverMixin],
   components: {
     draggable
   },
@@ -79,7 +79,6 @@ export default {
   },
   methods: {
     addItem() {
-
       const highestId = this.activity.items.reduce((max, item) => {
           return item.id > max ? item.id : max;
       }, 0);
@@ -182,6 +181,9 @@ export default {
         ]);
     },    
   },
+  created() {
+    this.addItem();
+  }
 };
 </script>
 

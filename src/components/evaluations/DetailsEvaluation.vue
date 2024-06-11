@@ -59,12 +59,13 @@
           <b-row class="justify-content-center">  
             <b-col cols="12">
               <p class="mt-2">
-                Selecciona el tipo de evaluación que deseas crear...
+                Tipo de evaluación
               </p>
             </b-col>
             
             <b-col v-for="dinamic in dinamicsList" :key="dinamic.id_dinamicas" bg="6" md="6" sm="12" class="custom-card-item">
-              <div :class="{'custom-card-item-content': true, 'active': (idDinamic === dinamic.id_dinamicas)}" @click="idDinamic = dinamic.id_dinamicas" class="d-flex align-items-center">
+              <!-- @click="idDinamic = dinamic.id_dinamicas" -->
+              <div :class="{'custom-card-item-content': true, 'active': (idDinamic === dinamic.id_dinamicas)}" class="d-flex align-items-center disabled-custom-card-item" title="El tipo de evaluación no puede cambiarse.">
                 <b-img v-bind:src="getImage(dinamic)" alt="Responsive image" class="custom-img-evaluation mr-2"></b-img>
                 <div class="text-content mr-1">
                   <h4>{{dinamic.dinamica}}</h4>                   
@@ -242,4 +243,10 @@ export default {
 .text-content {
   flex: 1; 
 }    
+
+.disabled-custom-card-item {
+  background-color: #e9ecef;
+  opacity: 1;
+  cursor: default;
+}
 </style>
