@@ -72,7 +72,15 @@ export default {
             if (this.activities.length > 0) {
                 newIdPregunta = this.activities[this.activities.length - 1].idPregunta + 1;
             }            
-            this.activities.push({ idPregunta: newIdPregunta, question: '', items: [] });
+            this.activities.push({ 
+                idPregunta: newIdPregunta, 
+                question: '', 
+                items: [{
+                    texto: '',
+                    id: 0,
+                    isNew: true
+                }] 
+            });
         },
         updateActivity(index, activity) {
             this.activities.splice(index, 1, activity);

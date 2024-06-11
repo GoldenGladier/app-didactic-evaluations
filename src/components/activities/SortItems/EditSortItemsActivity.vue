@@ -181,9 +181,6 @@ export default {
         ]);
     },    
   },
-  created() {
-    this.addItem();
-  }
 };
 </script>
 
