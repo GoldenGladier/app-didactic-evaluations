@@ -38,6 +38,19 @@
                 </b-col>
             </b-row>
         </b-container>
+        <b-container v-else-if="error === 'El usuario ya respondio la evaluación'">
+            <b-row>
+                <b-col cols="12" xm="12" md="6" class="my-2 ">
+                    <img src="/img/check.png" alt="No Time Available">
+                </b-col>
+                <b-col cols="12" xm="12" md="6" class="my-2 custom-center-flex">
+                    <p class="lead">
+                        Ya has respondido previamente a esta evaluación. No es necesario que la completes de nuevo.
+                    </p>        
+                </b-col>
+            </b-row>
+        </b-container>        
+        
     </b-overlay>
   </b-container>
 </template>
@@ -118,7 +131,11 @@ export default {
                     else if(error == 'Evaluación inactiva') {
                         console.log("La evaluación está inactiva.")
                         this.error = 'Evaluación inactiva';
-                    }                                                      
+                    }     
+                    else if(error == 'El usuario ya respondio la evaluación.') {
+                        console.log("El usuario ya respondio la evaluación.")
+                        this.error = 'El usuario ya respondio la evaluación';                        
+                    }                                                 
                 })
                 .finally(() => { this.isLoading = false });                                 
             }
