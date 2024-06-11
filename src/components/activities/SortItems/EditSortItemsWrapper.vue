@@ -22,7 +22,7 @@
                         :isLoading.sync="isLoading"
                         :id="'activity-'+activity.idPregunta"
                         @update-activity="updateActivity(indexActivity, activity)"
-                        @remove-activity="removeActivity"              
+                        @remove-activity="removeActivity(activity)"              
                         />
                     </b-col>
                     <b-col md="8" sm="12">
@@ -79,14 +79,50 @@ export default {
                     texto: '',
                     id: 0,
                     isNew: true
-                }] 
+                }],
+                isNew: true 
             });
         },
         updateActivity(index, activity) {
             this.activities.splice(index, 1, activity);
         },    
-        removeActivity(index) {     
-            this.activities.splice(index, 1);
+        removeActivity(activity) {     
+            console.log("Quiero eliminar a la pregunta: ", activity);
+
+            const itemToRemove = this.activities.find(question => question.idPregunta === activity.idPregunta);
+            if (itemToRemove.isNew) {
+                this.activities = this.activities.filter(question => question.idPregunta !== activity.idPregunta);
+            }      
+            else{
+                let deleteQuestionData = {
+                    idEvaluacion: Number(this.idEvaluation),
+                    numPregunta: activity.idPregunta,
+                }
+                console.log("Voy a eliminar la pregunta: ", deleteQuestionData);
+
+                this.isLoading = true;
+                ActivityService.deleteQuestionByNumQuestion(deleteQuestionData)
+                .then((response) => {
+                    console.log("Pregutna eliminada: ", response);
+                    this.activities = this.activities.filter(question => question.idPregunta !== activity.idPregunta);
+                    this.$swal({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: 'La pregunta fue eliminada exitosamente.',
+                    }) 
+                })
+                .catch((error) => {
+                    console.error("Ocurrio un error al eliminar la pregunta: ", error);
+                    this.$swal({
+                        icon: 'error',
+                        title: '¡Error!',
+                        text: 'Ocurrio un error al intentar eliminar la pregunta.',
+                    });          
+                })
+                .finally(() => {
+                    this.isLoading = false;
+                })         
+            }                 
         },
         saveActivities() {
             this.isLoading = true;

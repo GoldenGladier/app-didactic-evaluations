@@ -131,7 +131,7 @@ export default {
       }                 
     },
     removeActivity() {
-      this.$emit('remove-activity', this.index);
+      this.$emit('remove-activity', this.activity);
     },
     updateActivity() {
       this.$emit('update-activity', this.index, this.activity);

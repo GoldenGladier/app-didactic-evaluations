@@ -120,6 +120,15 @@ class ActivityService {
     }
   }    
 
+  async deleteQuestionByNumQuestion(QuestionData) {
+    try {
+      const response = await axios.post(`${API_URL}/orderItem/deleteQuestion`, QuestionData);
+      return response.data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
+  }      
+
   async solveActivityMultipleChoice(data) {
     try {
       const response = await axios.post(`${process.env.VUE_APP_API_URL}/answer/multipleChoice`, data);      
