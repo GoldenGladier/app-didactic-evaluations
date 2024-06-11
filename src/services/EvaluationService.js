@@ -27,6 +27,14 @@ class EvaluationService {
             throw error.response.data.message;
         }
     }    
+    async copy(data_evaluation) {
+        try {
+            const response = await axios.post(`${API_URL}/duplicate`, data_evaluation);
+            return response.data;
+        } catch (error) {
+            throw error.response.data.message;
+        }
+    }     
     async delete(id_evaluaciones) {
         try {
             const response = await axios.delete(`${API_URL}/delete/${id_evaluaciones}`);

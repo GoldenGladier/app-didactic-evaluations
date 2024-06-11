@@ -25,6 +25,7 @@
                   <b-icon icon="three-dots-vertical"></b-icon><span class="sr-only">Search</span>
                 </template>
                 <b-dropdown-item @click="goToEvaluationResults(item.id_evaluaciones)"><i class="bi bi-card-checklist"></i>Ver resultados</b-dropdown-item>
+                <b-dropdown-item @click="copyEvaluation(item.id_evaluaciones)"><i class="bi bi-copy"></i>Crear copia</b-dropdown-item>
                 <b-dropdown-item @click="removeItem(item.id_evaluaciones)"><b-icon icon="trash"/> Eliminar</b-dropdown-item>
               </b-dropdown>
             </div>
@@ -123,7 +124,7 @@ export default {
             EvaluationService.delete(id_evaluaciones)
             .then(response => {
               console.log("Delete status: ", response);
-              this.$router.go(0);
+              this.initData();
             })
             .catch(error => {
               console.error('Error:', error);  
@@ -131,6 +132,34 @@ export default {
             });        
           } 
         });         
+      },
+      copyEvaluation(idEvaluation) {
+        this.isLoading = true;
+        let dataEvaluation = { idEvaluacion: idEvaluation };
+        EvaluationService.copy(dataEvaluation)
+        .then((response) => {
+          console.log("Evaluación duplicada: ", response);
+          this.$swal({
+              icon: 'success',
+              title: '¡Éxito!',
+              text: 'La evaluación fue duplicada exitosamente.',
+          }).then(() => {
+            this.initData();
+          });           
+        })
+        .catch((error) => {
+          console.error("Algo salio mal al duplicar evaluación: ", error);
+          this.$swal({
+              icon: 'error',
+              title: '¡Error!',
+              text: 'La evaluación no pudo ser duplicada.',
+          }).then(() => {
+            this.initData();
+          });             
+        })
+        .finally(() => {
+          this.isLoading = false;
+        })
       },
       goToEvaluationResults(idEvaluation) {
         this.$router.replace({ name: 'EvaluationResults', params: { idEvaluation: idEvaluation } })
@@ -143,21 +172,24 @@ export default {
       getImage(dinamica) {
         console.log("Clasificación: ", dinamica.id_dinamica);
         return this.imagePaths[dinamica.id_dinamica] || this.imagePaths['default'];
-      },             
+      }, 
+      initData() {
+        this.isLoading = true;
+        EvaluationService.getAllEvaluationsByAauthenticatedUser()
+        .then(response => {
+          console.log("Evaluaciones del usuario: ", response);
+          this.items = response;
+          this.filteredItems = this.items;
+          this.isLoading = false;
+        })
+        .catch(error => {
+          console.error('Error:', error);  
+          this.isLoading = false;
+        }); 
+      },            
   },
   mounted() {
-    this.isLoading = true;
-    EvaluationService.getAllEvaluationsByAauthenticatedUser()
-    .then(response => {
-      console.log("Evaluaciones del usuario: ", response);
-      this.items = response;
-      this.filteredItems = this.items;
-      this.isLoading = false;
-    })
-    .catch(error => {
-      console.error('Error:', error);  
-      this.isLoading = false;
-    }); 
+    this.initData();
   }
 };
 </script>
