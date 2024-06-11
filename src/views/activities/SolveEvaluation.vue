@@ -14,6 +14,30 @@
             <SolveCrosswordWrapper v-else-if="dinamicSelected == 'Crucigrama'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />
             <SolveWordsearchWrapper v-else-if="dinamicSelected == 'Sopa de letras'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />
         </b-container>
+        <b-container v-if="error === 'Código invalido'">
+            <b-row>
+                <b-col cols="12" xm="12" md="6" class="my-2 ">
+                    <img src="/img/bad-url.png" alt="No Time Available">
+                </b-col>
+                <b-col cols="12" xm="12" md="6" class="my-2 custom-center-flex">
+                    <p class="lead">
+                        El PIN o la URL que has ingresado es inválido. Por favor, verifica esta información con tu profesor e inténtalo nuevamente.
+                    </p>        
+                </b-col>
+            </b-row>
+        </b-container>        
+        <b-container v-else-if="error === 'Evaluación inactiva'">
+            <b-row>
+                <b-col cols="12" xm="12" md="6" class="my-2 ">
+                    <img src="/img/no-time.png" alt="No Time Available">
+                </b-col>
+                <b-col cols="12" xm="12" md="6" class="my-2 custom-center-flex">
+                    <p class="lead">
+                        Lo sentimos, la evaluación que has solicitado no está disponible en este momento. Puede que aún no esté activa o que ya haya concluido. Por favor, verifica las fechas de activación y desactivación con tu profesor, y vuelve a intentarlo más tarde.
+                    </p>        
+                </b-col>
+            </b-row>
+        </b-container>
     </b-overlay>
   </b-container>
 </template>
@@ -43,7 +67,8 @@ export default {
             activities: null,
             dinamicsList: [],
             dinamicSelected: null, 
-            answerReviewActive: false,           
+            answerReviewActive: false,      
+            error: null,     
         }
     },
     methods: {
@@ -80,14 +105,20 @@ export default {
                     console.error("Ocurrio un error al intentar unirse a la evaluación: ", error)
                     if(error === 'Codigo invalido'){
                         console.log("El PIN es invalido, por favor revisa que el PIN sea el mismo que proporciono tu profesor.")
-                        this.$swal({
-                            icon: 'error',
-                            title: '¡PIN incorrecto!',
-                            text: 'El PIN es inválido. Verifica con tu profesor e intenta nuevamente.',
-                        }).then(() => {
-                            this.$router.push({ path: `/join-to-activity/${this.pin}` });        
-                        });                           
-                    }                                          
+                        this.error = 'Código invalido';
+
+                        // this.$swal({
+                        //     icon: 'error',
+                        //     title: '¡PIN incorrecto!',
+                        //     text: 'El PIN es inválido. Verifica con tu profesor e intenta nuevamente.',
+                        // }).then(() => {
+                        //     this.$router.push({ path: `/join-to-activity/${this.pin}` });        
+                        // });                           
+                    }        
+                    else if(error == 'Evaluación inactiva') {
+                        console.log("La evaluación está inactiva.")
+                        this.error = 'Evaluación inactiva';
+                    }                                                      
                 })
                 .finally(() => { this.isLoading = false });                                 
             }
