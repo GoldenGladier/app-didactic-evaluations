@@ -35,7 +35,7 @@
                 ></b-form-textarea>     
               </b-form-group>
               <b-form-checkbox v-model="feedback" id="feedback" name="check-button" class="custom-checkbox-switch mb-4 mb-md-0" size="lg" switch >             
-                Los alumnos podrán ver sus resultados al finalizar la evaluación   
+                Los alumnos podrán ver sus resultados al finalizar la evaluación, incluyendo las respuestas correctas a sus errores.
               </b-form-checkbox>      
             </b-col>
             <b-col bg="6" md="6" sm="12" class="custom-mini-form">             
@@ -149,6 +149,17 @@ export default {
           this.isLoading = false;
         },        
         update() {
+          console.log("Horas", this.activationTime, 'desactivacion', this.deactivationTime);
+          if (this.activationDate > this.deactivationDate || 
+              (this.activationDate === this.deactivationDate && this.activationTime >= this.deactivationTime)) {
+            this.$swal({
+              icon: 'error',
+              title: 'Error',
+              text: 'La fecha y hora de activación deben ser anteriores a la fecha y hora de finalización.',
+            });
+            return; // Detener la ejecución del método si hay un error
+          }
+
           this.isLoading = true
           let newDataEvaluation = {
             title: this.title,

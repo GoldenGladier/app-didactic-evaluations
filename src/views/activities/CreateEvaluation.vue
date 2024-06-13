@@ -37,7 +37,7 @@
                 ></b-form-textarea>     
               </b-form-group>
               <b-form-checkbox v-model="feedback" id="feedback" name="check-button" class="custom-checkbox-switch mb-4 mb-md-0" size="lg" switch >             
-                Los alumnos podrán ver sus resultados al finalizar la evaluación   
+                Los alumnos podrán ver sus resultados al finalizar la evaluación, incluyendo las respuestas correctas a sus errores.
               </b-form-checkbox>      
             </b-col>
 
@@ -146,6 +146,17 @@ export default {
   },
   methods: {
     create() {
+      console.log("Horas", this.activationTime, 'desactivacion', this.deactivationTime);
+      if (this.activationDate > this.deactivationDate || 
+          (this.activationDate === this.deactivationDate && this.activationTime >= this.deactivationTime)) {
+        this.$swal({
+          icon: 'error',
+          title: 'Error',
+          text: 'La fecha y hora de activación deben ser anteriores a la fecha y hora de finalización.',
+        });
+        return; // Detener la ejecución del método si hay un error
+      }
+
       this.isLoading = true
       let newEvaluation = {
         title: this.title,
@@ -212,6 +223,8 @@ export default {
 
     this.activationDate = now.toISOString().split('T')[0]; // Fecha actual
     this.activationTime = now.toTimeString().split(' ')[0].slice(0, 5); // Hora actual
+    this.activationTime = now.toTimeString().split(' ')[0].slice(0, 5) + ':00';
+
     this.deactivationDate = tomorrow.toISOString().split('T')[0]; // Fecha de mañana
     this.deactivationTime = '23:59'; // 11:59 PM
   },      
