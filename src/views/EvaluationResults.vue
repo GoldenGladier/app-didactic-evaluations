@@ -9,11 +9,11 @@
             <b-container v-if="!activeExportProcess">
                 <b-button type="submit" variant="danger" class="my-2 mx-1" @click="downloadPdf">
                     <i class="bi bi-file-earmark-pdf-fill"></i>
-                    Exportar a PDF
+                    Exportar en formato pdf
                 </b-button>
                 <b-button type="submit" variant="success" class="my-2 mx-1" @click="downloadExcel">
                     <i class="bi bi-file-earmark-excel-fill"></i>
-                    Exportar a Excel
+                    Exportar en formato excel
                 </b-button>   
             </b-container>
             <b-container class="p-0 px-md-3">
@@ -41,7 +41,7 @@ export default {
                 { key: 'nombreCompleto', label: 'Nombre' },
                 { key: 'respuestasCorrectas', label: 'Respuestas correctas' },
                 { key: 'totalPreguntas', label: 'Total de preguntas' },
-                { key: 'porcentaje', label: 'Porcentaje', formatter: this.formatPercentage }
+                { key: 'porcentaje', label: 'Total de puntos', formatter: this.formatPercentage }
             ],   
             activeExportProcess: false,
             results: null,     
@@ -55,15 +55,30 @@ export default {
             Promise.all([
                 EvaluationService.getEvaluationById(this.idEvaluation),
                 EvaluationService.getEvaluationResults({ idEvaluacion: Number(this.idEvaluation) })
+                    .catch(error => {
+                        console.log("Error atrapado: ", error)
+                        if (error === 'No se encontro información de respuestas asociadas a la evalaución.' 
+                            || (error.response && error.response.status === 404)) {
+                            console.log("Atrape el error 404")
+                            return null; // Retornar null para manejar el caso de 404
+                        }
+                        throw error; // Re-lanzar otros errores
+                    })
             ])
             .then(([evaluationResponse, resultsResponse]) => {
                 console.log("Datos de evaluation: ", evaluationResponse);
                 this.evaluationData = evaluationResponse;
-                console.log("Resultados de evaluation: ", resultsResponse);
-                this.results = resultsResponse.reportInfo?.report.map(result => ({
-                    ...result,
-                    totalPreguntas: resultsResponse.reportInfo?.totalQuestions
-                }));
+                
+                if (resultsResponse) {
+                    console.log("Resultados de evaluation: ", resultsResponse);
+                    this.results = resultsResponse.reportInfo?.report.map(result => ({
+                        ...result,
+                        totalPreguntas: resultsResponse.reportInfo?.totalQuestions
+                    }));
+                } else {
+                    console.log("Estoy entrando al otro")
+                    this.results = []; // Asignar un array vacío si no hay resultados
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -115,7 +130,7 @@ export default {
                 [{ s: { font: { bold: true, color: { rgb: '3A2C60' } }, }, v: this.evaluationData.nombre }],
                 [{ s: { font: { color: { rgb: '5f6368' } }, }, v: this.evaluationData.subtitulo }],
                 [], // Añadir una fila en blanco
-                ["Nombre", "Respuestas correctas", "Total de preguntas", "Porcentaje"], // Modificado para incluir "Total de preguntas"
+                ["Nombre", "Respuestas correctas", "Total de preguntas", "Total de puntos"], // Modificado para incluir "Total de preguntas"
                 ...formattedResults
             ]);
 

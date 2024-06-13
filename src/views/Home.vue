@@ -11,8 +11,6 @@
             <p class="lead mt-4">{{ bannerDescription }}</p>
           </div>
           <div class="my-4">
-            <!-- <b-button type="submit" variant="primary" class="mr-2"><i class="bi bi-arrow-right"></i>Comenzar</b-button> -->
-
             <router-link v-if="!isLoggedIn" to="/register" class="btn btn-primary mr-2">
               <i class="bi bi-person-fill-add"></i> Registrarse
             </router-link>
@@ -32,30 +30,20 @@
         </b-col>     
       </b-row>
 
-
-      <!-- <b-row class="text-center my-5">
-        <b-col>
-          <h1 class="display-3 font-weight-bold">Bienvenido a Donkademy</h1>
-          <p class="lead">Transforma la manera en que evalúas a tus estudiantes con herramientas interactivas y dinámicas.</p>
-        </b-col>
-      </b-row> -->
-
       <!-- Features Section -->
-      <b-row class="text-center my-5">
+      <b-row class="text-center justify-content-center my-5">
         <b-col cols="12" class="mb-4">
-          <h2 class="display-4 font-weight-bold ">Instrumentos de Evaluación</h2>
+          <h2 class="display-4 font-weight-bold ">Instrumentos de evaluación</h2>
           <p class="lead">Descubre la variedad de actividades de evaluación que Donkademy ofrece. Desde clasificación hasta resolución de crucigramas, nuestras herramientas están diseñadas para fomentar el aprendizaje interactivo y el pensamiento crítico. Explora nuestras actividades personalizables y lleva la evaluación al siguiente nivel con Donkademy.</p>
         </b-col>
 
         <b-col md="6" lg="3" class="mb-4" v-for="(activity, index) in activities" :key="index">
           <b-card :title="activity.title" class="text-center">
-            <b-icon :icon="activity.icon" font-scale="4" class="my-3"></b-icon>
+            <img :src="activity.image" alt="activity.title" class="activity-image my-3">
             <b-card-text>{{ activity.description }}</b-card-text>
-            <!-- <b-button variant="primary" @click="selectActivity(activity.type)">Crear {{ activity.title }}</b-button> -->
           </b-card>
         </b-col>
       </b-row>
-
 
       <!-- Share Section -->
       <b-row class="banner-section my-5 d-flex justify-content-center align-items-center">
@@ -119,6 +107,12 @@
 </template>
 
 <script>
+import SortText from '@/assets/dinamics/Sort-text.png';
+import SortItems from '@/assets/dinamics/Sort-items.png';
+import MultipleChoice from '@/assets/dinamics/MultipleChoice.png';
+import Crossword from '@/assets/dinamics/Crossword.png';
+import Wordsearch from '@/assets/dinamics/Wordsearch.png';
+
 export default {
   data() {
     return {
@@ -126,28 +120,34 @@ export default {
       bannerDescription: 'Transforma la manera en que evalúas a tus estudiantes con herramientas interactivas y dinámicas.',  
       activities: [
         {
-          title: 'Ordena los Ítems',
+          title: 'Ordena los ítems',
           description: 'Crea una evaluación donde los alumnos deben ordenar ítems correctamente.',
-          icon: 'sort-alpha-down',
+          image: SortItems,
           type: 'sort-items'
         },
         {
-          title: 'Ordena el Enunciado',
+          title: 'Ordena el enunciado',
           description: 'Desafía a tus alumnos a ordenar enunciados de forma correcta.',
-          icon: 'sort-alpha-down-alt',
+          image: SortText,
           type: 'sort-sentence'
         },
         {
-          title: 'Sopa de Letras',
+          title: 'Sopa de letras',
           description: 'Genera sopas de letras para que tus alumnos encuentren las palabras escondidas.',
-          icon: 'grid-3x3-gap-fill',
+          image: Wordsearch,
           type: 'word-search'
         },
         {
-          title: 'Crucigramas',
-          description: 'Diseña crucigramas educativos para tus alumnos.',
-          icon: 'journal',
+          title: 'Crucigrama',
+          description: 'Diseña crucigramas, proporcionando palabras con sus pistas correspondientes.',
+          image: Crossword,
           type: 'crossword'
+        },
+        {
+          title: 'Elección múltiple',
+          description: 'Crea evaluaciones con preguntas de elección múltiple.',
+          image: MultipleChoice,
+          type: 'multiple-choice'
         }
       ]
     };
@@ -218,5 +218,9 @@ b-button:hover {
 .my-4 {
   margin-top: 2rem !important;
   margin-bottom: 2rem !important;
+}
+
+.activity-image {
+  width: 80%;
 }
 </style>

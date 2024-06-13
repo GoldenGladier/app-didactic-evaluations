@@ -1,7 +1,7 @@
 <template>
   <b-container class="custom-master-container custom-card-box custom-center-flex">
     <b-overlay :show="isLoading" class="width-100">      
-    <h1 class="text-center mb-3"> Mis Evaluaciones</h1>
+    <h1 class="text-center mb-3"> Mis evaluaciones</h1>
     <div class="search-container">
     <!-- Barra de búsqueda -->
     <SearchBar v-if="items.length !== 0" @search="performSearch" class="mb-3"/>
@@ -22,7 +22,7 @@
             <div>
               <b-dropdown size="lg"  variant="link" toggle-class="text-decoration-none" class="custom-actions-button" no-caret>
                 <template #button-content>
-                  <b-icon icon="three-dots-vertical"></b-icon><span class="sr-only">Search</span>
+                  <b-icon icon="three-dots-vertical"></b-icon><span class="sr-only">Buscar</span>
                 </template>
                 <b-dropdown-item @click="goToEvaluationResults(item.id_evaluaciones)"><i class="bi bi-card-checklist"></i>Ver resultados</b-dropdown-item>
                 <b-dropdown-item @click="copyEvaluation(item.id_evaluaciones)"><i class="bi bi-copy"></i>Crear copia</b-dropdown-item>
@@ -221,17 +221,22 @@ export default {
   .custom-actions-button:active{
     position: absolute !important;
     right: 1.5rem;
-    background: #f0f0f0d7;
-    color: var(--acivity-border-color) !important;  
+    /* background: #f0f0f0; */
+    background: var(--info);
+    /* color: var(--acivity-border-color) !important;   */
+    color: #ffffff !important;
+    /* border: solid 1px #ccc; */
     border-radius: 0.4rem;
   }
 
   .custom-actions-button .btn-link {
     color: var(--acivity-border-color) !important;
+    color: #ffffff !important;
     padding: 0.5rem !important;
   }
   .custom-actions-button button.btn-link:hover {
     color: var(--acivity-border-color) !important;
+    color: #f0f0f0 !important;
   }
 
   @media (max-width: 768px) {

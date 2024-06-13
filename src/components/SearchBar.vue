@@ -3,7 +3,7 @@
     <b-input
       type="text"
       v-model="searchQuery"
-      placeholder="Search"
+      placeholder="Buscar"
       @input="handleSearch"
       class="round-input"
     />
