@@ -39,7 +39,7 @@
             <h3 class="mt-2 custom-text-info">
               ¿No tienes una cuenta?              
               <RouterLink to="register">
-                  <b-icon icon="person-plus-fill" class="icon-text-info"></b-icon> Registrate
+                  <b-icon icon="person-plus-fill" class="icon-text-info"></b-icon> Regístrate
               </RouterLink>    
             </h3>     
           </b-col>
@@ -73,7 +73,7 @@ export default {
 
       AuthService.login(credentials)
       .then(response => {
-        console.log("El login recibio la data: ", response);
+        console.log("El login recibió la data: ", response);
         this.$router.push('/evaluaciones/mis-evaluaciones');
       })
       .catch(error => {

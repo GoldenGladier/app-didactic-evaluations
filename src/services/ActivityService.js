@@ -88,7 +88,7 @@ class ActivityService {
     }
   }  
 
-    // ---- Pregunta de opción multiple ----
+    // ---- Pregunta de opción múltiple ----
   async addActivitiesMultipleChoice(activityData) {
     try {
       const response = await axios.post(`${API_URL}/questionAnswer/add`, activityData);

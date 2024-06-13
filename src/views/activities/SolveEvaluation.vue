@@ -10,7 +10,7 @@
 
             <SortTextController v-if="dinamicSelected == 'Ordena el enunciado'" :infoEvaluation="infoEvaluation" :sentences="activities.sentence" @updateLoading="updateLoading" :answerReviewActive.sync="answerReviewActive" />
             <SolveSortItemsWrapper v-else-if="dinamicSelected == 'Ordena los items'" :infoEvaluation="infoEvaluation" :activities="activities.sentence" @updateLoading="updateLoading" :answerReviewActive.sync="answerReviewActive" />
-            <SolveMultipleChoiceWrapper v-else-if="dinamicSelected == 'Opción multiple'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />
+            <SolveMultipleChoiceWrapper v-else-if="dinamicSelected == 'Opción múltiple'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />
             <SolveCrosswordWrapper v-else-if="dinamicSelected == 'Crucigrama'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />
             <SolveWordsearchWrapper v-else-if="dinamicSelected == 'Sopa de letras'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />
         </b-container>
@@ -38,7 +38,7 @@
                 </b-col>
             </b-row>
         </b-container>
-        <b-container v-else-if="error === 'El usuario ya respondio la evaluación'">
+        <b-container v-else-if="error === 'El usuario ya respondió la evaluación'">
             <b-row>
                 <b-col cols="12" xm="12" md="6" class="my-2 ">
                     <img src="/img/check.png" alt="No Time Available">
@@ -98,15 +98,15 @@ export default {
 
                     EvaluationService.getDinamics()
                     .then(response => {
-                        console.log("Dinamicas: ", response);
+                        console.log("Dinámicas: ", response);
                         this.dinamicsList = response;
                         const idToFind = this.infoEvaluation.id_dinamica;
                         const foundElement = this.dinamicsList.find(element => element.id_dinamicas === idToFind);
                         if (foundElement) {
                             this.dinamicSelected = foundElement.dinamica;
-                            console.log('Elemento dinamica encontrado:', foundElement);
+                            console.log('Elemento dinámica encontrado:', foundElement);
                         } else {
-                            console.log('Elemento dinamica no encontrado');
+                            console.log('Elemento dinámica no encontrado');
                         }
                     })
                     .catch(error => {
@@ -115,8 +115,8 @@ export default {
                     .finally(() => { this.isLoading = false });                                 
                 })
                 .catch((error) => {
-                    console.error("Ocurrio un error al intentar unirse a la evaluación: ", error)
-                    if(error === 'Codigo invalido'){
+                    console.error("Ocurrió un error al intentar unirse a la evaluación: ", error)
+                    if(error === 'Código invalido'){
                         console.log("El PIN es invalido, por favor revisa que el PIN sea el mismo que proporciono tu profesor.")
                         this.error = 'Código invalido';
 
@@ -132,9 +132,9 @@ export default {
                         console.log("La evaluación está inactiva.")
                         this.error = 'Evaluación inactiva';
                     }     
-                    else if(error == 'El usuario ya respondio la evaluación.') {
-                        console.log("El usuario ya respondio la evaluación.")
-                        this.error = 'El usuario ya respondio la evaluación';                        
+                    else if(error == 'El usuario ya respondió la evaluación.') {
+                        console.log("El usuario ya respondió la evaluación.")
+                        this.error = 'El usuario ya respondió la evaluación';                        
                     }                                                 
                 })
                 .finally(() => { this.isLoading = false });                                 

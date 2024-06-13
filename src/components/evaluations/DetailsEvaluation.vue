@@ -59,14 +59,14 @@
           <b-row class="justify-content-center">  
             <b-col cols="12">
               <p class="mt-2">
-                Tipo de evaluación
+                Selecciona una opción:
               </p>
             </b-col>
             
             <b-col v-for="dinamic in dinamicsList" :key="dinamic.id_dinamicas" bg="6" md="6" sm="12" class="custom-card-item">
               <!-- @click="idDinamic = dinamic.id_dinamicas" -->
               <div :class="{'custom-card-item-content': true, 'active': (idDinamic === dinamic.id_dinamicas)}" class="d-flex align-items-center disabled-custom-card-item" title="El tipo de evaluación no puede cambiarse.">
-                <b-img v-bind:src="getImage(dinamic)" alt="Responsive image" class="custom-img-evaluation mr-2"></b-img>
+                <b-img v-bind:src="getImage(dinamic)" alt="Imagen de instrumento de evaluación" class="custom-img-evaluation mr-2"></b-img>
                 <div class="text-content mr-1">
                   <h4>{{dinamic.dinamica}}</h4>                   
                   <p class="text-justify mb-1">{{dinamic.descripcion}}</p>
@@ -121,7 +121,7 @@ export default {
           imagePaths: {
             'Ordena el enunciado': SortText,
             'Ordena los items': SortItems,
-            'Opción multiple': MultipleChoice,
+            'Opción múltiple': MultipleChoice,
             'Crucigrama': Crossword,
             'Sopa de letras': Wordsearch,
             'default': BadImage
@@ -170,7 +170,7 @@ export default {
             this.$swal({
               icon: 'success',
               title: '¡Éxito!',
-              text: 'Los cambios en los detalles de la evaluación se guardarón correctamente.',
+              text: 'Los cambios en los detalles de la evaluación se guardaron correctamente.',
             }).then(() => {
               this.$router.replace({ name: 'EditEvaluation', params: { idEvaluation: this.$route.params.idEvaluation, tabId: 'details' } });   
             });                        

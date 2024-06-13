@@ -143,7 +143,7 @@ export default {
       this.validatePasswordConfirm();
     },
     validatePasswordConfirm() {
-      this.passwordConfirmState = this.password === this.passwordConfirm;
+      this.passwordConfirmState = (this.password === this.passwordConfirm) && !!this.password && this.password != '';
     },
     toggleShowPassword() {
       this.showPassword = !this.showPassword;
@@ -180,7 +180,7 @@ export default {
 
       AuthService.register(newUserData)
         .then(response => {
-          console.log("El server devolvio la data: ", response);
+          console.log("El server devolvió la data: ", response);
           this.isLoading = false;
           this.$swal({
             icon: 'success',

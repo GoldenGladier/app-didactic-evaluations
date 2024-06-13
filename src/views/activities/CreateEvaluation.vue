@@ -3,7 +3,7 @@
 
     <b-overlay :show="isLoading" class="width-100">      
       <b-container>  
-        <h1 class="text-center mb-4">Crear Evaluación</h1>
+        <h1 class="text-center mb-4">Crear evaluación</h1>
         <b-form @submit.prevent="create()">
 
           <b-row class="justify-content-center">          
@@ -63,7 +63,7 @@
           <b-row class="justify-content-center">  
             <b-col cols="12">
               <p class="lead mt-4">
-                Selecciona el tipo de evaluación que deseas crear:
+                Selecciona una opción:
               </p>
             </b-col>            
 
@@ -79,7 +79,7 @@
 
           </b-row>
           
-          <b-button type="submit" variant="primary" class="mt-3"><i class="bi bi-floppy"></i>Crear Evaluación</b-button>
+          <b-button type="submit" variant="primary" class="mt-3"><i class="bi bi-floppy"></i>Crear evaluación</b-button>
 
         </b-form>
       </b-container>
@@ -122,7 +122,7 @@ export default {
       imagePaths: {
         'Ordena el enunciado': SortText,
         'Ordena los items': SortItems,
-        'Opción multiple': MultipleChoice,
+        'Opción múltiple': MultipleChoice,
         'Crucigrama': Crossword,
         'Sopa de letras': Wordsearch,
         'default': BadImage
@@ -132,7 +132,7 @@ export default {
   created() {             
     EvaluationService.getDinamics()
     .then(response => {
-      console.log("Dinamicas: ", response);
+      console.log("Dinámicas: ", response);
       this.dinamicsList = response
     })
     .catch(error => {
