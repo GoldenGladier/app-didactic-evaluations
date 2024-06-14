@@ -36,6 +36,7 @@
 
     <div v-else>   
         <h4>Revisión de respuestas</h4>
+        <p>¡Felicitaciones por completar el crucigrama! En este resumen, podrás ver las palabras que lograste encontrar correctamente resaltadas en <span class="text-success">verde</span>, mientras que las que no lograste encontrar se mostrarán en <span class="text-danger">rojo</span>.</p>
         <b-row id="grid-crucigrama">
             <b-col cols="12" class="d-flex justify-content-center align-items-center p-0 p-md-3">
                 <CrosswordBoard :grid="grid" :gridRows="gridRows" :gridCols="gridCols" :answers.sync="answers" :modeRespondActivity="false" :colorReviewActived="true" />
@@ -107,13 +108,13 @@ export default {
     },
     methods: {
         initData() {
-            console.log("Activities: ", this.activities);
+            // console.log("Activities: ", this.activities);
             this.gridRows = this.activities.board.fila;
             this.gridCols = this.activities.board.columna;
 
-            console.log("gridRows: ", this.gridRows);
-            console.log("gridCols: ", this.gridCols);
-            console.log("grid: ", this.grid);
+            // console.log("gridRows: ", this.gridRows);
+            // console.log("gridCols: ", this.gridCols);
+            // console.log("grid: ", this.grid);
 
             this.answers = this.activities.resultWordSearchEvaluation.map((word) => {
                 return {
@@ -144,7 +145,7 @@ export default {
                     }
                 }
             });  
-            console.log("answers: ", this.answers);
+            // console.log("answers: ", this.answers);
 
         },
         activefeedback(feedback) {
@@ -152,7 +153,7 @@ export default {
             this.gridCols = feedback.boardData.columna;
 
             this.answers = feedback.DataAnswers.map((word) => {
-                console.log("Word: ", word);
+                // console.log("Word: ", word);
                 return {
                     answer: word.answer,
                     clue: word.clue,      
@@ -169,7 +170,7 @@ export default {
             this.grid = Array.from({ length: this.gridRows }, () => Array(this.gridCols).fill('-'));    
             
             this.answers.forEach(word => {
-                console.log("Iniciando palabra: ", word)
+                // console.log("Iniciando palabra: ", word)
                 const x = word.startx - 1;
                 const y = word.starty - 1;
                 const wordChars = word.answer.split('');
@@ -179,7 +180,7 @@ export default {
                     if (orientation === "across") {
                         this.grid[y][x + i] = wordChars[i];
                     } else {
-                        console.log("Intentando meter: ", y + i, x, wordChars[i])
+                        // console.log("Intentando meter: ", y + i, x, wordChars[i])
                         this.grid[y + i][x] = wordChars[i];
                     }
                 }
@@ -199,11 +200,11 @@ export default {
                 })
             };
             // console.log("Data Answers: ", dataAnswers);
-            console.log("dataAnswers: ", dataAnswers);
+            // console.log("dataAnswers: ", dataAnswers);
 
             ActivityService.solveActivityCrossword(dataAnswers)
             .then(response => {
-                console.log("sendAnswers status: ", response);
+                // console.log("sendAnswers status: ", response);
                 let text = 'Tus respuestas han sido enviadas correctamente. ';
                 text += this.infoEvaluation?.retroalimentacion_activa ? '' : 'Tu profesor te informará acerca de tus resultados.';
                 this.$swal({
@@ -212,7 +213,7 @@ export default {
                     text: text,
                 }).then(() => {
                     if (this.infoEvaluation?.retroalimentacion_activa) {
-                        console.log("Retroalimentación recibida: ", response); 
+                        // console.log("Retroalimentación recibida: ", response); 
                         this.activefeedback(response);
                         this.answerReviewActive = true;
                     } else {

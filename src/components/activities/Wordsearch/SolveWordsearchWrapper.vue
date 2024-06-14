@@ -119,7 +119,7 @@ export default {
                 idEvaluacion: this.infoEvaluation.id_evaluaciones,
                 palabras: palabras
             };
-            console.log("Data Answers: ", dataAnswers);
+            // console.log("Data Answers: ", dataAnswers);
 
             ActivityService.solveActivityWordsearch(dataAnswers)
             .then(response => {
