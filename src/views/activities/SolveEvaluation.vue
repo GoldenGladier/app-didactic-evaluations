@@ -9,7 +9,7 @@
             <hr class="my-4">
 
             <SortTextController v-if="dinamicSelected == 'Ordena el enunciado'" :infoEvaluation="infoEvaluation" :sentences="activities.sentence" @updateLoading="updateLoading" :answerReviewActive.sync="answerReviewActive" />
-            <SolveSortItemsWrapper v-else-if="dinamicSelected == 'Ordena los items'" :infoEvaluation="infoEvaluation" :activities="activities.sentence" @updateLoading="updateLoading" :answerReviewActive.sync="answerReviewActive" />
+            <SolveSortItemsWrapper v-else-if="dinamicSelected == 'Ordena los ítems'" :infoEvaluation="infoEvaluation" :activities="activities.sentence" @updateLoading="updateLoading" :answerReviewActive.sync="answerReviewActive" />
             <SolveMultipleChoiceWrapper v-else-if="dinamicSelected == 'Opción múltiple'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />
             <SolveCrosswordWrapper v-else-if="dinamicSelected == 'Crucigrama'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />
             <SolveWordsearchWrapper v-else-if="dinamicSelected == 'Sopa de letras'" :infoEvaluation="infoEvaluation" :activities="activities" @updateLoading="updateLoading" />

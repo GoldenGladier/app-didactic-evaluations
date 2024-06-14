@@ -121,7 +121,7 @@ export default {
         subcontenedorSeleccionado: 0, // Índice del subcontenedor seleccionado (por defecto, el primero)
       imagePaths: {
         'Ordena el enunciado': SortText,
-        'Ordena los items': SortItems,
+        'Ordena los ítems': SortItems,
         'Opción múltiple': MultipleChoice,
         'Crucigrama': Crossword,
         'Sopa de letras': Wordsearch,

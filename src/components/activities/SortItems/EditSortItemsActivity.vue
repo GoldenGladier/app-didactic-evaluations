@@ -1,7 +1,7 @@
 <template>
   <b-card class="mb-4">
     <b-button class="help-button" @click="startTutorial"
-      v-b-tooltip.hover.top="'Haz clic aquí para recibir un tutorial sobre cómo crear una actividad de ordenar los items.'" >
+      v-b-tooltip.hover.top="'Haz clic aquí para recibir un tutorial sobre cómo crear una actividad de ordenar los ítems.'" >
       <i class="bi bi-question-circle"></i>Ayuda
     </b-button>    
 
@@ -19,7 +19,7 @@
       </div>
     </b-form-group>
 
-    <b-form-group label="Items" class="mt-2">
+    <b-form-group label="Ítems" class="mt-2">
       <draggable v-model="activity.items" :group="{ name: 'items', pull: false, put: false }" handle=".drag-handle" :id="'items-list-'+index">
         <transition-group>
           <b-row v-for="(item, itemIndex) in activity.items" :key="itemIndex" class="mb-2">
@@ -33,11 +33,11 @@
                 <b-form-input
                   :id="'item' + index + '-' + itemIndex"
                   v-model="activity.items[itemIndex].texto"
-                  :placeholder="'Ingresa el item ' + (itemIndex + 1)"
+                  :placeholder="'Ingresa el ítem ' + (itemIndex + 1)"
                   required
                 ></b-form-input>
               </b-input-group>
-              <b-button @click="removeItem(item.id)" variant="danger" size="sm" class="custom-close-button mt-3" :id="'btn-delete-item-'+index" v-b-tooltip.hover title="Eliminar item">
+              <b-button @click="removeItem(item.id)" variant="danger" size="sm" class="custom-close-button mt-3" :id="'btn-delete-item-'+index" v-b-tooltip.hover title="Eliminar ítem">
                 <b-icon icon="x-lg"></b-icon>
               </b-button>
             </b-col>
@@ -45,7 +45,7 @@
         </transition-group>
       </draggable>
       <b-button @click="addItem()" variant="primary" size="sm" class="mt-2" :id="'btn-new-item-' + index">
-        <i class="bi bi-plus-lg"></i>Agregar Item
+        <i class="bi bi-plus-lg"></i>Agregar ítem
       </b-button>
     </b-form-group>
   </b-card>
@@ -104,25 +104,25 @@ export default {
           numPregunta: this.activity.idPregunta,
           item: itemIndex
         }
-        console.log("Voy a eliminar el item: ", deleteItemData);
+        console.log("Voy a eliminar el ítem: ", deleteItemData);
 
         this.$emit('update:isLoading', true);
         ActivityService.deleteDeleteItemByNumItem(deleteItemData)
         .then((response) => {
-          console.log("Item eliminado: ", response);
+          console.log("ítem eliminado: ", response);
           this.activity.items = this.activity.items.filter(item => item.id !== itemIndex);
           this.$swal({
               icon: 'success',
               title: '¡Éxito!',
-              text: 'El item fue eliminado exitosamente.',
+              text: 'El ítem fue eliminado exitosamente.',
           }) 
         })
         .catch((error) => {
-          console.error("Ocurrio un error al eliminar el item: ", error);
+          console.error("Ocurrió un error al eliminar el ítem: ", error);
           this.$swal({
               icon: 'error',
               title: '¡Error!',
-              text: 'Ocurrio un error al intentar eliminar el item.',
+              text: 'Ocurrió un error al intentar eliminar el ítem.',
           });          
         })
         .finally(() => {
@@ -149,32 +149,32 @@ export default {
             {
                 element: '#items-list-' + this.index,
                 popover: {
-                    title: 'Ingresar texto en un item',
-                    description: 'Simplemente escribe el texto que deseas para cada item en el campo correspondiente.',
+                    title: 'Ingresar texto en un ítem',
+                    description: 'Simplemente escribe el texto que deseas para cada ítem en el campo correspondiente.',
                     position: 'top',
                 },
             },     
             {
                 element: '#btn-new-item-' + this.index,
                 popover: {
-                    title: 'Agregar nuevo item',
-                    description: 'Haz clic en el botón de agregar item con un icono de "+" para añadir un nuevo item a la lista. Un nuevo campo de entrada aparecerá donde podrás escribir el texto del nuevo item.',
+                    title: 'Agregar nuevo ítem',
+                    description: 'Haz clic en el botón de agregar ítem con un icono de "+" para añadir un nuevo ítem a la lista. Un nuevo campo de entrada aparecerá donde podrás escribir el texto del nuevo ítem.',
                     position: 'top',
                 },
             }, 
             {
             element: '#drag-handle-' + this.index,
                 popover: {
-                    title: 'Reordenar items',
-                    description: 'Para reordenar los items, haz clic y arrastra este botón (<i class="bi bi-grip-vertical nm"></i>) para mover el item a la posición deseada dentro de la misma actividad.',
+                    title: 'Reordenar ítems',
+                    description: 'Para reordenar los ítems, haz clic y arrastra este botón (<i class="bi bi-grip-vertical nm"></i>) para mover el ítem a la posición deseada dentro de la misma actividad.',
                     position: 'top',
                 },
             },
             {
                 element: '#btn-delete-item-' + this.index,
                 popover: {
-                    title: 'Eliminar un item',
-                    description: 'Haz clic en este botón (<i class="bi bi-x-lg nm"></i>) si deseas eliminar ese item específico de la lista.',
+                    title: 'Eliminar un ítem',
+                    description: 'Haz clic en este botón (<i class="bi bi-x-lg nm"></i>) si deseas eliminar ese ítem específico de la lista.',
                     position: 'top',
                 },
             },                                                                             

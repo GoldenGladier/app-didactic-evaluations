@@ -1,6 +1,6 @@
 <template>
     <div class="mb-4">
-        <p><span v-if="index">{{ index }}.</span> Arrasta los bloques de palabras y ordenalas para crear el enunciado correcto: </p>
+        <p><span v-if="index">{{ index }}.</span> Arrastra los bloques de palabras y ordénalas para crear el enunciado correcto: </p>
 
         <draggable v-model="textAnswer" :key="`draggable-${index}`" :group="`group-${index}`" @start="drag=true" @end="drag=false" @input="emitResponse">
             <span class="custom-span-drag" v-for="element in textAnswer" :key="element.id">{{element.name}}</span>

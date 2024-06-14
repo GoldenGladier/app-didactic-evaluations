@@ -1,6 +1,6 @@
 <template>
     <div class="mb-4">
-        <p><span v-if="index">{{ index }}.</span> Arrasta los bloques de palabras y ordenalas para crear el enunciado correcto: </p>
+        <p><span v-if="index">{{ index }}.</span> Arrastra los bloques de palabras y ordénalas para crear el enunciado correcto: </p>
 
         <p class="mt-3 mb-0" :class="{ 'text-success': answer.correcta, 'text-danger': !answer.correcta }">
           <i class="bi bi-check2 icon-check text-success" v-if="answer.correcta"></i> 

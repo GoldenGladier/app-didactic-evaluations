@@ -228,7 +228,7 @@ export default {
                     element: '#lista-palabras-buscar',
                     popover: {
                         title: 'Lista de palabras',
-                        description: 'Aquí podrás observar la lista de palabras ocultas en la sopa de letras. Cuando selecciones una palabra correcta esta se tachará de la lista automaticamente.',
+                        description: 'Aquí podrás observar la lista de palabras ocultas en la sopa de letras. Cuando selecciones una palabra correcta esta se tachará de la lista automáticamente.',
                         position: 'top',
                     },
                 },     

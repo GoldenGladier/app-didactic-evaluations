@@ -120,7 +120,7 @@ export default {
 
           imagePaths: {
             'Ordena el enunciado': SortText,
-            'Ordena los items': SortItems,
+            'Ordena los ítems': SortItems,
             'Opción múltiple': MultipleChoice,
             'Crucigrama': Crossword,
             'Sopa de letras': Wordsearch,

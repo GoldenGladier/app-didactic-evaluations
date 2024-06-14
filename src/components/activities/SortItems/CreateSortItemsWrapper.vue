@@ -1,13 +1,13 @@
 <template>
   <b-overlay :show="isLoading" class="width-100">
     <b-button class="help-button" @click="startTutorial"
-      v-b-tooltip.hover.top="'Haz clic aquí para recibir un tutorial sobre cómo agregar o quitar una actividad de ordenar los items de esta evaluación.'" >
+      v-b-tooltip.hover.top="'Haz clic aquí para recibir un tutorial sobre cómo agregar o quitar una actividad de ordenar los ítems de esta evaluación.'" >
       <i class="bi bi-question-circle"></i>Ayuda
     </b-button>        
     <b-container>
       <h1 v-if="evaluationData">{{ evaluationData.nombre }}</h1>
-      <h1 class="text-center mb-4">Crear actividades de ordenar los items</h1>
-      <p class="text-justify">Aquí configura las actividades de ordenar items que necesites. Cuando tus alumnos resuelvan esta evaluación, verán los items en desorden y deberán acomodarlos en el mismo orden que tú los pusiste.</p>
+      <h1 class="text-center mb-4">Crear actividades de ordenar los ítems</h1>
+      <p class="text-justify">Aquí configura las actividades de ordenar ítems que necesites. Cuando tus alumnos resuelvan esta evaluación, verán los ítems en desorden y deberán acomodarlos en el mismo orden que tú los pusiste.</p>
 
       <b-form @submit.prevent="saveActivities()">
         <b-row class="justify-content-center">
@@ -141,15 +141,15 @@ export default {
               element: '#add-activity',
               popover: {
                   title: 'Agregar atem',
-                  description: 'Haz clic en el botón de agregar actividad (<i class="bi bi-plus-lg nm"></i>) para añadir una nueva actividad de ordena los items.',
+                  description: 'Haz clic en el botón de agregar actividad (<i class="bi bi-plus-lg nm"></i>) para añadir una nueva actividad de ordena los ítems.',
                   position: 'top',
               },
           },
           {
               element: '#activity-0',
               popover: {
-                  title: 'Actividad de ordena los items',
-                  description: 'Aquí puedes configurar una pregunta de ordenar los items. Si quieres saber más puedes dar clic en su botón de ayuda (<i class="bi bi-question-circle nm"></i>).',
+                  title: 'Actividad de ordena los ítems',
+                  description: 'Aquí puedes configurar una pregunta de ordenar los ítems. Si quieres saber más puedes dar clic en su botón de ayuda (<i class="bi bi-question-circle nm"></i>).',
                   position: 'top',
               },
           },     

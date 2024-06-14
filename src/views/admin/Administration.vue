@@ -47,7 +47,7 @@ export default {
             users: [],                 
             fields: [
                 { key: 'fullname', label: 'Nombre' },
-                { key: 'correo', label: 'Correo eléctronico' },
+                { key: 'correo', label: 'Correo electrónico' },
                 { key: 'verificado', label: 'Usuario verificado' },
                 { key: 'rol_de_usuario', label: 'Rol' },                
                 { key: 'acciones', label: 'Acciones' }                

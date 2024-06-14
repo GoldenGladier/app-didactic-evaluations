@@ -46,7 +46,7 @@ class ActivityService {
     }
   }
 
-    // ---- Ordena los items ----
+    // ---- Ordena los ítems ----
   async addActivitiesSortItems(activityData) {
     try {
       const response = await axios.post(`${API_URL}/orderItem/addItems`, activityData);
