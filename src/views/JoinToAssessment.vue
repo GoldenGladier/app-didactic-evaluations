@@ -106,6 +106,7 @@ export default {
   methods: {
     init_data() {
       this.pin = this.$route.params.pin ? this.$route.params.pin : '';
+      this.validatePin();
       if (this.$route.params.pin) {
         this.showInputPin = false;
       }
