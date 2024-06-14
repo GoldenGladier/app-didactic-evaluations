@@ -21,7 +21,7 @@
                         </span>                    
                     </template>   
                     <template v-slot:cell(acciones)="row">
-                        <button class="silent-button text-danger" v-b-tooltip.top title="Eliminar usuario" @click="deleteUser(row.item.id_info_usuario)">
+                        <button class="silent-button text-danger" v-b-tooltip.top title="Eliminar usuario" @click="deleteUser(row.item.id_info_usuario)" :disabled="row.item.rol_de_usuario == 'ADMIN'">
                             <i class="bi bi-trash3-fill nm"></i>
                         </button>
                     </template>                                               

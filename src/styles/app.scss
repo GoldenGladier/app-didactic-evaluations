@@ -63,6 +63,10 @@ i.custom-info-driver-button:hover {
     color: var(--silent-letter-color);
 }
 
+.silent-button:disabled {
+    color: var(--silent-letter-color) !important;
+}
+
 .custom-actions-button .btn-link {
     color: #FFFFFF;
 }
