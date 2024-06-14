@@ -9,7 +9,7 @@
 
             <!-- Lista de palabras verticales -->
             <b-col v-if="verticalClues.length" cols="12" md="6" class="my-2">
-                <h3>Pistas Verticales</h3>
+                <h3>Pistas verticales</h3>
                 <div style="display: inline-block">
                     <div  v-for="(clue, index) in verticalClues" :key="'word-vertical-'+index">
                     {{ `${clue.position}. ${clue.clue}` }}
@@ -19,7 +19,7 @@
             
             <!-- Lista de palabras horizontales -->
             <b-col v-if="horizontalClues.length" cols="12" md="6" class="my-2">
-                <h3>Pistas Horizontales</h3>
+                <h3>Pistas horizontales</h3>
                 <div style="display: inline-block">
                     <div  v-for="(clue, index) in horizontalClues" :key="'word-horizontal-'+index">
                     {{ `${clue.position}. ${clue.clue}` }}
@@ -35,7 +35,7 @@
 
 
     <div v-else>   
-        <h4>Revisión de Respuestas</h4>
+        <h4>Revisión de respuestas</h4>
         <b-row id="grid-crucigrama">
             <b-col cols="12" class="d-flex justify-content-center align-items-center p-0 p-md-3">
                 <CrosswordBoard :grid="grid" :gridRows="gridRows" :gridCols="gridCols" :answers.sync="answers" :modeRespondActivity="false" :colorReviewActived="true" />
@@ -43,7 +43,7 @@
 
             <!-- Lista de palabras verticales -->
             <b-col v-if="verticalClues.length" cols="12" md="6" class="my-2">
-                <h3>Pistas Verticales</h3>
+                <h3>Pistas verticales</h3>
                 <div style="display: inline-block">
                     <div  v-for="(clue, index) in verticalClues" :key="'word-vertical-'+index">
                     {{ `${clue.position}. ${clue.clue}` }}
@@ -53,7 +53,7 @@
             
             <!-- Lista de palabras horizontales -->
             <b-col v-if="horizontalClues.length" cols="12" md="6" class="my-2">
-                <h3>Pistas Horizontales</h3>
+                <h3>Pistas horizontales</h3>
                 <div style="display: inline-block">
                     <div  v-for="(clue, index) in horizontalClues" :key="'word-horizontal-'+index">
                     {{ `${clue.position}. ${clue.clue}` }}

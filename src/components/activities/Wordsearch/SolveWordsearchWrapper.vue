@@ -1,7 +1,7 @@
 <template>
   <div class="solve-wordsearch-wrapper">
         <div v-if="!answerReviewActive">
-            <h3>Resolver Sopa de Letras</h3>
+            <h3>Resolver sopa de letras</h3>
 
             <b-row class="my-3">        
                 <b-col cols="12 p-0 pd-md-3">
@@ -14,7 +14,7 @@
             </b-button>
         </div>
         <div v-else>   
-            <h4>Revisión de Respuestas</h4>
+            <h4>Revisión de respuestas</h4>
             <p>¡Felicitaciones por completar el desafío de búsqueda de palabras! En este resumen, podrás ver las palabras que lograste encontrar correctamente resaltadas en <span class="text-success">verde</span>, mientras que las que no lograste encontrar se mostrarán en <span class="text-danger">rojo</span>.</p>
             <b-row class="my-3">        
                 <b-col cols="12 p-0 pd-md-3">

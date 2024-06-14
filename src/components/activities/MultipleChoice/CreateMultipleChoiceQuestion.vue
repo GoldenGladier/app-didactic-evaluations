@@ -22,7 +22,7 @@
               <b-form-checkbox v-model="option.isCorrect" @change="selectCorrectOption(index)"></b-form-checkbox>
             </b-input-group-text>
           </b-input-group-prepend>
-          <b-form-input v-model="option.text" :placeholder="'Opcion ' + (index + 1)" class="input-answer" required></b-form-input>
+          <b-form-input v-model="option.text" :placeholder="'Ingresa aquí tu opción ' + (index + 1)" class="input-answer" required></b-form-input>
         </b-input-group>
         <b-button @click="removeOption(index)" variant="danger" size="sm" class="custom-close-button btn-delete-option mx-1" :id="'btn-delete-item-' + index" v-b-tooltip.hover title="Eliminar opción">
           <b-icon icon="x-lg"></b-icon>

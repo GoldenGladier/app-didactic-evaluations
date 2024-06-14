@@ -29,7 +29,7 @@
             <h3 class="mt-3 custom-text-info">
               ¿No tienes una cuenta?              
               <RouterLink to="/register">
-                  <b-icon icon="person-plus-fill" class="icon-text-info"></b-icon> Registrate
+                  <b-icon icon="person-plus-fill" class="icon-text-info"></b-icon> Regístrate
               </RouterLink>    
             </h3>     
           </b-col>

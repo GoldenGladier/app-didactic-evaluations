@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <h2>Crear Preguntas de Opción Múltiple</h2>
+    <h2>Crear preguntas de opción múltiple</h2>
     <b-row class="custom-center-flex">
       <b-col cols="12" md="8" class="px-0 px-md-3" v-for="(question, index) in questions" :key="question.key">
         <CreateMultipleChoiceQuestion

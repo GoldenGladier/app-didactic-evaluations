@@ -19,7 +19,7 @@
     </div>
 
     <div v-else>
-        <h4>Revisión de Respuestas</h4>
+        <h4>Revisión de respuestas</h4>
         <FeedbackSortItems
             v-for="(feedback, index) in feedbackData"
             :key="index"

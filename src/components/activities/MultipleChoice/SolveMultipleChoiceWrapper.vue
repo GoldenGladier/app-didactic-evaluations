@@ -29,7 +29,7 @@
 
 
     <div v-else>
-      <h4>Revisión de Respuestas</h4>
+      <h4>Revisión de respuestas</h4>
       <div v-for="(feedback) in feedbackData" :key="`feedback-${feedback.idQuestionDb}`" class="mb-5">
         <FeedbackMultipleChoiceQuestion :feedback="feedback" />
       </div>    
