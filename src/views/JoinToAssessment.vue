@@ -12,45 +12,59 @@
                   :disabled="isLoggedIn"
                   id="name"
                   type="text"
-                  v-model="name"                
+                  v-model="name"
                   placeholder="Ingresa tu nombre"
                   required
+                  @input="validateName"
+                  :state="nameState"
+                  aria-describedby="name-feedback"
                 ></b-form-input>
-              </b-form-group>              
+                <b-form-invalid-feedback id="name-feedback" class="mb-2">
+                  El nombre no debe contener números ni solo espacios.
+                </b-form-invalid-feedback>
+              </b-form-group>
 
               <b-form-group label="Apellidos" label-for="lastname" class="required-label">
                 <b-form-input
                   :disabled="isLoggedIn"
                   id="lastname"
                   type="text"
-                  v-model="lastname"                
+                  v-model="lastname"
                   placeholder="Ingresa tus apellidos"
                   required
+                  @input="validateLastname"
+                  :state="lastnameState"
+                  aria-describedby="lastname-feedback"
                 ></b-form-input>
-              </b-form-group>          
+                <b-form-invalid-feedback id="lastname-feedback" class="mb-2">
+                  Los apellidos no deben contener números ni solo espacios.
+                </b-form-invalid-feedback>
+              </b-form-group>
 
               <b-form-group label="Pin de acceso a la evaluación" label-for="pin" class="required-label">
                 <b-form-input
                   id="pin"
                   type="text"
-                  v-model="pin"                
+                  v-model="pin"
                   placeholder="Ingresa el pin de acceso"
                   :disabled="!showInputPin"
                   required
+                  @input="validatePin"
+                  :state="pinState"
+                  aria-describedby="pin-feedback"
                 ></b-form-input>
-              </b-form-group>                   
+                <b-form-invalid-feedback id="pin-feedback" class="mb-2">
+                  El PIN no debe contener solo espacios.
+                </b-form-invalid-feedback>
+              </b-form-group>
 
-              <b-button type="submit" variant="primary" class="mt-4 mb-2" block :disabled="!pin"><i class="bi bi-arrow-right"></i>Siguiente</b-button>
+              <b-button type="submit" variant="primary" class="mt-4 mb-2" block :disabled="!isFormValid"><i class="bi bi-arrow-right"></i>Siguiente</b-button>
               <b-button v-if="isLoggedIn" type="submit" variant="outline-primary" class="mt-2 mb-2" block @click="logout()"><i class="bi bi-person-fill-x"></i>No soy yo</b-button>
 
             </b-form>
           </b-col>
         </b-row>
-      </b-container>      
-
-  <!-- <div class="login-container">
-    
-  </div> -->
+      </b-container>
     </b-overlay>
   </b-container>
 </template>
@@ -67,64 +81,10 @@ export default {
       name: '',
       lastname: '',
       showInputPin: true,
+      nameState: null,
+      lastnameState: null,
+      pinState: null,
     };
-  },
-  methods: {
-    init_data() {
-      this.pin = this.$route.params.pin ? this.$route.params.pin : '';
-      if(this.$route.params.pin){
-        this.showInputPin = false;
-      }
-      if(this.isLoggedIn) {
-        this.name = this.username
-        this.lastname = this.userLastname
-      }
-    },
-    joinToAssessment() {
-      if(this.$store.state.auth.isLoggedIn) {
-        console.log('PIN de actividad:', this.pin);
-        console.log('Nombre de usuario registrado:', this.name);
-        this.$router.push({ path: `/evaluaciones/unirse/${this.pin}` });        
-      }
-      else{
-        console.log('PIN de actividad:', this.pin);
-        console.log('Nombre de invitado:', this.name);
-        const data = {
-          userName: this.name.trim() + ' ' + this.lastname.trim(),
-        }
-        AuthService.newGuestUser(data)
-        .then((response) => {
-          console.log("Resultado user guest: ", response)
-          const guest = response.guestUser;
-          
-          const guestToken = guest.token;
-          let guestUser = guest.guestUser;
-
-          const nameParts = guestUser.nombre.split(' ');
-          guestUser.nombre = nameParts[0];
-          guestUser.apellido_paterno = nameParts[1] ? nameParts[1] : '';
-          guestUser.apellido_materno = nameParts[2] ? nameParts[2] : '';
-
-          guestUser.isGuestUser = true;
-          store.commit('setUser', guestUser);  
-          store.commit('setToken', guestToken);   
-          this.$router.push({ path: `/evaluaciones/unirse/${this.pin}` });        
-        })
-        .catch(error => {
-          console.error('Error al crear un usuario invitado: ', error);
-        });
-      }
-    },
-    logout() {
-      this.isLoading = true;
-      console.log("Close sesion");
-      store.commit('logout');
-      window.location.reload();
-      // this.$router.push('/login');
-    },    
-  },
-  mounted() {
-    this.init_data();
   },
   computed: {
     isLoggedIn() {
@@ -134,11 +94,83 @@ export default {
       return this.$store.state.auth.user;
     },
     username() {
-      return this.user.nombre
+      return this.user.nombre;
     },
     userLastname() {
-      return (this.user.apellido_paterno + ' ' + (this.user.apellido_materno ? this.user.apellido_materno : '')).trim()
-    }       
+      return (this.user.apellido_paterno + ' ' + (this.user.apellido_materno ? this.user.apellido_materno : '')).trim();
+    },
+    isFormValid() {
+      return this.nameState === true && this.lastnameState === true && this.pinState === true;
+    }
+  },
+  methods: {
+    init_data() {
+      this.pin = this.$route.params.pin ? this.$route.params.pin : '';
+      if (this.$route.params.pin) {
+        this.showInputPin = false;
+      }
+      if (this.isLoggedIn) {
+        this.name = this.username;
+        this.validateName();
+        this.lastname = this.userLastname;
+        this.validateLastname();
+      }
+    },
+    validateName() {
+      const nameRegex = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+( [a-zA-ZÀ-ÿ\u00f1\u00d1]+)*$/;
+      this.nameState = nameRegex.test(this.name.trim());
+    },
+    validateLastname() {
+      const lastnameRegex = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+( [a-zA-ZÀ-ÿ\u00f1\u00d1]+)*$/;
+      this.lastnameState = lastnameRegex.test(this.lastname.trim());
+    },
+    validatePin() {
+      this.pinState = this.pin.trim() !== '';
+    },
+    joinToAssessment() {
+      if (this.$store.state.auth.isLoggedIn) {
+        console.log('PIN de actividad:', this.pin);
+        console.log('Nombre de usuario registrado:', this.name);
+        this.$router.push({ path: `/evaluaciones/unirse/${this.pin}` });
+      } else {
+        console.log('PIN de actividad:', this.pin);
+        console.log('Nombre de invitado:', this.name);
+        const data = {
+          userName: this.name.trim() + ' ' + this.lastname.trim(),
+        };
+        AuthService.newGuestUser(data)
+          .then((response) => {
+            console.log("Resultado user guest: ", response);
+            const guest = response.guestUser;
+
+            const guestToken = guest.token;
+            let guestUser = guest.guestUser;
+
+            const nameParts = guestUser.nombre.split(' ');
+            guestUser.nombre = nameParts[0];
+            guestUser.apellido_paterno = nameParts[1] ? nameParts[1] : '';
+            guestUser.apellido_materno = nameParts[2] ? nameParts[2] : '';
+
+            guestUser.isGuestUser = true;
+            store.commit('setUser', guestUser);
+            store.commit('setToken', guestToken);
+            this.$router.push({ path: `/evaluaciones/unirse/${this.pin}` });
+          })
+          .catch(error => {
+            console.error('Error al crear un usuario invitado: ', error);
+          });
+      }
+    },
+    logout() {
+      this.isLoading = true;
+      console.log("Close sesion");
+      store.commit('logout');
+      window.location.reload();
+      // this.$router.push('/login');
+    },
+  },
+  mounted() {
+    this.init_data();
   }
 }
 </script>
@@ -154,17 +186,14 @@ export default {
 
 .login-form {
   max-width: 700px;
-  /* width: 100%; */
-  /* padding: 20px; */
-  border-radius: 5px;  
-  /* background: tomato; */
+  border-radius: 5px;
 }
 
 .login-form input {
-    margin-bottom: 0.4rem;
+  margin-bottom: 0.4rem;
 }
 label {
-    margin-bottom: 0.3rem;
+  margin-bottom: 0.3rem;
 }
 
 .form-group {

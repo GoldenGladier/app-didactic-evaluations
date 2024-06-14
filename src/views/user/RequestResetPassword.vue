@@ -14,9 +14,15 @@
                   v-model="email"
                   required
                   placeholder="Ingresa el correo electrónico"
+                  @input="validateEmail"
+                  :state="emailState"
+                  aria-describedby="email-feedback"                  
                 ></b-form-input>
+                <b-form-invalid-feedback id="email-feedback" class="mb-2">
+                  El correo electrónico no es válido.
+                </b-form-invalid-feedback>                
               </b-form-group>
-              <b-button type="submit" variant="primary" class="mt-2" block>Enviar correo</b-button>
+              <b-button type="submit" variant="primary" class="mt-2" block :disabled="!isFormValid" >Enviar correo</b-button>
             </b-form>
               
             <hr class="my-4">
@@ -47,10 +53,23 @@ export default {
     return {
       isLoading: false,
       email: '',
+      emailState: null,
     };
   },
   methods: {
+    validateEmail() {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      this.emailState = emailRegex.test(this.email.trim());
+    },    
     requestResetPassword() {
+      if (!this.isFormValid) {
+        this.$swal({
+          icon: 'error',
+          title: '¡Error!',
+          text: 'Por favor, completa todos los campos correctamente.',
+        });
+        return;
+      }      
       this.isLoading = true;
         const data = {
             email: this.email,
@@ -77,6 +96,11 @@ export default {
         });      
     }
   },
+  computed: {
+    isFormValid() {
+      return this.emailState === true;
+    },
+  },  
 }
 </script>
 

@@ -13,7 +13,13 @@
                   v-model="nombre"                
                   placeholder="Ingrese su nombre"
                   required
+                  @input="validateNombre"
+                  :state="nombreState"
+                  aria-describedby="nombre-feedback"
                 ></b-form-input>
+                <b-form-invalid-feedback id="nombre-feedback" class="mb-2">
+                  El nombre no debe contener números ni estar vacío.
+                </b-form-invalid-feedback>
               </b-form-group>
 
               <b-form-group label="Apellidos" label-for="apellidos" class="required-label">
@@ -23,7 +29,13 @@
                   v-model="apellidos"                
                   placeholder="Ingrese sus apellidos"
                   required
+                  @input="validateApellidos"
+                  :state="apellidosState"
+                  aria-describedby="apellidos-feedback"
                 />
+                <b-form-invalid-feedback id="apellidos-feedback" class="mb-2">
+                  Los apellidos no deben contener números ni estar vacíos.
+                </b-form-invalid-feedback>
               </b-form-group>
 
               <b-form-group label="Correo electrónico" label-for="email" class="required-label">
@@ -33,7 +45,13 @@
                   v-model="email"
                   required
                   placeholder="Ingrese su correo electrónico"
+                  @input="validateEmail"
+                  :state="emailState"
+                  aria-describedby="email-feedback"
                 ></b-form-input>
+                <b-form-invalid-feedback id="email-feedback" class="mb-2">
+                  El correo electrónico no es válido.
+                </b-form-invalid-feedback>
               </b-form-group>
 
               <b-form-group label="Contraseña" label-for="password" class="required-label">
@@ -118,6 +136,9 @@ export default {
       email: '',
       password: '',
       passwordConfirm: '',
+      nombreState: null,
+      apellidosState: null,
+      emailState: null,
       passwordState: null,
       passwordConfirmState: null,
       showPassword: false,
@@ -127,6 +148,9 @@ export default {
   computed: {
     isFormValid() {
       return (
+        this.nombreState === true &&
+        this.apellidosState === true &&
+        this.emailState === true &&
         this.passwordState === true &&
         this.passwordConfirmState === true &&
         this.password === this.passwordConfirm &&
@@ -137,6 +161,18 @@ export default {
     },
   },
   methods: {
+    validateNombre() {
+      const nombreRegex = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+( [a-zA-ZÀ-ÿ\u00f1\u00d1]+)*$/;
+      this.nombreState = nombreRegex.test(this.nombre.trim());
+    },
+    validateApellidos() {
+      const apellidosRegex = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+( [a-zA-ZÀ-ÿ\u00f1\u00d1]+)*$/;
+      this.apellidosState = apellidosRegex.test(this.apellidos.trim());
+    },
+    validateEmail() {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      this.emailState = emailRegex.test(this.email.trim());
+    },
     validatePassword() {
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#&$%])[A-Za-z\d#&$%]{8,15}$/;
       this.passwordState = passwordRegex.test(this.password);

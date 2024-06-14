@@ -116,7 +116,7 @@ export default {
                 })
                 .catch((error) => {
                     console.error("Ocurrió un error al intentar unirse a la evaluación: ", error)
-                    if(error === 'Código invalido'){
+                    if(error === 'Codigo invalido'){
                         console.log("El PIN es invalido, por favor revisa que el PIN sea el mismo que proporciono tu profesor.")
                         this.error = 'Código invalido';
 

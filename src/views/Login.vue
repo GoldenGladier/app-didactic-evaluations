@@ -13,7 +13,13 @@
                   v-model="email"
                   required
                   placeholder="Ingrese su correo electrónico"
+                  @input="validateEmail"
+                  :state="emailState"
+                  aria-describedby="email-feedback"
                 ></b-form-input>
+                <b-form-invalid-feedback id="email-feedback" class="mb-2">
+                  El correo electrónico no es válido.
+                </b-form-invalid-feedback>
               </b-form-group>
 
               <b-form-group label="Contraseña" label-for="password" class="mt-1">
@@ -26,7 +32,7 @@
                 ></b-form-input>
               </b-form-group>
 
-              <b-button type="submit" variant="primary" class="mt-2" block>Iniciar sesión</b-button>
+              <b-button type="submit" variant="primary" class="mt-2" block :disabled="!isFormValid">Iniciar sesión</b-button>
             </b-form>
               
             <hr class="my-4">
@@ -58,10 +64,29 @@ export default {
       isLoading: false,
       email: '',
       password: '',
+      emailState: null,
     };
   },
+  computed: {
+    isFormValid() {
+      return this.emailState === true && this.password.trim() !== '';
+    },
+  },
   methods: {
+    validateEmail() {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      this.emailState = emailRegex.test(this.email.trim());
+    },
     login() {
+      if (!this.isFormValid) {
+        this.$swal({
+          icon: 'error',
+          title: '¡Error!',
+          text: 'Por favor, completa todos los campos correctamente.',
+        });
+        return;
+      }
+
       this.isLoading = true;
       console.log('Correo electrónico:', this.email);
       console.log('Contraseña:', this.password);
